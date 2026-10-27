@@ -19,3 +19,4 @@ chk "entrega con material duplicado"     "$(req POST /entregas "{\"user_id\":$UI
 chk "registrar entrega 5 kg aluminio"    "$(req POST /entregas "{\"user_id\":$UID_C,\"detalles\":[{\"material_id\":3,\"peso_kg\":5}]}")" 201; E1=$(id)
 chk "acreditar sin validar (transicion invalida)" "$(req PATCH /entregas/$E1/acreditar)" 409
 chk "pesar"                              "$(req PATCH /entregas/$E1/pesar "{\"detalles\":[{\"id\":$(grep -o '"detalles":\[{"id":[0-9]*' /tmp/r.json | grep -o '[0-9]*$' | head -1),\"peso_kg\":5}]}")" 422
+exit $((fail>0))

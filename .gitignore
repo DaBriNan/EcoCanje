@@ -12,3 +12,4 @@ secrets/
 node_modules/
 vendor/
 backend/storage/*.key
+docs/evidencias/historial-*.txt

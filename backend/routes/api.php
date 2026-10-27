@@ -32,3 +32,4 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/reportes/mensual', [CatalogoController::class, 'reporte']);
     });
 });
+require __DIR__ . '/catalogo.php';

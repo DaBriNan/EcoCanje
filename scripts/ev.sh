@@ -25,7 +25,7 @@ ev() {
   slug=$(echo "$desc" | iconv -f utf-8 -t ascii//TRANSLIT 2>/dev/null | tr 'A-Z ' 'a-z-' | tr -cd 'a-z0-9-' | cut -c1-40)
   f="$EV_DIR/$id-$slug-$ts.txt"
   ctx=$(kubectl config current-context 2>/dev/null || echo "compose-local")
-  amb="${EV_AMBIENTE:-$ctx}"
+  case "$1" in kubectl*|helm*|k3d*) amb="${EV_AMBIENTE:-$ctx}";; *) amb="${EV_AMBIENTE:-compose-local}";; esac
   commit="$(git -C "$EV_RAIZ" rev-parse --short HEAD 2>/dev/null)"
   git -C "$EV_RAIZ" diff --quiet 2>/dev/null || commit="$commit+cambios"
   {

@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             }
             if ($estado === 'acreditada') {
                 PuntosLote::create(['user_id' => $e->user_id, 'entrega_id' => $e->id, 'puntos' => $total,
-                    'restantes' => $total, 'vence_en' => $fecha->copy()->addMonths(12)]);
+                    'restantes' => $total, 'vence_en' => $fecha->copy()->addMonths(12), 'created_at' => $fecha, 'updated_at' => $fecha]);
             }
         }
     }

@@ -8,4 +8,5 @@ class Canje extends Model
 {
     protected $table = 'canjes';
     protected $guarded = ['id'];
+    protected $casts = ['lotes' => 'array'];
 }

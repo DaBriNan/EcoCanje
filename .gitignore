@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+*.kubeconfig
+kubeconfig*
+*.key
+*.pem
+*.crt
+secrets/
+*.dump
+*.sql.gz
+node_modules/
+vendor/
+backend/storage/*.key

@@ -1,0 +1,22 @@
+                 List of relations
+ Schema |         Name          | Type  |  Owner   
+--------+-----------------------+-------+----------
+ public | cache                 | table | ecocanje
+ public | cache_locks           | table | ecocanje
+ public | canjes                | table | ecocanje
+ public | entrega_detalles      | table | ecocanje
+ public | entregas              | table | ecocanje
+ public | failed_jobs           | table | ecocanje
+ public | job_batches           | table | ecocanje
+ public | jobs                  | table | ecocanje
+ public | materiales            | table | ecocanje
+ public | migrations            | table | ecocanje
+ public | outbox                | table | ecocanje
+ public | password_reset_tokens | table | ecocanje
+ public | puntos_lotes          | table | ecocanje
+ public | recompensas           | table | ecocanje
+ public | sessions              | table | ecocanje
+ public | tarifas               | table | ecocanje
+ public | users                 | table | ecocanje
+(17 rows)
+

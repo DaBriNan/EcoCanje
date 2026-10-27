@@ -1,0 +1,4 @@
+NAME               IMAGE                COMMAND                  SERVICE   CREATED         STATUS                  PORTS
+ecocanje-api-1     ecocanje-api         "docker-php-entrypoi…"   api       2 seconds ago   Up Less than a second   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+ecocanje-db-1      postgres:16-alpine   "docker-entrypoint.s…"   db        2 seconds ago   Up 1 second             5432/tcp
+ecocanje-mongo-1   mongo:7              "docker-entrypoint.s…"   mongo     2 seconds ago   Up Less than a second   27017/tcp

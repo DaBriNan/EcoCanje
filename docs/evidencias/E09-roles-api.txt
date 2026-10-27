@@ -1,0 +1,4 @@
+operador -> 200 (esperado 200)
+login malo -> 401 (esperado 401)
+ciudadano -> 403 (esperado 403)
+sin token -> 401 (esperado 401)

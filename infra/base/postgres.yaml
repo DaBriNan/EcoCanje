@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: postgres-init}
+data:
+  01-roles.sh: |
+    #!/bin/sh
+    set -e
+    S=/run/secrets/pg
+    psql -v ON_ERROR_STOP=1 --username ecocanje_admin --dbname ecocanje <<SQL
+    CREATE ROLE ecocanje_migrador LOGIN PASSWORD '$(cat $S/migrador)';
+    CREATE ROLE ecocanje_app LOGIN PASSWORD '$(cat $S/app)';
+    CREATE ROLE ecocanje_backup LOGIN PASSWORD '$(cat $S/backup)';
+    CREATE ROLE ecocanje_monitor LOGIN PASSWORD '$(cat $S/monitor)';
+    GRANT pg_read_all_data TO ecocanje_backup;
+    GRANT pg_monitor TO ecocanje_monitor;
+    REVOKE ALL ON DATABASE ecocanje FROM PUBLIC;
+    GRANT CONNECT ON DATABASE ecocanje TO ecocanje_migrador, ecocanje_app, ecocanje_backup, ecocanje_monitor;
+    ALTER SCHEMA public OWNER TO ecocanje_migrador;
+    REVOKE ALL ON SCHEMA public FROM PUBLIC;
+    GRANT USAGE ON SCHEMA public TO ecocanje_app, ecocanje_backup, ecocanje_monitor;
+    ALTER DEFAULT PRIVILEGES FOR ROLE ecocanje_migrador IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO ecocanje_app;
+    ALTER DEFAULT PRIVILEGES FOR ROLE ecocanje_migrador IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO ecocanje_app;
+    SQL
+  02-hba.sh: |
+    #!/bin/sh
+    set -e
+    sed -i "s/trust/scram-sha-256/g" "$PGDATA/pg_hba.conf"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels: {app: postgres}
+spec:
+  selector: {app: postgres}
+  ports:
+  - {name: pg, port: 5432, targetPort: pg}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  labels: {app: postgres}
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels: {app: postgres}
+  template:
+    metadata:
+      labels: {app: postgres}
+    spec:
+      serviceAccountName: postgres
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 70
+        runAsGroup: 70
+        fsGroup: 70
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+      - name: postgres
+        image: postgres:16-alpine
+        ports:
+        - {name: pg, containerPort: 5432}
+        env:
+        - {name: POSTGRES_DB, value: ecocanje}
+        - {name: POSTGRES_USER, value: ecocanje_admin}
+        - {name: POSTGRES_PASSWORD_FILE, value: /run/secrets/pg/admin}
+        - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities: {drop: [ALL]}
+        resources:
+          requests: {cpu: 100m, memory: 256Mi}
+          limits: {cpu: "1", memory: 768Mi}
+        startupProbe:
+          exec: {command: [pg_isready, -h, 127.0.0.1, -U, ecocanje_admin, -d, ecocanje]}
+          periodSeconds: 5
+          failureThreshold: 36
+        readinessProbe:
+          exec: {command: [pg_isready, -h, 127.0.0.1, -U, ecocanje_admin, -d, ecocanje]}
+          periodSeconds: 10
+        livenessProbe:
+          exec: {command: [pg_isready, -h, 127.0.0.1, -U, ecocanje_admin, -d, ecocanje]}
+          periodSeconds: 20
+          failureThreshold: 6
+        volumeMounts:
+        - {name: data, mountPath: /var/lib/postgresql/data}
+        - {name: run, mountPath: /var/run/postgresql}
+        - {name: tmp, mountPath: /tmp}
+        - {name: init, mountPath: /docker-entrypoint-initdb.d, readOnly: true}
+        - {name: credenciales, mountPath: /run/secrets/pg, readOnly: true}
+      volumes:
+      - {name: run, emptyDir: {}}
+      - {name: tmp, emptyDir: {}}
+      - name: init
+        configMap: {name: postgres-init, defaultMode: 365}
+      - name: credenciales
+        secret: {secretName: postgres-credenciales, defaultMode: 288}
+  volumeClaimTemplates:
+  - metadata: {name: data}
+    spec:
+      accessModes: [ReadWriteOnce]
+      storageClassName: local-path
+      resources:
+        requests: {storage: 2Gi}

@@ -25,13 +25,13 @@ ev() {
   slug=$(echo "$desc" | iconv -f utf-8 -t ascii//TRANSLIT 2>/dev/null | tr 'A-Z ' 'a-z-' | tr -cd 'a-z0-9-' | cut -c1-40)
   f="$EV_DIR/$id-$slug-$ts.txt"
   ctx=$(kubectl config current-context 2>/dev/null || echo "compose-local")
-  case "$1" in kubectl*|helm*|k3d*) amb="${EV_AMBIENTE:-$ctx}";; *) amb="${EV_AMBIENTE:-compose-local}";; esac
+  case "$1" in kd*) amb=dev;; kp*) amb=prod;; *) amb="${EV_AMBIENTE:-compose-local}";; esac
   commit="$(git -C "$EV_RAIZ" rev-parse --short HEAD 2>/dev/null)"
   git -C "$EV_RAIZ" diff --quiet 2>/dev/null || commit="$commit+cambios"
   {
     echo "ID: $id"; echo "Descripción: $desc"; echo "Fecha: $(date -Is)"
     echo "Ambiente: $amb"; echo "Host: $(hostname)"; echo "Commit: $commit"
-    echo "Comando: $*"; echo "Esperado: $esp"; echo "----- salida -----"
+    echo "Comando: $(printf %s "$*" | sed -e "s/^kd /kubectl --context k3d-dev /" -e "s/^kp /kubectl --context k3d-prod /")"; echo "Esperado: $esp"; echo "----- salida -----"
   } | redact > "$f"
   "$@" 2>&1 | redact | tee -a "$f"
   rc=${PIPESTATUS[0]}
@@ -46,3 +46,12 @@ ev() {
 }
 
 ev_historial() { history | tail -300 | redact > "$EV_DIR/historial-$(date +%F).txt"; echo "historial guardado"; }
+
+kd() { kubectl --context k3d-dev "$@"; }
+kp() { kubectl --context k3d-prod "$@"; }
+
+# Falla (código 1) si algún pod no está Running con todos sus contenedores listos, ni Completed
+pods_sanos() {
+  kubectl --context "$1" get pods -A --no-headers | awk '{split($3,a,"/"); if (($4=="Running" && a[1]!=a[2]) || ($4!="Running" && $4!="Completed")) {print; bad=1}} END{exit bad}' \
+    && echo "todos los pods Running/Completed"
+}

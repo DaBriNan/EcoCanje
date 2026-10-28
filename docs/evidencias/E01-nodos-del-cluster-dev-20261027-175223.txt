@@ -1,0 +1,12 @@
+ID: E01
+Descripción: Nodos del cluster dev
+Fecha: 2026-10-27T17:52:24-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1428352+cambios
+Comando: kubectl --context k3d-dev get nodes -o wide
+Esperado: 1 nodo Ready
+----- salida -----
+NAME               STATUS   ROLES           AGE   VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE           KERNEL-VERSION                   CONTAINER-RUNTIME
+k3d-dev-server-0   Ready    control-plane   61s   v1.36.1+k3s1   172.20.0.2    <none>        K3s v1.36.1+k3s1   7.2.10-200.fc44.x86_64 (amd64)   containerd://2.2.3-k3s1
+----- fin: OK -----

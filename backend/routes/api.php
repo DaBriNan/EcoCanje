@@ -33,3 +33,4 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 require __DIR__ . '/catalogo.php';
+require __DIR__ . '/health.php';

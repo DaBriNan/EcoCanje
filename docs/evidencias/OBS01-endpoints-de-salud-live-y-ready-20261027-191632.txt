@@ -1,0 +1,12 @@
+ID: OBS01
+Descripción: Endpoints de salud live y ready
+Fecha: 2026-10-27T19:16:32-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: b8578f9+cambios
+Comando: bash -c curl -s -w " -> %{http_code}\n" localhost:8000/api/health/live; curl -s -w " -> %{http_code}\n" localhost:8000/api/health/ready
+Esperado: live y ready responden 200
+----- salida -----
+{"status":"ok"} -> 200
+{"status":"ok"} -> 200
+----- fin: OK -----

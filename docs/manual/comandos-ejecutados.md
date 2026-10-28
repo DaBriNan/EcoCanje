@@ -15,3 +15,7 @@
 - 2026-10-27T17:52:25-06:00 [compose-local] `docker exec k3d-prod-server-0 k3s secrets-encrypt status` → OK (SEC01)
 - 2026-10-27T19:13:45-06:00 [compose-local] `pods_sanos k3d-prod` → OK (E01)
 - 2026-10-27T19:13:45-06:00 [compose-local] `pods_sanos k3d-dev` → OK (E01)
+- 2026-10-27T19:16:32-06:00 [compose-local] `bash -c curl -s -w " -> %{http_code}\n" localhost:8000/api/health/live; curl -s -w " -> %{http_code}\n" localhost:8000/api/health/ready` → OK (OBS01)
+- 2026-10-27T19:22:20-06:00 [compose-local] `docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --label org.opencontainers.image.revision=b8578f9 -t ecocanje-backend:0.1.0 backend` → OK (SUP01)
+- 2026-10-27T19:22:21-06:00 [compose-local] `docker run --rm --read-only --tmpfs /tmp -e APP_PACKAGES_CACHE=/tmp/packages.php -e APP_SERVICES_CACHE=/tmp/services.php ecocanje-backend:0.1.0 sh -c id -u; php -v | head -1; php -m | grep -Ei "^(mongodb|pdo_pgsql|zend opcache)$"; php artisan --version` → OK (SUP01)
+- 2026-10-27T19:22:21-06:00 [compose-local] `docker image inspect ecocanje-backend:0.1.0 --format id={{.Id}} tamano={{.Size}} rev={{index .Config.Labels "org.opencontainers.image.revision"}}` → OK (SUP01)

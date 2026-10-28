@@ -1,0 +1,9 @@
+vendor
+node_modules
+.env
+.env.*
+.git
+tests
+Dockerfile*
+storage/logs
+storage/framework

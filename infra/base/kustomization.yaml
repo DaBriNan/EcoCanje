@@ -27,3 +27,5 @@ images:
 - {name: postgres, digest: sha256:0cefaabd882e42bcb2a2f3dc56d3ce4770560ba62fd7f197f1a2e008fd5731ab}
 - {name: mongo, digest: sha256:8bb4442761a63a8dda452744082cdac9644b429807eb977b42324a63cef59ca4}
 - {name: nginxinc/nginx-unprivileged, digest: sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03}
+patches:
+- path: patch-worker-espera.yaml

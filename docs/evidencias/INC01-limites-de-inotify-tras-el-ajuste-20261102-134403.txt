@@ -1,0 +1,12 @@
+ID: INC01
+Descripción: Limites de inotify tras el ajuste
+Fecha: 2026-11-02T13:44:03-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: sysctl fs.inotify.max_user_instances fs.inotify.max_user_watches
+Esperado: max_user_instances=1024 y max_user_watches=524288
+----- salida -----
+fs.inotify.max_user_instances = 1024
+fs.inotify.max_user_watches = 524288
+----- fin: OK -----

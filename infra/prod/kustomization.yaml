@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources: [../base]
+namespace: ecocanje
+resources: [../base, pdb.yaml, hpa.yaml]
 labels:
 - pairs: {ambiente: prod}
 images:
@@ -8,9 +9,36 @@ images:
 configMapGenerator:
 - name: app-config
   behavior: merge
-  literals: [APP_NAME=EcoCanje-prod, APP_URL=https://prod.ecocanje.test:8445]
+  literals: [APP_NAME=EcoCanje-prod, "APP_URL=https://prod.ecocanje.test:8445"]
 patches:
 - target: {kind: Ingress, name: ecocanje}
   patch: |-
     - {op: replace, path: /spec/rules/0/host, value: prod.ecocanje.test}
     - {op: replace, path: /spec/tls/0/hosts/0, value: prod.ecocanje.test}
+- target: {kind: Deployment, name: backend}
+  patch: |-
+    - {op: replace, path: /spec/replicas, value: 2}
+    - op: add
+      path: /spec/template/spec/topologySpreadConstraints
+      value:
+      - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: DoNotSchedule, labelSelector: {matchLabels: {app: backend}}}
+- target: {kind: Deployment}
+  patch: |-
+    - op: add
+      path: /spec/template/spec/affinity
+      value:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
+- target: {kind: StatefulSet}
+  patch: |-
+    - op: add
+      path: /spec/template/spec/affinity
+      value:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}

@@ -1,0 +1,21 @@
+ID: E07
+Descripción: Distribucion de replicas entre workers
+Fecha: 2026-11-02T14:06:24-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: bash -c kubectl --context k3d-prod -n ecocanje get pods -o wide; echo; echo "backend por nodo:"; kubectl --context k3d-prod -n ecocanje get pods -l app=backend -o jsonpath="{range .items[*]}{.spec.nodeName}{\"\n\"}{end}" | sort | uniq -c; ! kubectl --context k3d-prod -n ecocanje get pods -o wide --no-headers | grep -v Completed | grep -q server-0
+Esperado: backend en agent-0 y agent-1 y nada activo en el control plane
+----- salida -----
+NAME                             READY   STATUS      RESTARTS   AGE    IP          NODE                NOMINATED NODE   READINESS GATES
+backend-c55cdbc77-7hjhm          2/2     Running     0          19m    10.42.0.4   k3d-prod-agent-0    <none>           <none>
+backend-c55cdbc77-hr9l7          2/2     Running     0          19m    10.42.1.4   k3d-prod-agent-1    <none>           <none>
+migraciones-cl972                0/1     Completed   0          114s   10.42.2.6   k3d-prod-server-0   <none>           <none>
+mongo-0                          1/1     Running     0          19m    10.42.0.8   k3d-prod-agent-0    <none>           <none>
+outbox-worker-5bb84c974c-nxm4x   1/1     Running     0          114s   10.42.0.9   k3d-prod-agent-0    <none>           <none>
+postgres-0                       1/1     Running     0          19m    10.42.1.7   k3d-prod-agent-1    <none>           <none>
+
+backend por nodo:
+      1 k3d-prod-agent-0
+      1 k3d-prod-agent-1
+----- fin: OK -----

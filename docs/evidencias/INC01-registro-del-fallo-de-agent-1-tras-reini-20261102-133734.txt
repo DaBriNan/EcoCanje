@@ -1,0 +1,22 @@
+ID: INC01
+Descripción: Registro del fallo de agent-1 tras reinicio de Docker
+Fecha: 2026-11-02T13:37:34-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: bash -c docker logs --tail 60 k3d-prod-agent-1 2>&1 | grep -iE "error|fatal|refused|password|fail|register" | tail -12 || true
+Esperado: log del agente guardado
+----- salida -----
+E1102 19:37:31.192231    3206 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+E1102 19:37:31.193886    3206 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+E1102 19:37:31.195683    3206 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+time="2026-11-02T19:37:32Z" level=info msg="Waiting for containerd startup: rpc error: code = Unimplemented desc = unknown service runtime.v1.RuntimeService"
+time="2026-11-02T19:37:33Z" level=info msg="Waiting for containerd startup: rpc error: code = Unimplemented desc = unknown service runtime.v1.RuntimeService"
+time="2026-11-02T19:37:34Z" level=info msg="Waiting for containerd startup: rpc error: code = Unimplemented desc = unknown service runtime.v1.RuntimeService"
+E1102 19:37:34.631510    3221 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+E1102 19:37:34.633633    3221 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+E1102 19:37:34.635580    3221 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+E1102 19:37:34.637449    3221 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+----- fin: OK -----

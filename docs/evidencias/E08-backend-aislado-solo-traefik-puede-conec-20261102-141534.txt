@@ -1,0 +1,17 @@
+ID: E08
+Descripción: Backend aislado: solo Traefik puede conectar (prod)
+Fecha: 2026-11-02T14:15:34-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: tests/netpol-app.sh prod
+Esperado: bloqueado, abierto con regla temporal, bloqueado de nuevo, HTTPS 200
+----- salida -----
+OK    backend sano (todas las replicas Ready) -> 0
+OK    DNS resuelve el backend desde el cliente -> resuelve
+OK    politicas reales: cliente con egreso permitido, bloqueado por INGRESO del backend -> bloqueado
+OK    con regla temporal que lo permite: el mismo cliente conecta (el servicio estaba sano) -> abierto
+OK    regla temporal retirada: bloqueado de nuevo -> bloqueado
+OK    la entrada HTTPS (Traefik) sigue pasando -> 200
+Resultado: 6 correctas, 0 fallidas
+----- fin: OK -----

@@ -1,0 +1,21 @@
+ID: E06
+Descripción: HPA y PDB en prod con las dos replicas Ready
+Fecha: 2026-11-02T14:06:25-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: bash -c kubectl --context k3d-prod -n ecocanje get hpa,pdb; kubectl --context k3d-prod -n ecocanje top pods
+Esperado: HPA 2-6 al 60%, 2 replicas y PDB con 1 disrupcion permitida
+----- salida -----
+NAME                                          REFERENCE            TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/backend   Deployment/backend   cpu: 14%/60%   2         6         2          19m
+
+NAME                                 MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+poddisruptionbudget.policy/backend   1               N/A               1                     19m
+NAME                             CPU(cores)   MEMORY(bytes)   
+backend-c55cdbc77-7hjhm          19m          36Mi            
+backend-c55cdbc77-hr9l7          18m          36Mi            
+mongo-0                          12m          80Mi            
+outbox-worker-5bb84c974c-nxm4x   2m           31Mi            
+postgres-0                       15m          27Mi            
+----- fin: OK -----

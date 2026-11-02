@@ -1,0 +1,14 @@
+ID: DEP03
+Descripción: Imagen aprobada identica en todos los nodos de prod
+Fecha: 2026-11-02T13:46:38-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/verificar-imagen.sh prod
+Esperado: mismo id que la imagen local en server-0, agent-0 y agent-1
+----- salida -----
+imagen local ecocanje-backend:0.1.1 -> a300adfa49ede
+FALLA k3d-prod-agent-0 -> 'ac2590b7b87d3'
+FALLA k3d-prod-agent-1 -> 'ac2590b7b87d3'
+FALLA k3d-prod-server-0 -> 'ac2590b7b87d3'
+----- fin: FALLA(1) -----

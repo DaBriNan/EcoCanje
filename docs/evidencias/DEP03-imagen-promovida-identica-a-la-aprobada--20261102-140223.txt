@@ -1,0 +1,14 @@
+ID: DEP03
+Descripción: Imagen promovida identica a la aprobada (prod)
+Fecha: 2026-11-02T14:02:23-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/verificar-imagen.sh prod 0.1.1
+Esperado: los tres nodos de prod con el mismo id que dev
+----- salida -----
+OK    k3d-prod-agent-0 -> ac2590b7b87d3
+OK    k3d-prod-agent-1 -> ac2590b7b87d3
+OK    k3d-prod-server-0 -> ac2590b7b87d3
+OK    identica a la imagen aprobada (ac2590b7b87d3)
+----- fin: OK -----

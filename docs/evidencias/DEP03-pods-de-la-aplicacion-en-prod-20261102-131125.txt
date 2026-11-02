@@ -1,0 +1,13 @@
+ID: DEP03
+Descripción: Pods de la aplicacion en prod
+Fecha: 2026-11-02T13:11:26-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d3269e2+cambios
+Comando: pods_sanos k3d-prod
+Esperado: todos Running/Completed
+----- salida -----
+ecocanje      backend-c55cdbc77-2scmz                   0/2   Pending       0               8m33s
+kube-system   coredns-6648f7576f-vczkg                  1/1   Terminating   0               5d19h
+kube-system   metrics-server-7c86f97b8d-zgdfl           1/1   Terminating   0               5d19h
+----- fin: FALLA(1) -----

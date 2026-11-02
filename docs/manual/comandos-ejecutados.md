@@ -32,3 +32,5 @@
 - 2026-10-27T21:05:43-06:00 [dev] `kd -n ecocanje get pods,pvc` → OK (DEP01)
 - 2026-10-27T21:12:37-06:00 [compose-local] `scripts/verificar-bd.sh k3d-dev` → OK (E09)
 - 2026-10-27T21:13:03-06:00 [compose-local] `tests/netpol.sh k3d-dev` → FALLA(1) (E08)
+- 2026-10-28T10:49:21-06:00 [compose-local] `tests/netpol.sh k3d-dev` → OK (E08)
+- 2026-11-02T11:50:55-06:00 [compose-local] `tests/netpol.sh k3d-dev` → OK (E08)

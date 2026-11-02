@@ -32,7 +32,9 @@ K wait --for=condition=Ready pod -l app=prueba --timeout=180s >/dev/null
 chk "pods de prueba creados (4)"         "$(K get pods -l app=prueba --no-headers | grep -c Running)" 4
 chk "servicio postgres sano (readiness)" "$(K get pod postgres-0 -o jsonpath='{.status.containerStatuses[0].ready}')" true
 chk "servicio mongo sano (readiness)"    "$(K get pod mongo-0 -o jsonpath='{.status.containerStatuses[0].ready}')" true
-chk "DNS funciona en el pod intruso"     "$(K exec intruso -- nslookup postgres >/dev/null 2>&1 && echo resuelve || echo falla)" resuelve
+IP_PG=$(K get svc postgres -o jsonpath='{.spec.clusterIP}')
+chk "DNS resuelve el servicio en el pod intruso" "$(K exec intruso -- nslookup postgres.ecocanje.svc.cluster.local 2>&1 | grep -q "$IP_PG" && echo resuelve || echo falla)" resuelve
+chk "postgres: intruso bloqueado tambien por IP directa" "$(alcanza intruso $IP_PG 5432)" bloqueado
 chk "postgres: cliente permitido"        "$(alcanza cliente-permitido postgres 5432)" abierto
 chk "postgres: bloqueado por INGRESO"    "$(alcanza sin-ingreso postgres 5432)" bloqueado
 chk "postgres: bloqueado por EGRESO"     "$(alcanza sin-egreso postgres 5432)" bloqueado

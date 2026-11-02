@@ -1,0 +1,20 @@
+ID: SUP01
+Descripción: Importacion de la imagen al cluster dev
+Fecha: 2026-11-02T11:58:14-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 978939b+cambios
+Comando: k3d image import ecocanje-backend:0.1.1 -c dev
+Esperado: imagen importada en los nodos
+----- salida -----
+[36mINFO[0m[0000] Importing image(s) into cluster 'dev'        
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-dev-tools'                
+[36mINFO[0m[0001] Saving 1 image(s) from runtime...            
+[36mINFO[0m[0004] Importing images into nodes...               
+[36mINFO[0m[0004] Importing images from tarball '/k3d/images/k3d-dev-images-20261102115815.tar' into node 'k3d-dev-server-0'... 
+[36mINFO[0m[0014] Removing the tarball(s) from image volume... 
+[36mINFO[0m[0015] Removing k3d-tools node...                   
+[36mINFO[0m[0015] Successfully imported image(s)               
+[36mINFO[0m[0015] Successfully imported 1 image(s) into 1 cluster(s) 
+----- fin: OK -----

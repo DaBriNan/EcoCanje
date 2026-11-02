@@ -3,3 +3,14 @@ kind: Kustomization
 resources: [../base]
 labels:
 - pairs: {ambiente: prod}
+images:
+- {name: ecocanje-backend, newTag: "0.1.1"}
+configMapGenerator:
+- name: app-config
+  behavior: merge
+  literals: [APP_NAME=EcoCanje-prod, APP_URL=https://prod.ecocanje.test:8445]
+patches:
+- target: {kind: Ingress, name: ecocanje}
+  patch: |-
+    - {op: replace, path: /spec/rules/0/host, value: prod.ecocanje.test}
+    - {op: replace, path: /spec/tls/0/hosts/0, value: prod.ecocanje.test}

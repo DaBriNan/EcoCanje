@@ -1,7 +1,29 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ecocanje
-resources: [namespace.yaml, cuotas.yaml, cuentas.yaml, postgres.yaml, mongo.yaml, redes.yaml]
+resources: [namespace.yaml, cuotas.yaml, cuentas.yaml, postgres.yaml, mongo.yaml, app.yaml, ingreso.yaml, redes.yaml]
+configMapGenerator:
+- name: app-config
+  literals:
+  - APP_ENV=production
+  - APP_DEBUG=false
+  - APP_TIMEZONE=America/Mexico_City
+  - LOG_CHANNEL=stderr
+  - LOG_LEVEL=info
+  - CACHE_STORE=database
+  - SESSION_DRIVER=array
+  - QUEUE_CONNECTION=sync
+  - DB_CONNECTION=pgsql
+  - DB_HOST=postgres
+  - DB_PORT=5432
+  - DB_DATABASE=ecocanje
+  - MONGODB_DATABASE=ecocanje
+  - APP_PACKAGES_CACHE=/tmp/packages.php
+  - APP_SERVICES_CACHE=/tmp/services.php
+  - VIEW_COMPILED_PATH=/tmp/views
+- name: nginx-conf
+  files: [default.conf=nginx-default.conf]
 images:
 - {name: postgres, digest: sha256:0cefaabd882e42bcb2a2f3dc56d3ce4770560ba62fd7f197f1a2e008fd5731ab}
 - {name: mongo, digest: sha256:8bb4442761a63a8dda452744082cdac9644b429807eb977b42324a63cef59ca4}
+- {name: nginxinc/nginx-unprivileged, digest: sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03}

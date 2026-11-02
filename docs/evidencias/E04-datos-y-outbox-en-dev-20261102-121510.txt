@@ -1,0 +1,13 @@
+ID: E04
+Descripción: Datos y outbox en dev
+Fecha: 2026-11-02T12:15:11-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 978939b+cambios
+Comando: scripts/estado-datos.sh k3d-dev
+Esperado: outbox pendiente 0 y movimientos en MongoDB
+----- salida -----
+contexto: k3d-dev
+usuarios | entregas | outbox pendientes: 32 | 102 | 0
+movimientos en MongoDB: 12
+----- fin: OK -----

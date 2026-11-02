@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ecocanje
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts: [ecocanje.invalid]
+    secretName: tls-ecocanje
+  rules:
+  - host: ecocanje.invalid
+    http:
+      paths:
+      - {path: /api, pathType: Prefix, backend: {service: {name: backend, port: {name: http}}}}

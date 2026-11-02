@@ -42,3 +42,13 @@ patches:
             nodeSelectorTerms:
             - matchExpressions:
               - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
+- target: {kind: CronJob}
+  patch: |-
+    - op: add
+      path: /spec/jobTemplate/spec/template/spec/affinity
+      value:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}

@@ -1,0 +1,67 @@
+ID: DEP02
+Descripción: Redespliegue de dev con espera de bases y respaldos
+Fecha: 2026-11-02T14:34:05-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 656ccdc+cambios
+Comando: scripts/desplegar.sh dev
+Esperado: migraciones, backend y worker Ready sin reinicios
+----- salida -----
+tls-ecocanje aplicado en k3d-dev para dev.ecocanje.test
+job.batch "migraciones" deleted from ecocanje namespace
+namespace/ecocanje configured
+resourcequota/cuota-ecocanje unchanged
+serviceaccount/backend unchanged
+serviceaccount/mongo unchanged
+serviceaccount/postgres unchanged
+serviceaccount/respaldo created
+configmap/app-config-24hd2ftb77 unchanged
+configmap/mongo-init unchanged
+configmap/nginx-conf-d47dfbcc27 unchanged
+configmap/postgres-init unchanged
+service/backend unchanged
+service/mongo unchanged
+service/postgres unchanged
+limitrange/limites-por-defecto unchanged
+persistentvolumeclaim/respaldos created
+deployment.apps/backend unchanged
+deployment.apps/outbox-worker configured
+statefulset.apps/mongo configured
+statefulset.apps/postgres configured
+cronjob.batch/respaldo-mongo created
+cronjob.batch/respaldo-postgres created
+job.batch/migraciones created
+ingress.networking.k8s.io/ecocanje unchanged
+networkpolicy.networking.k8s.io/backend-ingreso configured
+networkpolicy.networking.k8s.io/clientes-mongo-egreso configured
+networkpolicy.networking.k8s.io/clientes-postgres-egreso configured
+networkpolicy.networking.k8s.io/denegar-todo configured
+networkpolicy.networking.k8s.io/mongo-ingreso configured
+networkpolicy.networking.k8s.io/permitir-dns configured
+networkpolicy.networking.k8s.io/postgres-ingreso configured
+
+   INFO  Nothing to migrate.  
+
+MongoDB listo
+
+   INFO  Seeding database.  
+
+semilla ya aplicada
+deployment "backend" successfully rolled out
+deployment "outbox-worker" successfully rolled out
+NAME                                 READY   STATUS        RESTARTS       AGE
+pod/backend-7657ff8989-6tdcx         2/2     Running       0              144m
+pod/migraciones-tftlk                0/1     Completed     0              6s
+pod/mongo-0                          1/1     Running       0              5d3h
+pod/outbox-worker-58dc599b94-kzvvn   1/1     Terminating   1 (144m ago)   144m
+pod/outbox-worker-69f7977477-fbtxz   1/1     Running       0              6s
+pod/postgres-0                       1/1     Running       0              5d3h
+
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+service/backend    ClusterIP   10.43.200.208   <none>        80/TCP      144m
+service/mongo      ClusterIP   10.43.32.120    <none>        27017/TCP   5d19h
+service/postgres   ClusterIP   10.43.65.14     <none>        5432/TCP    5d19h
+
+NAME                                 CLASS     HOSTS               ADDRESS      PORTS     AGE
+ingress.networking.k8s.io/ecocanje   traefik   dev.ecocanje.test   172.20.0.2   80, 443   144m
+----- fin: OK -----

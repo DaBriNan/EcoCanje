@@ -1,7 +1,7 @@
 #!/bin/bash
 # Uso: scripts/crear-secretos.sh <contexto>  (crea los Secrets si no existen; no imprime valores)
 set -euo pipefail
-CTX="${1:?uso: crear-secretos.sh <contexto>}"; NS=ecocanje
+CTX="${1:?uso: crear-secretos.sh <contexto>}"; NS=${NS:-ecocanje}
 K() { kubectl --context "$CTX" -n "$NS" "$@"; }
 gen() { openssl rand -base64 24 | tr -d '/+=' | cut -c1-24; }
 existe() { K get secret "$1" >/dev/null 2>&1; }

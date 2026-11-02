@@ -1,0 +1,52 @@
+ID: E13
+Descripción: Restauracion de ambas bases en espacio aislado (prod)
+Fecha: 2026-11-02T15:58:53-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: d53f3cc+cambios
+Comando: scripts/restaurar.sh prod
+Esperado: conteos, indices y relaciones iguales al origen; aplicacion funcional; RTO medido
+----- salida -----
+[0 s] respaldos: pg-20261102-212029.dump.enc y mongo-20261102-212036.archive.gz.enc (SHA-256 verificado)
+Warning: resource namespaces/recuperacion is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+[49 s] PostgreSQL y MongoDB vacios listos en el namespace recuperacion
+[49 s] PostgreSQL restaurado
+[50 s] MongoDB restaurado
+--- PostgreSQL restaurado:
+canjes=2
+canjes_huerfanos=0
+detalles_huerfanos=0
+entrega_detalles=198
+entregas=102
+indices=34
+llaves_foraneas=10
+materiales=9
+outbox=12
+puntos_lotes=81
+puntos_restantes=4175
+recompensas=7
+restricciones_check=5
+tarifas=10
+users=32
+--- MongoDB restaurado:
+fichas=1
+indices=_id_|tipo_1|user_id_1_ocurrido_en_-1
+movimientos=12
+validador=si
+OK    PostgreSQL: conteos, relaciones e indices iguales al origen
+OK    PostgreSQL: sin filas huerfanas tras restaurar
+OK    MongoDB: documentos, indices y validador iguales al origen
+OK    la aplicacion responde (ready) sobre la base restaurada
+OK    autorizacion por rol con los usuarios restaurados
+OK    operador en ruta de operador -> 200
+OK    credenciales invalidas -> 401
+OK    ciudadano en ruta de operador -> 403
+OK    sin token -> 401
+Resultado: todas correctas
+OK    la API lista las entregas restauradas
+[60 s] aplicacion funcionando con los datos restaurados
+RTO medido: 60 s (objetivo 1800 s): CUMPLE
+RPO: antiguedad del respaldo usado: 2364 s (objetivo 86400 s); las diferencias contra el origen indican datos escritos despues del respaldo
+El namespace recuperacion se conserva para inspeccion; para eliminarlo: kubectl --context k3d-prod delete namespace recuperacion
+Resultado: 6 correctas, 0 fallidas
+----- fin: OK -----

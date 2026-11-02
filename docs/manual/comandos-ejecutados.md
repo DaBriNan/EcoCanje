@@ -44,3 +44,6 @@
 - 2026-11-02T12:15:00-06:00 [compose-local] `scripts/probar.sh dev tests/catalogo.sh` → OK (E03)
 - 2026-11-02T12:15:13-06:00 [compose-local] `scripts/estado-datos.sh k3d-dev` → OK (E04)
 - 2026-11-02T12:15:59-06:00 [compose-local] `tests/netpol.sh k3d-dev` → OK (E08)
+- 2026-11-02T12:29:49-06:00 [compose-local] `scripts/probar.sh dev tests/roles.sh` → OK (E09)
+- 2026-11-02T12:30:21-06:00 [compose-local] `tests/netpol-app.sh dev` → FALLA(1) (E08)
+- 2026-11-02T12:30:22-06:00 [compose-local] `pods_sanos k3d-dev` → FALLA(1) (DEP02)

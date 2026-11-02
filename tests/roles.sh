@@ -1,5 +1,5 @@
 #!/bin/bash
-U=localhost:8000/api; H='Accept: application/json'; J='Content-Type: application/json'
+U=${API_URL:-localhost:8000/api}; H='Accept: application/json'; J='Content-Type: application/json'
 PW=$(sed -n 's/^SEED_PASS[A-Z]*=//p' backend/.env); fail=0
 tok() { curl -s -H "$H" -H "$J" -d "{\"email\":\"$1\",\"password\":\"$PW\"}" $U/login | grep -o '"token":"[^"]*"' | cut -d'"' -f4; }
 chk() { [ "$2" = "$3" ] && echo "OK    $1 -> $2" || { echo "FALLA $1 -> $2 (esperado $3)"; fail=1; }; }

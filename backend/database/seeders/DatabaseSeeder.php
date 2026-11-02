@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        if (User::exists()) { $this->command?->info("semilla ya aplicada"); return; }
         $pass = env('SEED_PASSWORD') ?: throw new \RuntimeException('Define SEED_PASSWORD en .env');
         $hash = Hash::make($pass);
 

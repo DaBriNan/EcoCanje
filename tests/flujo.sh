@@ -1,6 +1,6 @@
 #!/bin/bash
-U=localhost:8000/api; H='Accept: application/json'; J='Content-Type: application/json'
-PW=$(sed -n 's/^SEED_PASS[A-Z]*=//p' backend/.env)
+U=${API_URL:-localhost:8000/api}; H='Accept: application/json'; J='Content-Type: application/json'
+PW=${SEED_PW:-$(sed -n 's/^SEED_PASS[A-Z]*=//p' backend/.env)}
 ok=0; fail=0
 chk() { if [ "$2" = "$3" ]; then echo "OK    $1 -> $2"; ok=$((ok+1)); else echo "FALLA $1 -> $2 (esperado $3)"; fail=$((fail+1)); fi; }
 req() { curl -s -o /tmp/r.json -w '%{http_code}' -H "$H" -H "$J" -H "Authorization: Bearer $TOK" -X "$1" "$U$2" ${3:+-d "$3"}; }

@@ -1,7 +1,7 @@
 ID: E02
 Descripción: HTTPS prod con certificado propio y distinto de dev
 Fecha: 2026-11-02T14:11:04-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: bash -c curl -fsS -o /dev/null -w "http=%{http_code} verify=%{ssl_verify_result}\n" https://prod.ecocanje.test:8445/api/health/live; echo | openssl s_client -connect prod.ecocanje.test:8445 -servername prod.ecocanje.test 2>/dev/null | openssl x509 -noout -subject -enddate

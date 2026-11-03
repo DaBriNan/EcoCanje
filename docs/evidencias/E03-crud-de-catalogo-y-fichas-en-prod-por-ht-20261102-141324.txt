@@ -1,7 +1,7 @@
 ID: E03
 Descripción: CRUD de catalogo y fichas en prod por HTTPS
 Fecha: 2026-11-02T14:13:24-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: scripts/probar.sh prod tests/catalogo.sh

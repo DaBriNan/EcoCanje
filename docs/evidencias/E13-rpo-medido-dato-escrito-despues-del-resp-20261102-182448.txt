@@ -1,7 +1,7 @@
 ID: E13
 Descripción: RPO medido: dato escrito despues del respaldo no sobrevive a la restauracion (prod)
 Fecha: 2026-11-02T18:24:48-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: 2ecc113
 Comando: tests/rpo.sh prod

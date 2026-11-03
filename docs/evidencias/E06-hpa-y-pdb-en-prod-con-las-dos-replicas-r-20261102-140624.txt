@@ -1,7 +1,7 @@
 ID: E06
 Descripción: HPA y PDB en prod con las dos replicas Ready
 Fecha: 2026-11-02T14:06:25-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: bash -c kubectl --context k3d-prod -n ecocanje get hpa,pdb; kubectl --context k3d-prod -n ecocanje top pods

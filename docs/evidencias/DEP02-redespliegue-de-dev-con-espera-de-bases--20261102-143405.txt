@@ -1,7 +1,7 @@
 ID: DEP02
 Descripción: Redespliegue de dev con espera de bases y respaldos
 Fecha: 2026-11-02T14:34:05-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: 656ccdc+cambios
 Comando: scripts/desplegar.sh dev

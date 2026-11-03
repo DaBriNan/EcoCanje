@@ -1,7 +1,7 @@
 ID: E01
 Descripción: Pods del sistema dev (verificado)
 Fecha: 2026-10-27T19:13:45-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: 1428352+cambios
 Comando: pods_sanos k3d-dev

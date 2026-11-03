@@ -25,7 +25,7 @@ ev() {
   slug=$(echo "$desc" | iconv -f utf-8 -t ascii//TRANSLIT 2>/dev/null | tr 'A-Z ' 'a-z-' | tr -cd 'a-z0-9-' | cut -c1-40)
   f="$EV_DIR/$id-$slug-$ts.txt"
   ctx=$(kubectl config current-context 2>/dev/null || echo "compose-local")
-  case "$1" in kd*) amb=dev;; kp*) amb=prod;; *) amb="${EV_AMBIENTE:-compose-local}";; esac
+  amb=$(ev_ambiente "$@")
   commit="$(git -C "$EV_RAIZ" rev-parse --short HEAD 2>/dev/null)"
   git -C "$EV_RAIZ" diff --quiet 2>/dev/null || commit="$commit+cambios"
   {
@@ -54,4 +54,15 @@ kp() { kubectl --context k3d-prod "$@"; }
 pods_sanos() {
   kubectl --context "$1" get pods -A --no-headers | awk '{split($3,a,"/"); if (($4=="Running" && a[1]!=a[2]) || ($4!="Running" && $4!="Completed")) {print; bad=1}} END{exit bad}' \
     && echo "todos los pods Running/Completed"
+}
+
+# Ambiente de una evidencia: EV_AMBIENTE manda; si no, se deduce de las palabras del comando
+ev_ambiente() {
+  [ -n "${EV_AMBIENTE:-}" ] && { echo "$EV_AMBIENTE"; return; }
+  local s=" $* "
+  case "$s" in
+    *k3d-prod*|*" kp "*|*" prod "*) echo prod;;
+    *k3d-dev*|*" kd "*|*" dev "*) echo dev;;
+    *) echo compose-local;;
+  esac
 }

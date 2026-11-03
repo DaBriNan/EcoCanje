@@ -1,7 +1,7 @@
 ID: E13
 Descripción: Exportacion cifrada de respaldos (prod, repeticion)
 Fecha: 2026-11-02T15:20:55-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: 656ccdc+cambios
 Comando: scripts/exportar-respaldos.sh prod

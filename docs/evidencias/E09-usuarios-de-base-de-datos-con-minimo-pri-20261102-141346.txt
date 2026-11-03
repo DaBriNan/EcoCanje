@@ -1,7 +1,7 @@
 ID: E09
 Descripción: Usuarios de base de datos con minimo privilegio (prod)
 Fecha: 2026-11-02T14:13:47-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: scripts/verificar-bd.sh k3d-prod

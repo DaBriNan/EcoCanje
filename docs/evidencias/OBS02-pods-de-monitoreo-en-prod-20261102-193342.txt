@@ -1,0 +1,20 @@
+ID: OBS02
+Descripción: Pods de monitoreo en prod
+Fecha: 2026-11-02T19:33:42-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0+cambios
+Comando: bash -c kubectl --context k3d-prod -n monitoring get pods; kubectl --context k3d-prod -n monitoring-nodos get pods
+Esperado: todos Running
+----- salida -----
+NAME                                     READY   STATUS    RESTARTS   AGE
+alertmanager-kps-alertmanager-0          2/2     Running   0          2m30s
+kps-grafana-9fdbd5b4f-qf425              3/3     Running   0          2m40s
+kps-kube-state-metrics-59d4d4677-b5sfq   1/1     Running   0          2m40s
+kps-operator-969cb86db-z4kz7             1/1     Running   0          2m40s
+prometheus-kps-prometheus-0              2/2     Running   0          2m29s
+NAME                  READY   STATUS    RESTARTS   AGE
+node-exporter-kn9hk   1/1     Running   0          8s
+node-exporter-kzgms   1/1     Running   0          8s
+node-exporter-nqnpv   1/1     Running   0          8s
+----- fin: OK -----

@@ -1,7 +1,7 @@
 ID: DEP02
 Descripción: Despliegue completo en dev
 Fecha: 2026-11-02T12:09:30-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: 978939b+cambios
 Comando: scripts/desplegar.sh dev

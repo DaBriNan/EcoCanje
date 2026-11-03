@@ -1,7 +1,7 @@
 ID: DEP03
 Descripción: Pods de la aplicacion en prod
 Fecha: 2026-11-02T13:11:26-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: pods_sanos k3d-prod

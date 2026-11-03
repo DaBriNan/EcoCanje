@@ -1,7 +1,7 @@
 ID: E02
 Descripción: Datos, credenciales y volumenes independientes entre dev y prod
 Fecha: 2026-11-02T14:32:28-06:00
-Ambiente: compose-local
+Ambiente: dev y prod
 Host: fedora
 Commit: 656ccdc+cambios
 Comando: tests/independencia.sh

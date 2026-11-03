@@ -1,7 +1,7 @@
 ID: E13
 Descripción: Respaldo manual de ambas bases (dev, repeticion con espera de la base)
 Fecha: 2026-11-02T15:20:42-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: 656ccdc+cambios
 Comando: scripts/respaldar.sh dev

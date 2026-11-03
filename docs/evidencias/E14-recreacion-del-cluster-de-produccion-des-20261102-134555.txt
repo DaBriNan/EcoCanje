@@ -1,7 +1,7 @@
 ID: E14
 Descripción: Recreacion del cluster de produccion desde cero
 Fecha: 2026-11-02T13:45:55-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: scripts/crear-clusters.sh prod

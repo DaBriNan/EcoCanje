@@ -1,7 +1,7 @@
 ID: E09
 Descripción: Usuarios de base de datos con minimo privilegio (dev, repeticion tras cerrar trust)
 Fecha: 2026-10-27T21:12:32-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: 1ab1eb0+cambios
 Comando: scripts/verificar-bd.sh k3d-dev

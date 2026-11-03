@@ -1,7 +1,7 @@
 ID: E08
 Descripción: Conexiones permitidas y denegadas por NetworkPolicy (prod)
 Fecha: 2026-11-02T14:13:59-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: tests/netpol.sh k3d-prod

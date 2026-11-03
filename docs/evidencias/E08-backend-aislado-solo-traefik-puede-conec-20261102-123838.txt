@@ -1,7 +1,7 @@
 ID: E08
 Descripción: Backend aislado: solo Traefik puede conectar (dev, repeticion con regla temporal)
 Fecha: 2026-11-02T12:38:38-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: ed81c6b+cambios
 Comando: tests/netpol-app.sh dev

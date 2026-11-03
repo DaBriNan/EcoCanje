@@ -1,7 +1,7 @@
 ID: DEP03
 Descripción: Imagen aprobada identica en todos los nodos de prod
 Fecha: 2026-11-02T13:46:38-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: scripts/verificar-imagen.sh prod

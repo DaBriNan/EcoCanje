@@ -1,7 +1,7 @@
 ID: E13
 Descripción: Restauracion de ambas bases en espacio aislado (prod)
 Fecha: 2026-11-02T15:58:53-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d53f3cc+cambios
 Comando: scripts/restaurar.sh prod

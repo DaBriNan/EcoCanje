@@ -1,7 +1,7 @@
 ID: E08
 Descripción: Conexiones permitidas y denegadas por NetworkPolicy (dev, repeticion con DNS completo)
 Fecha: 2026-11-02T11:50:35-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: d7ce12b+cambios
 Comando: tests/netpol.sh k3d-dev

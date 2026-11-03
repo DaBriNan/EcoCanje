@@ -1,7 +1,7 @@
 ID: E03
 Descripción: Flujo de negocio en dev por HTTPS
 Fecha: 2026-11-02T12:13:43-06:00
-Ambiente: compose-local
+Ambiente: dev
 Host: fedora
 Commit: 978939b+cambios
 Comando: scripts/probar.sh dev tests/flujo.sh

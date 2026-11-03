@@ -1,7 +1,7 @@
 ID: DEP03
 Descripción: Despliegue completo en prod
 Fecha: 2026-11-02T13:02:48-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: scripts/desplegar.sh prod

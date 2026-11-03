@@ -1,7 +1,7 @@
 ID: SEC03
 Descripción: Pod Security restricted en prod
 Fecha: 2026-11-02T14:16:34-06:00
-Ambiente: compose-local
+Ambiente: prod
 Host: fedora
 Commit: d3269e2+cambios
 Comando: bash -c kubectl --context k3d-prod get ns ecocanje --show-labels; out=$(kubectl --context k3d-prod -n ecocanje run priv --image=busybox --privileged --restart=Never 2>&1); echo "$out" | head -2; echo "$out" | grep -q "violates PodSecurity"

@@ -1,0 +1,31 @@
+ID: E13
+Descripción: RPO medido: dato escrito despues del respaldo no sobrevive a la restauracion (prod)
+Fecha: 2026-11-02T18:24:48-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 2ecc113
+Comando: tests/rpo.sh prod
+Esperado: marcador presente en origen y ausente en lo restaurado
+----- salida -----
+== 1. Respaldo fresco exportado
+respaldo completado a las 18:25:05
+== 2. Se escribe un dato DESPUES del respaldo
+OK    marcador creado en el origen -> 201
+== 3. Se simula el desastre: se restaura desde la copia (espera 61 s por el limite de intentos de login)
+FALLA PostgreSQL: conteos, relaciones e indices iguales al origen -> distintos (esperado iguales)
+    dif PG: 8c8
+    dif PG: < materiales=10
+    dif PG: ---
+    dif PG: > materiales=9
+    dif PG: 14c14
+    dif PG: < tarifas=11
+    dif PG: ---
+    dif PG: > tarifas=10
+RTO medido: 61 s (objetivo 1800 s): CUMPLE
+== 4. Comparacion
+OK    el marcador existe en el origen -> 1
+OK    el marcador NO esta en los datos restaurados (dato perdido) -> 0
+FALLA la aplicacion sobre los datos restaurados responde -> 0 (esperado 1)
+ventana de perdida: el dato se escribio 1 s despues del respaldo; con respaldos diarios la perdida maxima es 24 h (RPO objetivo 86400 s)
+Resultado: 3 correctas, 1 fallidas
+----- fin: FALLA(1) -----

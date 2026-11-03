@@ -68,7 +68,9 @@ diff <(pgq ecocanje) <(pgq "$NS") | sed 's/^/    dif PG: /'; diff <(mq ecocanje)
 
 # 4. la aplicacion sobre los datos restaurados
 K rollout status deployment/backend --timeout=300s >/dev/null || echo "FALLA: el backend no quedo Ready"
-K port-forward deploy/backend 18080:8080 >/dev/null 2>&1 & PF=$!; sleep 5
+pkill -f "port-forward deploy/backend 18080" 2>/dev/null; sleep 1
+K port-forward deploy/backend 18080:8080 >/dev/null 2>&1 & PF=$!
+for i in $(seq 1 30); do [ "$(curl -s -o /dev/null -w '%{http_code}' localhost:18080/api/health/ready)" = 200 ] && break; sleep 2; done
 export API_URL=localhost:18080/api SEED_PW=$(O get secret app-migracion -o jsonpath='{.data.seed-pass}' | base64 -d)
 chk "la aplicacion responde (ready) sobre la base restaurada" "$(curl -s -o /dev/null -w '%{http_code}' localhost:18080/api/health/ready)" 200
 chk "autorizacion por rol con los usuarios restaurados" "$("$(dirname "$0")/../tests/roles.sh" >/tmp/roles.out 2>&1 && echo ok || echo falla)" ok

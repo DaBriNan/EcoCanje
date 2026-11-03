@@ -91,3 +91,6 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-02T15:20:55-06:00 [compose-local] `scripts/respaldar.sh dev` → OK (E13)
 - 2026-11-02T15:21:00-06:00 [compose-local] `scripts/exportar-respaldos.sh prod` → OK (E13)
 - 2026-11-02T15:59:53-06:00 [compose-local] `scripts/restaurar.sh prod` → OK (E13)
+- 2026-11-02T18:27:09-06:00 [compose-local] `tests/rpo.sh prod` → FALLA(1) (E13)
+- 2026-11-02T18:34:14-06:00 [compose-local] `tests/rpo.sh prod` → OK (E13)
+- 2026-11-02T18:45:03-06:00 [compose-local] `tests/independencia.sh` → OK (E02)

@@ -38,7 +38,7 @@ class EntregaController extends Controller
             foreach ($d['detalles'] as $x) {
                 abort_unless(Material::whereKey($x['material_id'])->where('activo', true)->exists(), 422, 'Material inactivo');
                 $t = Tarifa::where('material_id', $x['material_id'])->where('vigente_desde', '<=', now())
-                    ->orderByDesc('vigente_desde')->first();
+                    ->orderByDesc('vigente_desde')->orderByDesc('id')->first(); // desempate: la última tarifa insertada
                 abort_unless($t, 422, 'Material sin tarifa vigente');
                 EntregaDetalle::create(['entrega_id' => $e->id, 'material_id' => $x['material_id'],
                     'tarifa_id' => $t->id, 'peso_kg' => $x['peso_kg']]);

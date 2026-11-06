@@ -1,0 +1,11 @@
+ID: E09
+Descripción: API sin token ni Accept JSON responde 401 en dev 0.1.3
+Fecha: 2026-11-06T13:06:12-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: c3f3272+cambios
+Comando: bash -c c=$(for i in $(seq 20); do curl -s -o /dev/null -w "%{http_code}\n" https://dev.ecocanje.test:8444/api/materiales; done | sort | uniq -c); echo "$c"; echo "$c" | grep -q "20 401"
+Esperado: 20 de 20 solicitudes con 401
+----- salida -----
+     20 401
+----- fin: OK -----

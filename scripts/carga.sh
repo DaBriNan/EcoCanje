@@ -5,6 +5,11 @@
 # Código de salida: 0 si se cumple el umbral (p95<1s, errores<1%) y, con HPA, si crece por encima de 2
 # réplicas y regresa a 2; 1 en otro caso.
 set -uo pipefail
+# Impide que el equipo se suspenda durante la prueba (una suspensión a mitad de la carga invalidó una corrida).
+if [ -z "${CARGA_INHIBIDA:-}" ] && command -v systemd-inhibit >/dev/null; then
+  export CARGA_INHIBIDA=1
+  exec systemd-inhibit --what=sleep:idle:handle-lid-switch --who=ecocanje --why="prueba de carga E06" "$0" "$@"
+fi
 ENV=${1:?prod}; ETQ=${2:?con-hpa|sin-hpa|humo}; CTX=k3d-$ENV
 K="kubectl --context $CTX -n ecocanje"
 RAIZ=$(cd "$(dirname "$0")/.." && pwd)

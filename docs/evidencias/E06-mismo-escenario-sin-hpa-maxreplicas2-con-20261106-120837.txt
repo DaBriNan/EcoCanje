@@ -1,0 +1,9 @@
+ID: E06
+Descripción: Mismo escenario sin HPA (maxReplicas=2) con 0.1.2
+Fecha: 2026-11-06T12:08:37-06:00
+Ambiente: prod
+Host: fedora
+Commit: d36699e+cambios
+Comando: scripts/carga.sh prod sin-hpa
+Esperado: comparacion: 2 replicas fijas bajo la misma carga
+----- salida -----

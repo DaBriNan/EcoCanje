@@ -1,0 +1,69 @@
+ID: DEP04
+Descripción: Despliegue de 0.1.2 en dev
+Fecha: 2026-11-05T20:38:57-06:00
+Ambiente: dev
+Host: fedora
+Commit: 5eb23b3+cambios
+Comando: scripts/desplegar.sh dev
+Esperado: migraciones OK y rollout completo
+----- salida -----
+tls-ecocanje aplicado en k3d-dev para dev.ecocanje.test
+job.batch "migraciones" deleted from ecocanje namespace
+namespace/ecocanje configured
+resourcequota/cuota-ecocanje unchanged
+serviceaccount/backend unchanged
+serviceaccount/mongo unchanged
+serviceaccount/postgres unchanged
+serviceaccount/respaldo unchanged
+configmap/app-config-4g2b258h9h created
+configmap/mongo-init unchanged
+configmap/nginx-conf-d47dfbcc27 unchanged
+configmap/postgres-init unchanged
+service/backend unchanged
+service/mongo unchanged
+service/postgres unchanged
+limitrange/limites-por-defecto unchanged
+persistentvolumeclaim/respaldos unchanged
+deployment.apps/backend configured
+deployment.apps/outbox-worker configured
+statefulset.apps/mongo configured
+statefulset.apps/postgres configured
+cronjob.batch/respaldo-mongo unchanged
+cronjob.batch/respaldo-postgres unchanged
+job.batch/migraciones created
+ingress.networking.k8s.io/ecocanje unchanged
+networkpolicy.networking.k8s.io/backend-ingreso unchanged
+networkpolicy.networking.k8s.io/clientes-mongo-egreso unchanged
+networkpolicy.networking.k8s.io/clientes-postgres-egreso unchanged
+networkpolicy.networking.k8s.io/denegar-todo unchanged
+networkpolicy.networking.k8s.io/mongo-ingreso unchanged
+networkpolicy.networking.k8s.io/permitir-dns unchanged
+networkpolicy.networking.k8s.io/postgres-ingreso unchanged
+
+   INFO  Nothing to migrate.  
+
+MongoDB listo
+
+   INFO  Seeding database.  
+
+semilla ya aplicada
+deployment "backend" successfully rolled out
+deployment "outbox-worker" successfully rolled out
+NAME                                   READY   STATUS        RESTARTS   AGE
+pod/backend-9b89bf6dc-drn66            2/2     Running       0          13s
+pod/migraciones-q2bbg                  0/1     Completed     0          12s
+pod/mongo-0                            1/1     Running       0          21h
+pod/outbox-worker-57f677b668-g779c     1/1     Running       0          12s
+pod/outbox-worker-69f7977477-brqfd     1/1     Terminating   0          21h
+pod/postgres-0                         1/1     Running       0          21h
+pod/respaldo-mongo-29897770-l6p88      0/1     Completed     0          3h6m
+pod/respaldo-postgres-29897760-68k97   0/1     Completed     0          3h6m
+
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+service/backend    ClusterIP   10.43.200.208   <none>        80/TCP      3d8h
+service/mongo      ClusterIP   10.43.32.120    <none>        27017/TCP   9d
+service/postgres   ClusterIP   10.43.65.14     <none>        5432/TCP    9d
+
+NAME                                 CLASS     HOSTS               ADDRESS      PORTS     AGE
+ingress.networking.k8s.io/ecocanje   traefik   dev.ecocanje.test   172.20.0.2   80, 443   3d8h
+----- fin: OK -----

@@ -5,7 +5,7 @@ resources: [../base, pdb.yaml, hpa.yaml]
 labels:
 - pairs: {ambiente: prod}
 images:
-- {name: ecocanje-backend, newTag: "0.1.1"}
+- {name: ecocanje-backend, newTag: "0.1.2"}
 configMapGenerator:
 - name: app-config
   behavior: merge

@@ -129,3 +129,22 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-05T20:03:18-06:00 [prod] `scripts/carga.sh prod con-hpa` → FALLA(1) (E06)
 - 2026-11-05T20:05:47-06:00 [local] ajuste de .git/hooks/pre-commit: se excluyen referencias no literales ($(cat archivo), __ENV. de k6, r.json('token')); verificado que sigue bloqueando DB_PASSWORD=<literal>
 - 2026-11-05T20:35:19-06:00 [compose-local] `bash -c docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --build-arg APP_VERSION=0.1.2 --label org.opencontainers.image.revision=7e707b3 --label org.opencontainers.image.version=0.1.2 -t ecocanje-backend:0.1.2 backend && docker run --rm --entrypoint sh ecocanje-backend:0.1.2 -c 'php -r "echo getenv(\"APP_VERSION\"), PHP_EOL;"; ls bootstrap/cache'` → FALLA(1) (SUP01)
+- 2026-11-05T20:38:32-06:00 [compose-local] `bash -c docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --build-arg APP_VERSION=0.1.2 --label org.opencontainers.image.revision=5eb23b3 --label org.opencontainers.image.version=0.1.2 -t ecocanje-backend:0.1.2 backend && docker run --rm --entrypoint sh ecocanje-backend:0.1.2 -c 'echo APP_VERSION=$APP_VERSION; ls bootstrap/cache; grep -c Pail bootstrap/cache/packages.php || true' && docker inspect -f 'revision={{index .Config.Labels "org.opencontainers.image.revision"}} id={{.Id}}' ecocanje-backend:0.1.2` → OK (SUP01)
+- 2026-11-05T20:38:57-06:00 [dev] `bash -c k3d image import ecocanje-backend:0.1.2 -c dev 2>&1 | tail -1 && scripts/verificar-imagen.sh dev 0.1.2` → OK (SUP02)
+- 2026-11-05T20:39:17-06:00 [dev] `scripts/desplegar.sh dev` → OK (DEP04)
+- 2026-11-05T20:39:26-06:00 [dev] `bash -c curl -s https://dev.ecocanje.test:8444/api/health/live; echo; kubectl --context k3d-dev -n ecocanje get pods -l "app in (backend,outbox-worker)" -o jsonpath="{range .items[*]}{.metadata.name} {.spec.containers[0].image}{\"\n\"}{end}"; curl -s https://dev.ecocanje.test:8444/api/health/live | grep -q "\"version\":\"0.1.2\""` → OK (E12)
+- 2026-11-05T20:39:28-06:00 [dev] `scripts/probar.sh dev tests/roles.sh` → OK (E03)
+- 2026-11-05T20:40:34-06:00 [dev] `scripts/probar.sh dev tests/flujo.sh` → OK (E03)
+- 2026-11-05T20:41:38-06:00 [dev] `scripts/probar.sh dev tests/catalogo.sh` → OK (E03)
+- 2026-11-05T20:41:51-06:00 [dev] `bash -c a=$(ses () 
+{ 
+    kubectl --context k3d-dev -n ecocanje exec postgres-0 -- sh -c 'PGPASSWORD=*** /run/secrets/pg/admin) psql -h 127.0.0.1 -U ecocanje_admin -d ecocanje -tAc "select sessions from pg_stat_database where datname=current_database()"'
+}; ses); for i in $(seq 30); do curl -s -o /dev/null https://dev.ecocanje.test:8444/api/health/ready; done; b=$(ses () 
+{ 
+    kubectl --context k3d-dev -n ecocanje exec postgres-0 -- sh -c 'PGPASSWORD=*** /run/secrets/pg/admin) psql -h 127.0.0.1 -U ecocanje_admin -d ecocanje -tAc "select sessions from pg_stat_database where datname=current_database()"'
+}; ses); echo "sesiones antes=$a despues=$b nuevas=$((b-a)) por 30 solicitudes"; [ $((b-a)) -le 10 ]` → OK (E12)
+- 2026-11-05T20:42:00-06:00 [dev] `scripts/verificar-imagen.sh dev 0.1.2 --registrar` → OK (SUP02)
+- 2026-11-05T20:47:26-06:00 [prod] `scripts/actualizacion.sh prod 0.1.2 0.1.1` → FALLA(1) (E12)
+- 2026-11-05T20:54:24-06:00 [prod] `scripts/actualizacion.sh prod 0.1.2 0.1.1` → OK (E12)
+- 2026-11-05T20:54:48-06:00 [prod] `scripts/probar.sh prod tests/flujo.sh` → OK (E12)
+- 2026-11-05T20:54:59-06:00 [local] .git/hooks/pre-commit: se excluye el valor ya ocultado por ev.sh (=***); sigue bloqueando literales

@@ -4,7 +4,7 @@ resources: [../base]
 labels:
 - pairs: {ambiente: dev}
 images:
-- {name: ecocanje-backend, newTag: "0.1.1"}
+- {name: ecocanje-backend, newTag: "0.1.2"}
 configMapGenerator:
 - name: app-config
   behavior: merge

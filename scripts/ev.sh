@@ -2,7 +2,7 @@
 # Uso:  source scripts/ev.sh
 #       ev E03 "Descripción" "Resultado esperado" comando arg1 arg2 ...
 # Ejecutar siempre desde ~/ecocanje. EV_AMBIENTE="prod" fuerza el nombre del ambiente.
-unalias dc 2>/dev/null
+unalias dc 2>/dev/null || true
 EV_RAIZ="${EV_RAIZ:-$HOME/ecocanje}"
 EV_DIR="$EV_RAIZ/docs/evidencias"
 

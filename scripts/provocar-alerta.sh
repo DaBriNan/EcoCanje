@@ -77,13 +77,18 @@ spec:
       containers:
       - name: pg-dump
         image: $IMG
-        command: ["/bin/sh", "-ec", "pg_dump -w -h postgres -U ecocanje_backup -d ecocanje -Fc -f /tmp/x.dump"]
+        command: ["/bin/sh", "-ec"]
+        args:
+        - |
+          n=0; until pg_isready -q -h postgres -p 5432; do n=\$((n+1)); [ \$n -gt 30 ] && { echo "postgres no responde"; exit 1; }; sleep 2; done
+          echo "postgres acepta conexiones; pg_dump sin credencial:"
+          pg_dump -w -h postgres -U ecocanje_backup -d ecocanje -Fc -f /tmp/x.dump
         securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
         resources: {requests: {cpu: 50m, memory: 64Mi}, limits: {cpu: 200m, memory: 128Mi}}
         volumeMounts: [{name: tmp, mountPath: /tmp}]
       volumes: [{name: tmp, emptyDir: {sizeLimit: 64Mi}}]
 EOF
-  $K -n ecocanje wait --for=condition=Failed job/$J --timeout=120s
+  $K -n ecocanje wait --for=condition=Failed job/$J --timeout=180s
   echo "$(t) log del Job fallido:"; $K -n ecocanje logs job/$J --tail=5
   esperar $A pending prom; esperar $A firing prom && esperar $A firing am; R1=$?
   echo "$(t) ACCIÓN: eliminar el Job fallido y repetir el respaldo desde el CronJob"

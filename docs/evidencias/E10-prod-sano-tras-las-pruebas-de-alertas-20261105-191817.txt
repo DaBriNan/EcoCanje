@@ -1,0 +1,12 @@
+ID: E10
+Descripción: Prod sano tras las pruebas de alertas
+Fecha: 2026-11-05T19:18:17-06:00
+Ambiente: prod
+Host: fedora
+Commit: 95fd9c6+cambios
+Comando: bash -c set -e; source scripts/ev.sh; pods_sanos k3d-prod; kubectl --context k3d-prod -n ecocanje get deploy backend; scripts/prom.sh prod "ALERTS{alertstate=\"firing\",namespace=\"ecocanje\",alertname!=\"InfoInhibitor\"}" && exit 1 || [ $? -eq 2 ]
+Esperado: pods sanos, backend 2/2 y sin alertas de ecocanje en firing
+----- salida -----
+----- fin: FALLA(1) -----
+
+NOTA: FALLA(1) sin salida porque set -e abortó al cargar ev.sh (unalias dc devolvia 1). Corregido en scripts/ev.sh; repetida a continuacion.

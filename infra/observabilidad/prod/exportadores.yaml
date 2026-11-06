@@ -27,7 +27,7 @@ spec:
         - {name: DATA_SOURCE_PASS_FILE, value: /run/secrets/pg/monitor}
         ports: [{name: metricas, containerPort: 9187}]
         securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
-        resources: {requests: {cpu: 10m, memory: 24Mi}, limits: {cpu: 100m, memory: 96Mi}}
+        resources: {requests: {cpu: 10m, memory: 24Mi}, limits: {cpu: 250m, memory: 96Mi}}
         readinessProbe: {tcpSocket: {port: metricas}, periodSeconds: 10}
         livenessProbe: {tcpSocket: {port: metricas}, periodSeconds: 20, failureThreshold: 6}
         volumeMounts: [{name: credenciales, mountPath: /run/secrets/pg, readOnly: true}]
@@ -58,7 +58,7 @@ spec:
           valueFrom: {secretKeyRef: {name: mongo-exportador, key: uri}}
         ports: [{name: metricas, containerPort: 9216}]
         securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
-        resources: {requests: {cpu: 10m, memory: 32Mi}, limits: {cpu: 100m, memory: 128Mi}}
+        resources: {requests: {cpu: 10m, memory: 32Mi}, limits: {cpu: 250m, memory: 128Mi}}
         readinessProbe: {tcpSocket: {port: metricas}, periodSeconds: 10}
         livenessProbe: {tcpSocket: {port: metricas}, periodSeconds: 20, failureThreshold: 6}
 ---

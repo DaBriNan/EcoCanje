@@ -1,0 +1,85 @@
+ID: E06
+Descripción: HPA crece y regresa bajo carga k6 (con HPA)
+Fecha: 2026-11-05T19:33:50-06:00
+Ambiente: prod
+Host: fedora
+Commit: 5b1c3bf
+Comando: scripts/carga.sh prod con-hpa
+Esperado: replicas >2 durante la carga y regreso a 2; p95<1s y errores<1% reportados
+----- salida -----
+19:33:50 1. API de métricas (requisito antes de probar)
+NAME                      CPU(cores)   MEMORY(bytes)   
+backend-c55cdbc77-2k44q   16m          44Mi            
+backend-c55cdbc77-999dr   35m          36Mi            
+backend-c55cdbc77-gq9bd   18m          44Mi            
+backend-c55cdbc77-sm8jk   18m          35Mi            
+backend-c55cdbc77-xfnsp   13m          43Mi            
+backend-c55cdbc77-xqvxs   20m          46Mi            
+HPA min=2 max=6 objetivo=60% actual=15%
+requests por pod (base del % del HPA): php=100m nginx=20m 
+19:33:50 1b. Esperar a que el backend esté en minReplicas=2 antes de la línea base (máx 900 s)
+19:38:57 en 2 réplicas tras 307 s
+19:38:57 2. Línea base sin carga: 300 s
+19:43:57 3. Carga con k6 (grafana/k6:2.2.0@sha256:9bd01d6941fca969cb61bb57d2da5ee9b385fe2aa8881df3798c196564d6ace6), generador limitado a 1.5 CPU en el host fedora
+
+  █ THRESHOLDS 
+
+    http_req_duration{scenario:consulta}
+    ✗ 'p(95)<1000' p(95)=6.22s
+
+    http_req_failed{scenario:consulta}
+    ✓ 'rate<0.01' rate=0.08%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 22892  29.243972/s
+    checks_succeeded...: 99.91% 22872 out of 22892
+    checks_failed......: 0.08%  20 out of 22892
+
+    ✗ status 200
+      ↳  99% — ✓ 22872 / ✗ 20
+
+    HTTP
+    http_req_duration..............: avg=2.66s med=2.28s p(90)=5.3s p(95)=6.22s p(99)=7.38s max=9.61s 
+      { expected_response:true }...: avg=2.67s med=2.28s p(90)=5.3s p(95)=6.22s p(99)=7.38s max=9.61s 
+      { scenario:consulta }........: avg=2.66s med=2.28s p(90)=5.3s p(95)=6.22s p(99)=7.38s max=9.61s 
+    http_req_failed................: 0.08%  20 out of 22893
+      { scenario:consulta }........: 0.08%  20 out of 22892
+    http_reqs......................: 22893  29.24525/s
+
+    EXECUTION
+    iteration_duration.............: avg=4.32s med=4.2s  p(90)=7s   p(95)=7.6s  p(99)=8.53s max=10.11s
+    iterations.....................: 5723   7.310993/s
+    vus............................: 1      min=0           max=50
+    vus_max........................: 50     min=50          max=50
+
+    NETWORK
+    data_received..................: 14 MB  17 kB/s
+    data_sent......................: 1.3 MB 1.6 kB/s
+
+
+
+time="2026-11-06T01:57:01Z" level=error msg="thresholds on metrics 'http_req_duration{scenario:consulta}' have been crossed"
+19:57:01 4. Sin carga: esperar regreso a minReplicas (máx 600 s; estabilización declarada 120 s)
+20:02:50 réplicas tras 349 s sin carga: 2
+20:03:10 5. Exportar series de Prometheus (1793929137 a 1793930570)
+Resumen por fase (Prometheus, paso 15 s):
+  base          réplicas max=2  rps prom=0  p95 max=nan s  errores max=nan  cpu backend max=0.0442 cores  pg max=2  mongo max=12
+  carga         réplicas max=6  rps prom=28.1  p95 max=nan s  errores max=nan  cpu backend max=1.85 cores  pg max=30  mongo max=39
+  enfriamiento  réplicas max=6  rps prom=1.57  p95 max=4.58 s  errores max=0  cpu backend max=1.47 cores  pg max=10  mongo max=36
+20:03:11 6. Resultado
+k6 (solo escenario, sin login de setup): solicitudes totales=22893 (29.2/s)  p95=6221 ms  p99=7384 ms  max=9617 ms  errores=0.09%
+umbral p95<1000 ms: NO CUMPLE | umbral errores<1%: CUMPLE
+réplicas: máximo observado=6, final=2 (muestreo kubectl en replicas.csv)
+archivos: docs/evidencias/carga/20261105-1933-con-hpa
+k6 terminó con 99 (umbral no cumplido o error)
+----- fin: FALLA(1) -----
+
+DIAGNOSTICO (2026-11-05 20:10):
+- HPA: crecio de 2 a 6 replicas y regreso a 2 en 349 s sin carga. Errores 0.09% (cumple). p95 6.22 s (NO cumple p95<1 s).
+- Los "p95 max=nan" del resumen por fase son un defecto del resumen (max() con NaN en Python), no de las series; corregido en scripts/carga.sh. Las series completas estan en carga/20261105-1933-con-hpa/series-prometheus.csv.
+- Cuello de botella: PostgreSQL al limite de CPU (0.96 de 1 core, 98% de periodos con throttling) con solo 7 conexiones activas en promedio.
+  php uso 1.73 cores con 24% de throttling; nodos al 58%. Mas replicas de backend no suben el rendimiento (~29 rps) porque esperan a la base.
+- Causa: una conexion nueva por solicitud (pg_stat_database: 26482 sesiones para ~23000 solicitudes) con autenticacion scram-sha-256,
+  y ~18 transacciones por solicitud (pico 522 commits/s a 29 rps).

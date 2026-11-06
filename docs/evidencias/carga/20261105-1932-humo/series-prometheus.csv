@@ -1,0 +1,3 @@
+epoch,fase,hpa_deseadas,hpa_actuales,deploy_ready,cpu_backend_cores,mem_backend_bytes,rps,errores_ratio,p95_s,pg_conexiones,mongo_conexiones,cpu_nodos_pct
+1793928747,carga,4,4,4,0.1203,1.851e+08,0,nan,nan,2,12,41.95
+1793928762,carga,4,4,4,0.1054,1.851e+08,0,nan,nan,2,12,42.05

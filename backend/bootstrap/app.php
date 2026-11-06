@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: "*");
         $middleware->prepend(\App\Http\Middleware\RequestId::class);
+        // Sin página de login: un invitado de la API recibe 401, no una redirección a una ruta inexistente.
+        $middleware->redirectGuestsTo(fn ($request) => $request->is('api/*') ? null : '/');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // La API siempre responde JSON: sin esto, una solicitud sin token y sin "Accept: application/json"

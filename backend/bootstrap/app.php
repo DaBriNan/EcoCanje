@@ -16,5 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->prepend(\App\Http\Middleware\RequestId::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // La API siempre responde JSON: sin esto, una solicitud sin token y sin "Accept: application/json"
+        // intentaba redirigir a una ruta de login inexistente y respondía 500 en lugar de 401.
+        $exceptions->shouldRenderJsonWhen(fn ($request) => $request->is('api/*'));
     })->create();

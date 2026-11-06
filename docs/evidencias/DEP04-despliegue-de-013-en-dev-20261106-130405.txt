@@ -1,0 +1,11 @@
+ID: DEP04
+Descripción: Despliegue de 0.1.3 en dev
+Fecha: 2026-11-06T13:04:05-06:00
+Ambiente: dev
+Host: fedora
+Commit: 62df988+cambios
+Comando: bash -c scripts/desplegar.sh dev >/dev/null && echo ok
+Esperado: migraciones OK y rollout completo
+----- salida -----
+ok
+----- fin: OK -----

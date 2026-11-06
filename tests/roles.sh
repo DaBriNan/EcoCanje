@@ -8,5 +8,6 @@ chk "operador en ruta de operador"  "$(code -H "Authorization: Bearer $(tok oper
 chk "credenciales invalidas"        "$(code -H "$J" -d '{"email":"x@x.com","password":"mal"}' $U/login)" 401
 chk "ciudadano en ruta de operador" "$(code -H "Authorization: Bearer $(tok ciudadano1@ecocanje.test)" $U/operador/ping)" 403
 chk "sin token"                     "$(code $U/operador/ping)" 401
+chk "sin token ni Accept JSON (navegador)" "$(curl -s -o /dev/null -w %{http_code} $U/materiales)" 401
 echo "Resultado: $([ $fail -eq 0 ] && echo todas correctas || echo hay fallos)"
 exit $fail

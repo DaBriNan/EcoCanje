@@ -1,0 +1,16 @@
+ID: E12
+Descripción: Version 0.1.3 y correlacion en dev
+Fecha: 2026-11-06T13:04:19-06:00
+Ambiente: dev
+Host: fedora
+Commit: 62df988+cambios
+Comando: bash -c set -e; U=https://dev.ecocanje.test:8444/api; curl -s $U/health/live; echo; RID=prueba-correlacion-$(date +%s); H=$(curl -s -D - -o /dev/null -H "X-Request-Id: $RID" $U/materiales | grep -i "^x-request-id" | tr -d "\r"); echo "respuesta: $H"; echo "$H" | grep -q "$RID"; GEN=$(curl -s -D - -o /dev/null $U/health/live | grep -i "^x-request-id" | tr -d "\r"); echo "sin cabecera, nginx genera: $GEN"; sleep 1; kubectl --context k3d-dev -n ecocanje logs deploy/backend -c nginx --since=1m | grep "rid=$RID"; curl -s $U/health/live | grep -q "\"version\":\"0.1.3\""
+Esperado: version 0.1.3; X-Request-Id propagado y en logs de nginx y Laravel
+----- salida -----
+{"status":"ok","version":"0.1.3"}
+respuesta: x-request-id: prueba-correlacion-1793991859
+sin cabecera, nginx genera: x-request-id: b3d94dffcd73efd4bc794aa074f15179
+10.42.0.85 [2026-11-06T19:04:19+00:00] "GET /api/materiales HTTP/1.1" 500 6678 0.043 rid=prueba-correlacion-1793991859
+----- fin: OK -----
+
+NOTA: la verificacion no revisaba el codigo de estado: /api/materiales sin token ni Accept JSON devolvio 500 ("Route [login] not defined", encontrado en el log por su request_id). Defecto previo, tambien en 0.1.2 de prod. Corregido en bootstrap/app.php (shouldRenderJsonWhen api/*) antes de aprobar 0.1.3; caso agregado a tests/roles.sh.

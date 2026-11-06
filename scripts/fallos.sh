@@ -24,7 +24,7 @@ mongo_cuenta() { $K exec mongo-0 -- sh -c "mongosh --quiet --host 127.0.0.1 -u e
 
 case "$CASO" in
 pod)
-  echo "$(t) réplicas: $($K get pods -l app=backend -o wide --no-headers | awk '{print $1"@"$7}' | tr '\n' ' ')"
+  echo "$(t) réplicas: $($K get pods -l app=backend -o jsonpath='{range .items[*]}{.metadata.name}@{.spec.nodeName} {end}')"
   V=$($K get pods -l app=backend -o jsonpath='{.items[0].metadata.name}')
   sonda_ini; sleep 5
   echo "$(t) FALLA: borrar $V"; T=$(date +%s.%N)
@@ -32,7 +32,7 @@ pod)
   until [ "$(listos)" = "$($K get deploy backend -o jsonpath='{.spec.replicas}')" ] && ! $K get pod "$V" >/dev/null 2>&1; do sleep 0.5; done
   echo "$(t) réplicas listas de nuevo en $(echo "$(date +%s.%N) - $T" | bc | cut -c1-5) s"
   sleep 5; sonda_fin
-  echo "réplicas ahora: $($K get pods -l app=backend -o wide --no-headers | awk '{print $1"@"$7}' | tr '\n' ' ')"
+  echo "réplicas ahora: $($K get pods -l app=backend -o jsonpath='{range .items[*]}{.metadata.name}@{.spec.nodeName} {end}')"
   ;;
 drain)
   N=${NODO:-$($K get pod -l app=backend -o jsonpath='{.items[0].spec.nodeName}')}
@@ -42,10 +42,14 @@ drain)
   echo "$(t) MANTENIMIENTO: drain $N (respeta PDB; sin --force ni --disable-eviction)"; T=$(date +%s)
   kubectl --context $CTX drain "$N" --ignore-daemonsets --delete-emptydir-data --timeout=300s 2>&1 | grep -v -e "^WARNING" | tail -15 || rc=1
   echo "$(t) drain terminó en $(( $(date +%s) - T )) s; réplicas listas: $(listos)"
-  $K get pods -o wide --no-headers | awk '{print "  "$1, $3, $7}'
+  $K get pods -o jsonpath='{range .items[*]}{"  "}{.metadata.name} {.status.phase} {.spec.nodeName}{"\n"}{end}'
   echo "capacidad del otro nodo:"; kubectl --context $CTX top nodes
   sleep 20
   echo "$(t) uncordon $N"; kubectl --context $CTX uncordon "$N"
+  echo "$(t) reequilibrar: el uncordon no mueve pods; rollout restart de backend y frontend"
+  $K rollout restart deploy/backend deploy/frontend >/dev/null
+  $K rollout status deploy/backend --timeout=180s >/dev/null && $K rollout status deploy/frontend --timeout=180s >/dev/null
+  echo "reparto final: $($K get pods -l 'app in (backend,frontend)' --field-selector=status.phase=Running -o jsonpath='{range .items[*]}{.metadata.labels.app}@{.spec.nodeName} {end}')"
   sleep 10; sonda_fin
   kubectl --context $CTX get nodes
   ;;

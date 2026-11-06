@@ -22,14 +22,14 @@ patches:
     - op: add
       path: /spec/template/spec/topologySpreadConstraints
       value:
-      - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: DoNotSchedule, labelSelector: {matchLabels: {app: backend}}}
+      - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: DoNotSchedule, nodeTaintsPolicy: Honor, matchLabelKeys: [pod-template-hash], labelSelector: {matchLabels: {app: backend}}}
 - target: {kind: Deployment, name: frontend}
   patch: |-
     - {op: replace, path: /spec/replicas, value: 2}
     - op: add
       path: /spec/template/spec/topologySpreadConstraints
       value:
-      - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: DoNotSchedule, labelSelector: {matchLabels: {app: frontend}}}
+      - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: DoNotSchedule, nodeTaintsPolicy: Honor, matchLabelKeys: [pod-template-hash], labelSelector: {matchLabels: {app: frontend}}}
 - target: {kind: Deployment}
   patch: |-
     - op: add

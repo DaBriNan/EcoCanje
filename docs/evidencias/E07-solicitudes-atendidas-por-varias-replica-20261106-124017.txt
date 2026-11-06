@@ -1,0 +1,15 @@
+ID: E07
+Descripción: Solicitudes atendidas por varias replicas del backend en prod
+Fecha: 2026-11-06T12:40:17-06:00
+Ambiente: prod
+Host: fedora
+Commit: acaea13+cambios
+Comando: scripts/probar.sh prod tests/balanceo.sh 60
+Esperado: las 60 solicitudes aparecen en logs y al menos 2 replicas atienden
+----- salida -----
+réplicas: backend-6dfcc5ddf4-dt8kr@k3d-prod-agent-1 backend-6dfcc5ddf4-f2gr5@k3d-prod-agent-0 
+enviadas=60 respuestas_200=60 marca=e07-1793990417
+  backend-6dfcc5ddf4-dt8kr (k3d-prod-agent-1): 30
+  backend-6dfcc5ddf4-f2gr5 (k3d-prod-agent-0): 30
+atendidas en logs=60, réplicas con tráfico=2
+----- fin: OK -----

@@ -160,3 +160,6 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T12:36:15-06:00 [prod] `scripts/probar.sh prod tests/interfaz/correr.sh` → OK (E03)
 - 2026-11-06T12:36:37-06:00 [local] .git/hooks/pre-commit: se excluyen cadena vacia ('' o "") y referencias obj.password; sigue bloqueando literales
 - 2026-11-06T12:37:13-06:00 [local] gancho pre-commit: exclusiones en .git/hooks/excluir-secretos.txt (amarradas a la clave), bloquea si falta el archivo; copia versionada en docs/manual/gancho-*
+- 2026-11-06T12:39:04-06:00 [dev] `tests/netpol-frontend.sh dev` → OK (E08)
+- 2026-11-06T12:40:12-06:00 [prod] `tests/netpol-frontend.sh prod` → OK (E08)
+- 2026-11-06T12:40:21-06:00 [prod] `scripts/probar.sh prod tests/balanceo.sh 60` → OK (E07)

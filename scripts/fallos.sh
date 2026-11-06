@@ -15,7 +15,7 @@ sonda_fin() {
   awk '$2!="200"{c[$2]++} END{for (k in c) printf "  código %s: %d\n", k, c[k]}' "$SONDA"
 }
 trap 'kill ${SPID:-} 2>/dev/null; rm -f "$SONDA"' EXIT
-reinicios() { $K get pods -l app=backend -o jsonpath='{range .items[*]}{.metadata.name}={.status.containerStatuses[*].restartCount} {end}'; }
+reinicios() { $K get pods -l 'app in (backend,outbox-worker)' -o jsonpath='{range .items[*]}{.metadata.name}={.status.containerStatuses[*].restartCount} {end}'; }
 listos() { $K get deploy backend -o jsonpath='{.status.readyReplicas}'; }
 token() { local pw; pw=$($K get secret app-migracion -o jsonpath='{.data.seed-pass}' | base64 -d)
   curl -sk -H 'Content-Type: application/json' -H 'Accept: application/json' -d "{\"email\":\"operador@ecocanje.test\",\"password\":\"$pw\"}" $URL/login | python3 -c 'import sys,json; print(json.load(sys.stdin)["token"])'; }

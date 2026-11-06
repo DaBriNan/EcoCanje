@@ -16,7 +16,7 @@ imagenes() { $K get pods -l 'app in (backend,outbox-worker)' --field-selector=st
 esperar_rollout() { $K rollout status deploy/backend --timeout=300s >/dev/null && $K rollout status deploy/outbox-worker --timeout=300s >/dev/null; }
 verificar() {  # verificar <versión esperada>
   local v; v=$(version); echo "$(t) versión en /health/live: $v | pods: $(imagenes)"
-  if [ "$1" = "$ANT" ]; then [ "$v" = "sin campo version" ] || { echo "  esperado $ANT (sin campo version)"; rc=1; }
+  if [ "$1" = 0.1.1 ]; then [ "$v" = "sin campo version" ] || { echo "  esperado 0.1.1 (sin campo version)"; rc=1; }
   else [ "$v" = "$1" ] || { echo "  esperado $1"; rc=1; }; fi
   imagenes | tr ' ' '\n' | grep -v "^$" | grep -vq ":$1$" && { echo "  hay pods con otra imagen"; rc=1; }
   local o r; o=$(scripts/probar.sh "$ENV" tests/roles.sh 2>&1); r=$?

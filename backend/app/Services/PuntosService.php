@@ -42,6 +42,8 @@ class PuntosService
 
     public static function evento(string $tipo, array $payload): void
     {
-        Outbox::create(['tipo' => $tipo, 'payload' => $payload + ['ocurrido_en' => now()->toIso8601String()]]);
+        $rid = app()->bound('request_id') ? app('request_id') : null;
+        $o = Outbox::create(['tipo' => $tipo, 'payload' => $payload + ['ocurrido_en' => now()->toIso8601String(), 'request_id' => $rid]]);
+        \Illuminate\Support\Facades\Log::info('evento registrado', ['outbox_id' => $o->id, 'tipo' => $tipo]);
     }
 }

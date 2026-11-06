@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Outbox;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PublicarOutbox extends Command
 {
@@ -13,11 +14,26 @@ class PublicarOutbox extends Command
 
     public function handle(): int
     {
+        $espera = 2;
+        $error = null;
         do {
-            [$ok, $error] = $this->lote();
-            $this->info("publicados=$ok" . ($error ? " error=$error" : ''));
+            try {
+                [$ok, $error] = $this->lote();
+                $this->info("publicados=$ok" . ($error ? " error=$error" : ''));
+                $espera = 2;
+            } catch (\Throwable $e) {
+                if (!$this->option('loop')) {
+                    throw $e;
+                }
+                // Con --loop una caída de PostgreSQL no termina el proceso (evita CrashLoopBackOff y su espera):
+                // se descarta la conexión persistente rota y se reintenta con espera creciente.
+                $error = class_basename($e);
+                Log::warning('outbox: base no disponible, se reintenta', ['error' => $error, 'espera_s' => $espera]);
+                DB::disconnect();
+                $espera = min($espera * 2, 30);
+            }
             if ($this->option('loop')) {
-                sleep(2);
+                sleep($espera);
             }
         } while ($this->option('loop'));
         return $error ? self::FAILURE : self::SUCCESS;
@@ -41,6 +57,8 @@ class PublicarOutbox extends Command
                         'payload' => $o->payload,
                     ]], ['upsert' => true]);
                     $o->update(['publicado_en' => now()]);
+                    Log::info('evento publicado en MongoDB', ['outbox_id' => $o->id, 'tipo' => $o->tipo,
+                        'request_id' => $o->payload['request_id'] ?? null]);
                     $ok++;
                 } catch (\Throwable $e) {
                     $o->increment('intentos');

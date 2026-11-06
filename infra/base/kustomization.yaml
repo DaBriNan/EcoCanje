@@ -10,6 +10,7 @@ configMapGenerator:
   - DB_PERSISTENT=true
   - APP_TIMEZONE=America/Mexico_City
   - LOG_CHANNEL=stderr
+  - LOG_STDERR_FORMATTER=Monolog\Formatter\JsonFormatter
   - LOG_LEVEL=info
   - CACHE_STORE=database
   - SESSION_DRIVER=array

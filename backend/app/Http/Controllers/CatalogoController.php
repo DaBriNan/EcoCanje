@@ -12,11 +12,14 @@ class CatalogoController extends Controller
 {
     public function materiales()
     {
+        // Una sola consulta para la tarifa vigente de cada material (antes una consulta por material, N+1)
+        $tarifas = Tarifa::query()->selectRaw('distinct on (material_id) material_id, puntos_por_kg')
+            ->where('vigente_desde', '<=', now())->orderBy('material_id')->orderByDesc('vigente_desde')
+            ->pluck('puntos_por_kg', 'material_id');
         return Material::where('activo', true)->orderBy('nombre')->get()->map(fn ($m) => [
             'id' => $m->id,
             'nombre' => $m->nombre,
-            'puntos_por_kg' => Tarifa::where('material_id', $m->id)->where('vigente_desde', '<=', now())
-                ->orderByDesc('vigente_desde')->value('puntos_por_kg'),
+            'puntos_por_kg' => $tarifas[$m->id] ?? null,
         ]);
     }
 

@@ -1,0 +1,27 @@
+ID: OBS06
+Descripción: Logs centralizados en Loki por namespace y app
+Fecha: 2026-11-06T13:01:58-06:00
+Ambiente: prod
+Host: fedora
+Commit: 745fac0+cambios
+Comando: scripts/loki.sh prod sum by (namespace, app) (count_over_time({cluster="prod"}[10m]))
+Esperado: lineas de backend, frontend, bases, worker y monitoreo en los ultimos 10 min
+----- salida -----
+app=alloy, namespace=monitoring -> 213
+app=backend, namespace=ecocanje -> 720
+app=exportador-mongo, namespace=ecocanje -> 1
+app=exportador-postgres, namespace=ecocanje -> 2
+app=frontend, namespace=ecocanje -> 22
+app=grafana, namespace=monitoring -> 94
+app=kube-dns, namespace=kube-system -> 38
+app=local-path-provisioner, namespace=kube-system -> 7
+app=loki, namespace=monitoring -> 221
+app=migraciones, namespace=ecocanje -> 8
+app=mongo, namespace=ecocanje -> 510
+app=outbox-worker, namespace=ecocanje -> 300
+app=postgres, namespace=ecocanje -> 2
+app=prometheus, namespace=monitoring -> 6
+namespace=ecocanje -> 3
+namespace=kube-system -> 39
+namespace=monitoring -> 47
+----- fin: OK -----

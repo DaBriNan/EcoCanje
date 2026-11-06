@@ -171,3 +171,7 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T12:44:40-06:00 [prod] `bash -c K="kubectl --context k3d-prod -n ecocanje"; ( while :; do curl -s -o /dev/null -m 2 -w "%{http_code}\n" https://prod.ecocanje.test:8445/api/health/ready; sleep 0.2; done ) > /tmp/sonda-$$ & S=$!; $K rollout restart deploy/backend deploy/frontend >/dev/null; $K rollout status deploy/backend --timeout=180s >/dev/null && $K rollout status deploy/frontend --timeout=180s >/dev/null; sleep 3; kill $S; echo "sonda: $(wc -l < /tmp/sonda-$$) solicitudes, $(grep -vc "^200$" /tmp/sonda-$$) sin 200"; rm -f /tmp/sonda-$$; $K get pods -l "app in (backend,frontend)" --field-selector=status.phase=Running -o jsonpath="{range .items[*]}{.metadata.deletionTimestamp}|{.metadata.labels.app} {.spec.nodeName}{\"\n\"}{end}" | grep "^|" | cut -c2- | sort | tee /dev/stderr | sort -u | wc -l | grep -qx 4` → OK (E11)
 - 2026-11-06T12:45:35-06:00 [prod] `scripts/fallos.sh prod mongo` → OK (E11)
 - 2026-11-06T12:47:09-06:00 [prod] `scripts/fallos.sh prod postgres` → OK (E11)
+- 2026-11-06T12:58:17-06:00 [prod] `scripts/logs.sh prod` → FALLA(1) (OBS06)
+- 2026-11-06T12:59:53-06:00 [prod] `scripts/logs.sh prod` → OK (OBS06)
+- 2026-11-06T13:02:00-06:00 [prod] `scripts/loki.sh prod sum by (namespace, app) (count_over_time({cluster="prod"}[10m]))` → OK (OBS06)
+- 2026-11-06T13:02:01-06:00 [prod] `scripts/loki.sh prod {job="loki.source.kubernetes_events", namespace="ecocanje"} 2h 3` → OK (OBS06)

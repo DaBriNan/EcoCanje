@@ -1,0 +1,71 @@
+# Alloy como Deployment: lee los logs por la API de Kubernetes (sin hostPath ni privilegios) y los envía a Loki.
+controller:
+  type: deployment
+  replicas: 1
+  affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+  volumes:
+    extra: [{name: datos, emptyDir: {sizeLimit: 256Mi}}]
+global:
+  podSecurityContext: {runAsNonRoot: true, runAsUser: 473, runAsGroup: 473, fsGroup: 473, seccompProfile: {type: RuntimeDefault}}
+image: {tag: v1.21.1, digest: "sha256:4039c971193053a84e53dd9ed3e7d4561c069256b024631cd3498a353ed7ece8"}
+crds: {create: false}
+serviceMonitor: {enabled: true}
+alloy:
+  storagePath: /var/lib/alloy
+  mounts:
+    extra: [{name: datos, mountPath: /var/lib/alloy}]
+  securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+  resources: {requests: {cpu: 20m, memory: 96Mi}, limits: {cpu: 300m, memory: 256Mi}}
+  extraArgs: ["--disable-reporting"]   # sin envío de datos a terceros
+  configMap:
+    content: |
+      discovery.kubernetes "pods" {
+        role = "pod"
+        namespaces {
+          names = ["ecocanje", "monitoring", "kube-system"]
+        }
+      }
+      discovery.relabel "pods" {
+        targets = discovery.kubernetes.pods.targets
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          target_label  = "namespace"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          target_label  = "pod"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          target_label  = "container"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app", "__meta_kubernetes_pod_label_app_kubernetes_io_name", "__meta_kubernetes_pod_label_k8s_app"]
+          regex         = "^;*([^;]+?);*$"
+          target_label  = "app"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_node_name"]
+          target_label  = "node"
+        }
+      }
+      loki.source.kubernetes "pods" {
+        targets    = discovery.relabel.pods.output
+        forward_to = [loki.process.comun.receiver]
+      }
+      loki.source.kubernetes_events "eventos" {
+        namespaces = ["ecocanje", "monitoring", "kube-system"]
+        forward_to = [loki.process.comun.receiver]
+      }
+      loki.process "comun" {
+        stage.static_labels {
+          values = { cluster = sys.env("CLUSTER") }
+        }
+        forward_to = [loki.write.local.receiver]
+      }
+      loki.write "local" {
+        endpoint {
+          url = "http://loki.monitoring.svc:3100/loki/api/v1/push"
+        }
+      }
+  extraEnv: [{name: CLUSTER, value: prod}]

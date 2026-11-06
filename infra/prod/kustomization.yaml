@@ -6,6 +6,7 @@ labels:
 - pairs: {ambiente: prod}
 images:
 - {name: ecocanje-backend, newTag: "0.1.2"}
+- {name: ecocanje-frontend, newTag: "0.1.0"}
 configMapGenerator:
 - name: app-config
   behavior: merge
@@ -22,6 +23,13 @@ patches:
       path: /spec/template/spec/topologySpreadConstraints
       value:
       - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: DoNotSchedule, labelSelector: {matchLabels: {app: backend}}}
+- target: {kind: Deployment, name: frontend}
+  patch: |-
+    - {op: replace, path: /spec/replicas, value: 2}
+    - op: add
+      path: /spec/template/spec/topologySpreadConstraints
+      value:
+      - {maxSkew: 1, topologyKey: kubernetes.io/hostname, whenUnsatisfiable: DoNotSchedule, labelSelector: {matchLabels: {app: frontend}}}
 - target: {kind: Deployment}
   patch: |-
     - op: add

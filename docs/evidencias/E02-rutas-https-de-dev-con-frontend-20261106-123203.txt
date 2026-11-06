@@ -1,0 +1,13 @@
+ID: E02
+Descripción: Rutas HTTPS de dev con frontend
+Fecha: 2026-11-06T12:32:03-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 4b44ecf+cambios
+Comando: bash -c set -e; U=https://dev.ecocanje.test:8444; for r in / /operador/x /api/health/live; do echo "$r -> $(curl -s -o /dev/null -w "%{http_code} %{content_type}" $U$r)"; done; curl -s $U/ | grep -q "<div id=\"raiz\">"; curl -s $U/api/health/live | grep -q version
+Esperado: / y una ruta de la SPA sirven HTML; /api sigue en el backend
+----- salida -----
+/ -> 200 text/html
+/operador/x -> 200 text/html
+/api/health/live -> 200 application/json
+----- fin: OK -----

@@ -1,0 +1,15 @@
+ID: SUP02
+Descripción: Importar frontend 0.1.0 a prod
+Fecha: 2026-11-06T12:35:46-06:00
+Ambiente: prod
+Host: fedora
+Commit: 4b44ecf+cambios
+Comando: bash -c k3d image import ecocanje-frontend:0.1.0 -c prod 2>&1 | tail -1 && IMG=ecocanje-frontend scripts/verificar-imagen.sh prod 0.1.0
+Esperado: mismo id en los 3 nodos e identico al aprobado
+----- salida -----
+[36mINFO[0m[0004] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-prod-agent-0 -> 6451729c69f9b
+OK    k3d-prod-agent-1 -> 6451729c69f9b
+OK    k3d-prod-server-0 -> 6451729c69f9b
+OK    identica a la imagen aprobada (6451729c69f9b)
+----- fin: OK -----

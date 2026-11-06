@@ -150,3 +150,13 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-05T20:54:59-06:00 [local] .git/hooks/pre-commit: se excluye el valor ya ocultado por ev.sh (=***); sigue bloqueando literales
 - 2026-11-06T12:06:57-06:00 [prod] `scripts/carga.sh prod con-hpa` → OK (E06)
 - 2026-11-06T12:29:43-06:00 [prod] `scripts/carga.sh prod sin-hpa` → FALLA(1) (E06)
+- 2026-11-06T12:31:53-06:00 [dev] `bash -c k3d image import ecocanje-frontend:0.1.0 -c dev 2>&1 | tail -1 && IMG=ecocanje-frontend scripts/verificar-imagen.sh dev 0.1.0` → OK (SUP02)
+- 2026-11-06T12:32:03-06:00 [dev] `bash -c scripts/desplegar.sh dev >/dev/null && kubectl --context k3d-dev -n ecocanje rollout status deploy/frontend --timeout=120s && kubectl --context k3d-dev -n ecocanje get pods -l app=frontend -o wide --no-headers` → OK (DEP05)
+- 2026-11-06T12:32:04-06:00 [compose-local] `bash -c set -e; U=https://dev.ecocanje.test:8444; for r in / /operador/x /api/health/live; do echo "$r -> $(curl -s -o /dev/null -w "%{http_code} %{content_type}" $U$r)"; done; curl -s $U/ | grep -q "<div id=\"raiz\">"; curl -s $U/api/health/live | grep -q version` → OK (E02)
+- 2026-11-06T12:35:19-06:00 [dev] `scripts/probar.sh dev tests/interfaz/correr.sh` → OK (E03)
+- 2026-11-06T12:35:46-06:00 [dev] `bash -c IMG=ecocanje-frontend scripts/verificar-imagen.sh dev 0.1.0 --registrar` → OK (SUP02)
+- 2026-11-06T12:35:52-06:00 [prod] `bash -c k3d image import ecocanje-frontend:0.1.0 -c prod 2>&1 | tail -1 && IMG=ecocanje-frontend scripts/verificar-imagen.sh prod 0.1.0` → OK (SUP02)
+- 2026-11-06T12:36:01-06:00 [prod] `bash -c scripts/desplegar.sh prod >/dev/null && kubectl --context k3d-prod -n ecocanje rollout status deploy/frontend --timeout=180s && kubectl --context k3d-prod -n ecocanje get pods -l app=frontend -o wide --no-headers | awk "{print \$1, \$2, \$3, \$7}" && kubectl --context k3d-prod -n ecocanje get pdb` → OK (DEP05)
+- 2026-11-06T12:36:15-06:00 [prod] `scripts/probar.sh prod tests/interfaz/correr.sh` → OK (E03)
+- 2026-11-06T12:36:37-06:00 [local] .git/hooks/pre-commit: se excluyen cadena vacia ('' o "") y referencias obj.password; sigue bloqueando literales
+- 2026-11-06T12:37:13-06:00 [local] gancho pre-commit: exclusiones en .git/hooks/excluir-secretos.txt (amarradas a la clave), bloquea si falta el archivo; copia versionada en docs/manual/gancho-*

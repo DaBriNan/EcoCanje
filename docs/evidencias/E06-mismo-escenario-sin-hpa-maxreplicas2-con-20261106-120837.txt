@@ -7,3 +7,82 @@ Commit: d36699e+cambios
 Comando: scripts/carga.sh prod sin-hpa
 Esperado: comparacion: 2 replicas fijas bajo la misma carga
 ----- salida -----
+12:08:37 1. API de métricas (requisito antes de probar)
+NAME                       CPU(cores)   MEMORY(bytes)   
+backend-6dfcc5ddf4-dt8kr   6m           43Mi            
+backend-6dfcc5ddf4-f2gr5   6m           62Mi            
+HPA min=2 max=2 objetivo=60% actual=2%
+requests por pod (base del % del HPA): php=100m nginx=20m 
+12:08:38 1b. Esperar a que el backend esté en minReplicas=2 antes de la línea base (máx 900 s)
+12:08:38 en 2 réplicas tras 0 s
+12:08:38 2. Línea base sin carga: 300 s
+12:13:38 3. Carga con k6 (grafana/k6:2.2.0@sha256:9bd01d6941fca969cb61bb57d2da5ee9b385fe2aa8881df3798c196564d6ace6), generador limitado a 1.5 CPU en el host fedora
+
+  █ THRESHOLDS 
+
+    http_req_duration{scenario:consulta}
+    ✗ 'p(95)<1000' p(95)=12.56s
+
+    http_req_failed{scenario:consulta}
+    ✗ 'rate<0.01' rate=13.42%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 19652  25.170648/s
+    checks_succeeded...: 86.57% 17014 out of 19652
+    checks_failed......: 13.42% 2638 out of 19652
+
+    ✗ status 200
+      ↳  86% — ✓ 17014 / ✗ 2638
+
+    HTTP
+    http_req_duration..............: avg=3.84s med=2.02s p(90)=10.5s  p(95)=12.56s p(99)=15.09s max=16.89s
+      { expected_response:true }...: avg=4.44s med=3.18s p(90)=10.96s p(95)=12.89s p(99)=15.18s max=16.89s
+      { scenario:consulta }........: avg=3.84s med=2.02s p(90)=10.5s  p(95)=12.56s p(99)=15.09s max=16.89s
+    http_req_failed................: 13.42% 2638 out of 19655
+      { scenario:consulta }........: 13.42% 2638 out of 19654
+    http_reqs......................: 19655  25.17449/s
+
+    EXECUTION
+    iteration_duration.............: avg=5.04s med=3.8s  p(90)=11.6s  p(95)=13.61s p(99)=15.79s max=17.39s
+    iterations.....................: 4913   6.292662/s
+    vus............................: 1      min=0             max=50
+    vus_max........................: 50     min=50            max=50
+
+    NETWORK
+    data_received..................: 10 MB  13 kB/s
+    data_sent......................: 1.1 MB 1.5 kB/s
+
+
+
+time="2026-11-06T18:26:39Z" level=error msg="thresholds on metrics 'http_req_duration{scenario:consulta}, http_req_failed{scenario:consulta}' have been crossed"
+12:26:39 4. Sin carga: esperar regreso a minReplicas (máx 600 s; estabilización declarada 120 s)
+12:29:10 réplicas tras 151 s sin carga: 2
+12:29:31 5. Exportar series de Prometheus (1793988518 a 1793989751)
+Resumen por fase (Prometheus, paso 15 s):
+  base          réplicas max=2  rps prom=0  p95 max=- s  errores max=-  cpu backend max=0.012 cores  pg max=8  mongo max=13
+  carga         réplicas max=2  rps prom=20.8  p95 max=5 s  errores max=0.0271  cpu backend max=1.01 cores  pg max=14  mongo max=19
+  enfriamiento  réplicas max=2  rps prom=3.49  p95 max=5 s  errores max=0.00946  cpu backend max=0.691 cores  pg max=8  mongo max=13
+12:29:32 6. Resultado
+k6 (solo escenario, sin login de setup): solicitudes totales=19655 (25.2/s)  p95=12564 ms  p99=15096 ms  max=16893 ms  errores=13.42%
+umbral p95<1000 ms: NO CUMPLE | umbral errores<1%: NO CUMPLE
+réplicas: máximo observado=2, final=2 (muestreo kubectl en replicas.csv)
+archivos: docs/evidencias/carga/20261106-1208-sin-hpa
+k6 terminó con 99 (umbral no cumplido o error)
+scripts/carga.sh failed with exit status 1.
+----- fin: FALLA(1) -----
+
+ANALISIS Y COMPARACION (2026-11-06 12:35), mismo escenario k6, misma imagen 0.1.2, mismos datos:
+| Metrica                  | Sin HPA (2 fijas) | Con HPA (2->6)   |
+|--------------------------|-------------------|------------------|
+| Rendimiento              | 25.2 rps          | 124.0 rps        |
+| p95 / p99                | 12.56 s / 15.10 s | 0.99 s / 1.40 s  |
+| Errores (k6)             | 13.42 %           | 0.00 %           |
+| CPU backend max          | 1.01 cores        | 2.97 cores       |
+| Umbral p95<1s, err<1%    | NO CUMPLE         | CUMPLE           |
+Con 2 replicas la CPU del backend (2 x 500m) se satura y las solicitudes hacen cola en PHP-FPM (6 procesos por pod).
+Errores: k6 conto 2638 fallos; Traefik registro solo 50 (40 de 502 y 10 de 499) entre ~17500 atendidas. El resto no aparece
+en las metricas de servicio de Traefik, lo que indica fallos a nivel de conexion; k6 no exporto el desglose por codigo en esta
+corrida, por lo que no se atribuye una causa exacta (se agrego el desglose en tests/carga/escenario.js para corridas futuras).
+Al terminar se restauro maxReplicas=6 (valor de infra/prod/hpa.yaml).

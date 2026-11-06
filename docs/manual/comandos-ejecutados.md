@@ -149,3 +149,4 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-05T20:54:48-06:00 [prod] `scripts/probar.sh prod tests/flujo.sh` → OK (E12)
 - 2026-11-05T20:54:59-06:00 [local] .git/hooks/pre-commit: se excluye el valor ya ocultado por ev.sh (=***); sigue bloqueando literales
 - 2026-11-06T12:06:57-06:00 [prod] `scripts/carga.sh prod con-hpa` → OK (E06)
+- 2026-11-06T12:29:43-06:00 [prod] `scripts/carga.sh prod sin-hpa` → FALLA(1) (E06)

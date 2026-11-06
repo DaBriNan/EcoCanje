@@ -44,7 +44,7 @@ grafana:
   defaultDashboardsTimezone: America/Mexico_City
   persistence: {enabled: false}
   initChownData: {enabled: false}
-  resources: {requests: {cpu: 50m, memory: 128Mi}, limits: {cpu: 300m, memory: 384Mi}}
+  resources: {requests: {cpu: 50m, memory: 192Mi}, limits: {cpu: 500m, memory: 512Mi}}   # 300m/384Mi: sondas agotadas al arrancar y tras reanudar
   affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
   securityContext: {runAsNonRoot: true, runAsUser: 472, runAsGroup: 472, fsGroup: 472, seccompProfile: {type: RuntimeDefault}}
   containerSecurityContext: {allowPrivilegeEscalation: false, capabilities: {drop: [ALL]}}

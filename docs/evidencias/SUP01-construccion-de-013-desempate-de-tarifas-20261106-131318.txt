@@ -1,0 +1,11 @@
+ID: SUP01
+Descripción: Construccion de 0.1.3 (desempate de tarifas)
+Fecha: 2026-11-06T13:13:18-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: ef9a452+cambios
+Comando: bash -c docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --build-arg APP_VERSION=0.1.3 --label org.opencontainers.image.revision=ef9a452 --label org.opencontainers.image.version=0.1.3 -t ecocanje-backend:0.1.3 backend
+Esperado: imagen construida
+----- salida -----
+sha256:bd9da4814ae1aeb6a1d74e0748c649d0c35304d93b9b32757880f8fcf06fbbce
+----- fin: OK -----

@@ -33,7 +33,12 @@ ev() {
     echo "Ambiente: $amb"; echo "Host: $(hostname)"; echo "Commit: $commit"
     echo "Comando: $(printf %s "$*" | sed -e "s/^kd /kubectl --context k3d-dev /" -e "s/^kp /kubectl --context k3d-prod /")"; echo "Esperado: $esp"; echo "----- salida -----"
   } | redact > "$f"
-  "$@" 2>&1 | redact | tee -a "$f"
+  # Bloquea la suspensión del equipo mientras corre la evidencia (dos suspensiones afectaron corridas largas)
+  if command -v systemd-inhibit >/dev/null; then
+    systemd-inhibit --what=sleep:idle:handle-lid-switch --who=ecocanje --why="evidencia $id" "$@" 2>&1 | redact | tee -a "$f"
+  else
+    "$@" 2>&1 | redact | tee -a "$f"
+  fi
   rc=${PIPESTATUS[0]}
   [ "$rc" -eq 0 ] && estado="OK" || estado="FALLA($rc)"
   obs=$(grep -v '^[[:space:]]*$' "$f" | tail -n1 | tr '|' '/' | cut -c1-90)

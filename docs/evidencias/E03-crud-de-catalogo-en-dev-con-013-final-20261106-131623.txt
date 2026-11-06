@@ -1,0 +1,27 @@
+ID: E03
+Descripción: CRUD de catalogo en dev con 0.1.3 final
+Fecha: 2026-11-06T13:16:23-06:00
+Ambiente: dev
+Host: fedora
+Commit: ef9a452+cambios
+Comando: scripts/probar.sh dev tests/catalogo.sh
+Esperado: todas OK (incluye empate de tarifas)
+----- salida -----
+OK    ciudadano no crea materiales -> 403
+OK    crear material -> 201
+OK    material duplicado -> 422
+OK    tarifa fuera de rango -> 422
+OK    nueva tarifa -> 201
+OK    modificar material -> 200
+OK    ficha MongoDB valida -> 200
+OK    ficha con clave invalida -> 422
+OK    consultar ficha -> 200
+OK    baja logica de material -> 204
+OK    recompensa valida -> 201
+OK    recompensa tipo invalido -> 422
+OK    recompensa stock negativo -> 422
+OK    historial del ciudadano (Mongo) -> 200
+OK    entregas con paginacion -> 200
+OK    tarifa cambiada en el mismo segundo: gana la ultima -> 9
+Resultado: 16 correctas, 0 fallidas
+----- fin: OK -----

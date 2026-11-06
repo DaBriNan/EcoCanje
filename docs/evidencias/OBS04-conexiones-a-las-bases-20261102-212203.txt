@@ -10,3 +10,5 @@ Esperado: valores numericos de ambos motores
 (sin resultados)
 instance=10.42.1.19:9216, job=ecocanje/exportadores, namespace=ecocanje, pod=exportador-mongo-6bb5d8df5-vqrsf -> 4
 ----- fin: OK -----
+
+NOTA POSTERIOR (2026-11-05): este OK es incorrecto. bash -c solo devolvió el código de la última consulta; la de PostgreSQL no tuvo resultados porque exportador-postgres no podía leer su credencial (falta fsGroup). Repetida correctamente en OBS04-conexiones-y-tamano-de-ambas-bases-repet-20261105-184010.txt

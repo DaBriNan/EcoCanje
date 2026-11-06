@@ -26,5 +26,11 @@ chk "recompensa stock negativo"      "$(req POST /recompensas '{"nombre":"X","ti
 TOK=$TC
 chk "historial del ciudadano (Mongo)" "$(req GET /historial)" 200
 chk "entregas con paginacion"        "$(req GET '/entregas?page=2')" 200
+TOK=$OP; NE="Empate $(date +%s%N)"
+req POST /materiales "{\"nombre\":\"$NE\",\"puntos_por_kg\":7}" >/dev/null; ME=$(id)
+req POST /materiales/$ME/tarifas '{"puntos_por_kg":9}' >/dev/null
+req GET /materiales >/dev/null
+chk "tarifa cambiada en el mismo segundo: gana la ultima" "$(python3 -c "import json; print([m['puntos_por_kg'] for m in json.load(open('/tmp/r.json')) if m['id']==$ME][0])")" 9
+req DELETE /materiales/$ME >/dev/null
 echo "Resultado: $ok correctas, $fail fallidas"
 exit $((fail>0))

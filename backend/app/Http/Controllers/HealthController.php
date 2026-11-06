@@ -9,7 +9,7 @@ class HealthController extends Controller
 {
     public function live()
     {
-        return ['status' => 'ok'];
+        return ['status' => 'ok', 'version' => config('app.version')];
     }
 
     public function ready()

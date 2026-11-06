@@ -15,9 +15,12 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --no-interaction --prefer-dist
 COPY . .
 RUN composer dump-autoload --no-dev --classmap-authoritative --no-scripts \
- && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs
+ && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs \
+ && php artisan route:cache && php artisan event:cache
 
 FROM php:${PHP_TAG} AS runtime
+ARG APP_VERSION=dev
+ENV APP_VERSION=${APP_VERSION}
 RUN apk add --no-cache libpq
 COPY --from=ext /usr/local/lib/php/extensions /usr/local/lib/php/extensions
 COPY --from=ext /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d

@@ -98,6 +98,8 @@ return [
             'prefix_indexes' => true,
             'search_path' => 'public',
             'sslmode' => env('DB_SSLMODE', 'prefer'),
+            // Conexion persistente por proceso de PHP-FPM: evita una autenticacion scram-sha-256 por solicitud (E06).
+            'options' => extension_loaded('pdo_pgsql') ? [PDO::ATTR_PERSISTENT => (bool) env('DB_PERSISTENT', false)] : [],
         ],
 
         'sqlsrv' => [

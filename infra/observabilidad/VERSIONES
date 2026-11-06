@@ -1,2 +1,4 @@
 kube-prometheus-stack 92.17.1
 prometheus-node-exporter 4.60.1
+postgres-exporter v0.20.1 (sha256:ac5ec343104fae0e2d84a27bb8d69b38430a11910c5382cad85d478d2bab713e)
+mongodb_exporter 0.53.0 (sha256:0214e482b2cd4b1849f9f4dcef90d328a99ba3727dd1103e7da48b42060bcec1)

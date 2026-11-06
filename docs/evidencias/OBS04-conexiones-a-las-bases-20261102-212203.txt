@@ -1,0 +1,12 @@
+ID: OBS04
+Descripción: Conexiones a las bases
+Fecha: 2026-11-02T21:22:03-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c scripts/prom.sh prod "pg_stat_database_numbackends{datname=\"ecocanje\"}"; scripts/prom.sh prod "mongodb_ss_connections{conn_type=\"current\"}"
+Esperado: valores numericos de ambos motores
+----- salida -----
+(sin resultados)
+instance=10.42.1.19:9216, job=ecocanje/exportadores, namespace=ecocanje, pod=exportador-mongo-6bb5d8df5-vqrsf -> 4
+----- fin: OK -----

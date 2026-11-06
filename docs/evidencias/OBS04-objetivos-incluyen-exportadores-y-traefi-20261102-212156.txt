@@ -1,0 +1,12 @@
+ID: OBS04
+Descripción: Objetivos incluyen exportadores y Traefik
+Fecha: 2026-11-02T21:21:56-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/prom.sh prod sum by (job) (up{job=~".*(exportadores|traefik).*"})
+Esperado: jobs de exportadores y traefik con up=1
+----- salida -----
+job=ecocanje/exportadores -> 1
+job=kube-system/traefik -> 1
+----- fin: OK -----

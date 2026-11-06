@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: exportador, namespace: ecocanje}
+automountServiceAccountToken: false
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: exportador-postgres, namespace: ecocanje, labels: {app: exportador-postgres}}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: exportador-postgres}}
+  template:
+    metadata:
+      labels: {app: exportador-postgres, monitoreo: exportador, postgres-egress: permitido, postgres-ingress: permitido}
+    spec:
+      serviceAccountName: exportador
+      automountServiceAccountToken: false
+      affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+      securityContext: {runAsNonRoot: true, runAsUser: 65534, runAsGroup: 65534, fsGroup: 65534, seccompProfile: {type: RuntimeDefault}}
+      containers:
+      - name: exportador
+        image: quay.io/prometheuscommunity/postgres-exporter
+        args: ["--web.listen-address=:9187"]
+        env:
+        - {name: DATA_SOURCE_URI, value: "postgres:5432/ecocanje?sslmode=disable"}
+        - {name: DATA_SOURCE_USER, value: ecocanje_monitor}
+        - {name: DATA_SOURCE_PASS_FILE, value: /run/secrets/pg/monitor}
+        ports: [{name: metricas, containerPort: 9187}]
+        securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 10m, memory: 24Mi}, limits: {cpu: 100m, memory: 96Mi}}
+        readinessProbe: {tcpSocket: {port: metricas}, periodSeconds: 10}
+        livenessProbe: {tcpSocket: {port: metricas}, periodSeconds: 20, failureThreshold: 6}
+        volumeMounts: [{name: credenciales, mountPath: /run/secrets/pg, readOnly: true}]
+      volumes:
+      - name: credenciales
+        secret: {secretName: postgres-credenciales, defaultMode: 288, items: [{key: monitor, path: monitor}]}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: exportador-mongo, namespace: ecocanje, labels: {app: exportador-mongo}}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: exportador-mongo}}
+  template:
+    metadata:
+      labels: {app: exportador-mongo, monitoreo: exportador, mongo-egress: permitido, mongo-ingress: permitido}
+    spec:
+      serviceAccountName: exportador
+      automountServiceAccountToken: false
+      affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+      securityContext: {runAsNonRoot: true, runAsUser: 65534, runAsGroup: 65534, seccompProfile: {type: RuntimeDefault}}
+      containers:
+      - name: exportador
+        image: percona/mongodb_exporter
+        args: ["--web.listen-address=:9216", "--compatible-mode", "--collector.diagnosticdata", "--collector.dbstats"]
+        env:
+        - name: MONGODB_URI
+          valueFrom: {secretKeyRef: {name: mongo-exportador, key: uri}}
+        ports: [{name: metricas, containerPort: 9216}]
+        securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 10m, memory: 32Mi}, limits: {cpu: 100m, memory: 128Mi}}
+        readinessProbe: {tcpSocket: {port: metricas}, periodSeconds: 10}
+        livenessProbe: {tcpSocket: {port: metricas}, periodSeconds: 20, failureThreshold: 6}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: exportadores-desde-prometheus, namespace: ecocanje}
+spec:
+  podSelector: {matchLabels: {monitoreo: exportador}}
+  policyTypes: [Ingress]
+  ingress:
+  - from:
+    - namespaceSelector: {matchLabels: {kubernetes.io/metadata.name: monitoring}}
+      podSelector: {matchLabels: {app.kubernetes.io/name: prometheus}}
+    ports: [{protocol: TCP, port: 9187}, {protocol: TCP, port: 9216}]
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata: {name: exportadores, namespace: ecocanje}
+spec:
+  selector: {matchLabels: {monitoreo: exportador}}
+  podMetricsEndpoints: [{port: metricas, interval: 30s}]
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata: {name: traefik, namespace: kube-system}
+spec:
+  selector: {matchLabels: {app.kubernetes.io/name: traefik}}
+  podMetricsEndpoints: [{port: metrics, path: /metrics, interval: 30s}]

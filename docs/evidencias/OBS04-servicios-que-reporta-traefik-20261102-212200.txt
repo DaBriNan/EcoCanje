@@ -1,0 +1,11 @@
+ID: OBS04
+Descripción: Servicios que reporta Traefik
+Fecha: 2026-11-02T21:22:00-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/prom.sh prod count by (service) (traefik_service_requests_total)
+Esperado: un servicio del backend de ecocanje
+----- salida -----
+service=ecocanje-backend-http@kubernetes -> 14
+----- fin: OK -----

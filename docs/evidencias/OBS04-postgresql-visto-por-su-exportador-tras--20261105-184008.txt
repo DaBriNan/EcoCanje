@@ -1,0 +1,11 @@
+ID: OBS04
+Descripción: PostgreSQL visto por su exportador tras fsGroup
+Fecha: 2026-11-05T18:40:08-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/prom.sh prod pg_up == 1
+Esperado: pg_up=1
+----- salida -----
+instance=10.42.1.43:9187, job=ecocanje/exportadores, namespace=ecocanje, pod=exportador-postgres-7c6765469d-pt4vw -> 1
+----- fin: OK -----

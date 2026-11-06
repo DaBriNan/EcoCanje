@@ -1,0 +1,14 @@
+ID: OBS04
+Descripción: Conexiones y tamano de ambas bases (repeticion)
+Fecha: 2026-11-05T18:40:10-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c set -e; scripts/prom.sh prod "sum(pg_stat_activity_count{datname=\"ecocanje\"})"; scripts/prom.sh prod "mongodb_ss_connections{conn_type=\"current\"}"; scripts/prom.sh prod "pg_database_size_bytes{datname=\"ecocanje\"}"; scripts/prom.sh prod "sum(mongodb_dbstats_dataSize{database=\"ecocanje\"})"
+Esperado: valores de ambos motores; falla si falta uno
+----- salida -----
+- -> 2
+instance=10.42.1.44:9216, job=ecocanje/exportadores, namespace=ecocanje, pod=exportador-mongo-88d7c78cf-kwlp6 -> 3
+instance=10.42.1.43:9187, job=ecocanje/exportadores, namespace=ecocanje, pod=exportador-postgres-7c6765469d-pt4vw -> 8838167
+- -> 2822
+----- fin: OK -----

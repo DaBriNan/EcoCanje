@@ -1,0 +1,31 @@
+ID: E11
+Descripción: PostgreSQL caido en prod: sin reinicios por liveness y recuperacion
+Fecha: 2026-11-06T12:45:48-06:00
+Ambiente: prod
+Host: fedora
+Commit: be856ad+cambios
+Comando: scripts/fallos.sh prod postgres
+Esperado: backend no Ready durante la caida, 0 reinicios, recuperacion medida
+----- salida -----
+12:45:49 reinicios antes: backend-6b55d88fcb-f4wjf=0 0 backend-6b55d88fcb-zxhkt=0 0 
+12:45:52 FALLA: PostgreSQL a 0 réplicas
+statefulset.apps/postgres scaled
+pod/postgres-0 condition met
+12:46:53 tras 60 s sin base: réplicas listas= | /health/live=503
+reinicios durante la caída: backend-6b55d88fcb-f4wjf=0 0 backend-6b55d88fcb-zxhkt=0 0 
+12:46:53 RECUPERACIÓN: PostgreSQL a 1 réplica
+statefulset.apps/postgres scaled
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+12:47:04 backend listo tras 72 s desde la caída
+sonda: 261 solicitudes, 222 sin 200 (85.1%), corte continuo más largo 69.8 s
+  código 000: 3
+  código 503: 219
+reinicios después: backend-6b55d88fcb-f4wjf=0 0 backend-6b55d88fcb-zxhkt=0 0 
+la liveness no reinició contenedores
+----- fin: OK -----
+
+ANALISIS DE ALERTAS (2026-11-06 12:48): BaseDeDatosCaida y AplicacionIndisponible pasaron a pending a las 18:46:28 UTC
+(36 s tras la caida: scrape de 30 s + evaluacion) y se resolvieron sin llegar a firing, porque la base volvio a las 18:47:04,
+antes de cumplir el for: 1m (firing previsto a las 18:47:28). Umbral efectivo de aviso ~96 s: una caida mas corta no notifica,
+lo que es intencional para evitar ruido; se documenta en D08. La sonda midio el impacto real: 69.8 s de 503 continuos.

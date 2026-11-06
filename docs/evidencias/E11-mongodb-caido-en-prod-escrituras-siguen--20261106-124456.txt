@@ -1,0 +1,23 @@
+ID: E11
+Descripción: MongoDB caido en prod: escrituras siguen y outbox reconcilia
+Fecha: 2026-11-06T12:44:56-06:00
+Ambiente: prod
+Host: fedora
+Commit: be856ad
+Comando: scripts/fallos.sh prod mongo
+Esperado: POST 201 con Mongo caido, pendientes crecen y vuelven a 0 sin duplicados
+----- salida -----
+12:44:57 outbox pendientes antes: 0
+12:45:00 FALLA: MongoDB a 0 réplicas
+statefulset.apps/mongo scaled
+pod/mongo-0 condition met
+12:45:01 POST /entregas con MongoDB caído -> 201 (entrega 106)
+12:45:22 outbox pendientes durante la caída: 1
+12:45:22 RECUPERACIÓN: MongoDB a 1 réplica
+statefulset.apps/mongo scaled
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+12:45:28 MongoDB listo tras 28 s de caída
+12:45:35 outbox pendientes tras 7 s: 0 | documentos de la entrega 106 en MongoDB: 1 (esperado 1)
+sonda: 141 solicitudes, 0 sin 200 (0.0%), corte continuo más largo 0.0 s
+----- fin: OK -----

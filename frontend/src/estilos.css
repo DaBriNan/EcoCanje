@@ -44,3 +44,10 @@ th, td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid var(--
 .estado-rechazada, .estado-cancelado { background: #fde8e7; color: #7a1a14; }
 footer { text-align: center; color: var(--gris); font-size: .8rem; padding: 1.5rem; }
 @media (max-width: 40rem) { .contenido { padding: .75rem; } .marco header .quien { margin-left: 0; width: 100%; order: 3; } }
+.ayuda { color: var(--gris); font-size: .9rem; margin: 0; }
+.numero-ciudadano { background: #e3f4ea; color: #0f5132; padding: .25rem .6rem; border-radius: 1rem; }
+.faltan { color: var(--gris); font-size: .9rem; }
+label.corto { max-width: 14rem; }
+.fila .quitar { align-self: end; }
+table.detalle { margin: .25rem 0; }
+table.detalle td input { width: 6rem; }

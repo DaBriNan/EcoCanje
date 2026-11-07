@@ -3,6 +3,7 @@ import { api } from '../api.js';
 import { Aviso, Estado, fecha, useAccion, useDatos } from '../comun.jsx';
 
 export default function Ciudadano() {
+  const yo = useDatos('/yo');
   const saldo = useDatos('/saldo');
   const materiales = useDatos('/materiales');
   const recompensas = useDatos('/recompensas');
@@ -23,14 +24,21 @@ export default function Ciudadano() {
     <main className="contenido">
       <Aviso aviso={aviso} cerrar={cerrar} />
       <section className="tarjeta resumen">
-        <h2>Mi saldo</h2>
-        {saldo.error ? <p className="error-campo">{saldo.error}</p> : !saldo.datos ? <p>Cargando…</p> : (
+        <div className="titulo-fila">
+          <h2>Mi saldo</h2>
+          {yo.datos && <span className="numero-ciudadano">Tu número de ciudadano: <strong>{yo.datos.id}</strong></span>}
+        </div>
+        {saldo.error ? <p className="error-campo">{saldo.error}</p> : !saldo.datos ? <p>Cargando…</p> : (<>
+          {saldo.datos.saldo === 0 && (
+            <p className="ayuda">Aún no tienes puntos. Lleva tu material reciclable al centro de acopio y da tu número de ciudadano
+              {yo.datos ? ` (${yo.datos.id})` : ''}: el operador pesa y valida lo que entregas, y los puntos aparecen aquí al acreditarse.</p>
+          )}
           <div className="cifras">
             <div><span className="cifra">{saldo.datos.saldo}</span> puntos disponibles</div>
             <div><span className="cifra">{saldo.datos.vence_en_30_dias}</span> vencen en 30 días</div>
             <div><span className="cifra">{saldo.datos.tope_diario_restante}</span> por acreditar hoy</div>
           </div>
-        )}
+        </>)}
       </section>
 
       <section className="tarjeta">
@@ -46,9 +54,9 @@ export default function Ciudadano() {
                     <button className="secundario" onClick={() => setConfirmar(null)}>Cancelar</button>
                   </span>
                 ) : (
-                  <button disabled={ocupado || (saldo.datos && saldo.datos.saldo < r.costo_puntos)} onClick={() => setConfirmar(r.id)}>
-                    Canjear · {r.costo_puntos} pts
-                  </button>
+                  saldo.datos && saldo.datos.saldo < r.costo_puntos
+                    ? <span className="faltan">{r.costo_puntos} pts · te faltan {r.costo_puntos - saldo.datos.saldo}</span>
+                    : <button disabled={ocupado || !saldo.datos} onClick={() => setConfirmar(r.id)}>Canjear · {r.costo_puntos} pts</button>
                 )}
               </li>
             ))}
@@ -77,9 +85,10 @@ export default function Ciudadano() {
       <section className="tarjeta">
         <h2>Mis entregas</h2>
         {!entregas.datos ? <p>Cargando…</p> : entregas.datos.data.length === 0 ? <p>Aún no tienes entregas.</p> : (
-          <table><thead><tr><th>#</th><th>Kilos</th><th>Puntos</th><th>Estado</th><th>Fecha</th></tr></thead>
+          <table><thead><tr><th>#</th><th>Materiales</th><th>Kilos</th><th>Puntos</th><th>Estado</th><th>Fecha</th></tr></thead>
             <tbody>{entregas.datos.data.map((e) => (
               <tr key={e.id}><td>{e.id}</td>
+                <td>{e.detalles.map((d) => `${materiales.datos?.find((m) => m.id === d.material_id)?.nombre ?? `#${d.material_id}`} ${Number(d.peso_kg).toFixed(1)} kg`).join(', ')}</td>
                 <td>{e.detalles.reduce((a, d) => a + Number(d.peso_kg), 0).toFixed(1)}</td>
                 <td>{e.detalles.reduce((a, d) => a + (d.puntos || 0), 0)}</td>
                 <td><Estado valor={e.estado} /></td><td>{fecha(e.created_at)}</td></tr>

@@ -25,22 +25,34 @@ export default function Operador() {
   );
 }
 
+const PASOS = {
+  registrada: 'Pesa cada material en la báscula y captura el peso real; luego "Confirmar pesaje".',
+  pesada: 'Revisa que cada material corresponda a lo declarado y esté limpio; valida o rechaza con motivo.',
+  validada: 'Al acreditar se calculan los puntos con la tarifa fijada al registrar y se suman al ciudadano.',
+};
+const filaVacia = () => ({ material_id: '', peso_kg: '' });
+
 function Entregas({ a }) {
   const materiales = useDatos('/materiales');
+  const nombre = (id) => materiales.datos?.find((m) => m.id === id)?.nombre ?? `material #${id}`;
+  const tarifa = (id) => materiales.datos?.find((m) => m.id === Number(id))?.puntos_por_kg;
   const [filtro, setFiltro] = useState('');
   const [ciudadano, setCiudadano] = useState('');
   const consulta = new URLSearchParams({ ...(filtro && { estado: filtro }), ...(/^\d+$/.test(ciudadano) && { user_id: ciudadano }) });
   const lista = useDatos(`/entregas${consulta.toString() ? `?${consulta}` : ''}`);
-  const [f, setF] = useState({ user_id: '', material_id: '', peso_kg: '' });
+  const [usuario, setUsuario] = useState('');
+  const [filas, setFilas] = useState([filaVacia()]);
   const [pesos, setPesos] = useState({});
   const [motivo, setMotivo] = useState({});
+  const cambiarFila = (i, campo, valor) => setFilas(filas.map((x, j) => (j === i ? { ...x, [campo]: valor } : x)));
+  const estimado = filas.reduce((t, x) => t + Math.round((Number(x.peso_kg) || 0) * (tarifa(x.material_id) || 0)), 0);
 
   const registrar = async (e) => {
     e.preventDefault();
     const r = await a.ejecutar(() => api('POST', '/entregas', {
-      user_id: Number(f.user_id), detalles: [{ material_id: Number(f.material_id), peso_kg: Number(f.peso_kg) }],
-    }), (x) => `Entrega #${x.id} registrada.`);
-    if (r) { setF({ user_id: '', material_id: '', peso_kg: '' }); lista.cargar(); }
+      user_id: Number(usuario), detalles: filas.map((x) => ({ material_id: Number(x.material_id), peso_kg: Number(x.peso_kg) })),
+    }), (x) => `Entrega #${x.id} registrada con ${x.detalles.length} material(es).`);
+    if (r) { setUsuario(''); setFilas([filaVacia()]); lista.cargar(); }
   };
   const paso = async (e, ruta, cuerpo, texto) => {
     const r = await a.ejecutar(() => api('PATCH', `/entregas/${e.id}/${ruta}`, cuerpo), texto);
@@ -51,23 +63,35 @@ function Entregas({ a }) {
     <>
       <form className="tarjeta" onSubmit={registrar}>
         <h2>Registrar entrega</h2>
-        <div className="fila">
-          <label>Id del ciudadano<input type="number" min="1" required value={f.user_id} onChange={(e) => setF({ ...f, user_id: e.target.value })} />
-            <ErrorCampo campos={a.campos} nombre="user_id" /></label>
-          <label>Material<select required value={f.material_id} onChange={(e) => setF({ ...f, material_id: e.target.value })}>
-            <option value="">Elige…</option>
-            {materiales.datos?.map((m) => <option key={m.id} value={m.id}>{m.nombre} ({m.puntos_por_kg} pts/kg)</option>)}
-          </select><ErrorCampo campos={a.campos} nombre="detalles.0.material_id" /></label>
-          <label>Peso (kg)<input type="number" step="0.1" min="0.1" max="200" required value={f.peso_kg} onChange={(e) => setF({ ...f, peso_kg: e.target.value })} />
-            <ErrorCampo campos={a.campos} nombre="detalles.0.peso_kg" /></label>
+        <p className="ayuda">Captura el número del ciudadano (lo ve en su pantalla) y una fila por cada material que trae, con el peso que declara.</p>
+        <label className="corto">Número de ciudadano<input type="number" min="1" required value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+          <ErrorCampo campos={a.campos} nombre="user_id" /></label>
+        {filas.map((x, i) => (
+          <div className="fila" key={i}>
+            <label>{`Material ${i + 1}`}<select required value={x.material_id} onChange={(e) => cambiarFila(i, 'material_id', e.target.value)}>
+              <option value="">Elige…</option>
+              {materiales.datos?.map((m) => (
+                <option key={m.id} value={m.id} disabled={filas.some((y, j) => j !== i && Number(y.material_id) === m.id)}>
+                  {m.nombre} ({m.puntos_por_kg} pts/kg)</option>
+              ))}
+            </select><ErrorCampo campos={a.campos} nombre={`detalles.${i}.material_id`} /></label>
+            <label>{`Peso declarado ${i + 1} (kg)`}<input type="number" step="0.1" min="0.1" max="200" required value={x.peso_kg}
+              onChange={(e) => cambiarFila(i, 'peso_kg', e.target.value)} />
+              <ErrorCampo campos={a.campos} nombre={`detalles.${i}.peso_kg`} /></label>
+            {filas.length > 1 && <button type="button" className="secundario quitar" onClick={() => setFilas(filas.filter((_, j) => j !== i))}>Quitar</button>}
+          </div>
+        ))}
+        <div className="acciones">
+          <button type="button" className="secundario" disabled={filas.length >= 10} onClick={() => setFilas([...filas, filaVacia()])}>Agregar material</button>
+          <span className="ayuda">Puntos estimados: <strong>{estimado}</strong> (se confirman con el peso en báscula)</span>
         </div>
-        <button disabled={a.ocupado}>Registrar</button>
+        <button disabled={a.ocupado}>Registrar entrega</button>
       </form>
 
       <section className="tarjeta">
         <div className="titulo-fila">
           <h2>Entregas</h2>
-          <input type="search" inputMode="numeric" pattern="\d*" placeholder="Buscar por id de ciudadano" aria-label="Buscar por id de ciudadano"
+          <input type="search" inputMode="numeric" pattern="\d*" placeholder="Buscar por número de ciudadano" aria-label="Buscar por id de ciudadano"
             value={ciudadano} onChange={(e) => setCiudadano(e.target.value.trim())} />
           <select aria-label="Filtrar por estado" value={filtro} onChange={(e) => setFiltro(e.target.value)}>
             <option value="">Todas</option>
@@ -80,18 +104,27 @@ function Entregas({ a }) {
               <li key={e.id} className="bloque">
                 <div><strong>#{e.id}</strong> ciudadano {e.user_id} · <Estado valor={e.estado} /> <small>{fecha(e.created_at)}</small>
                   {e.motivo_rechazo && <small> · {e.motivo_rechazo}</small>}</div>
+                <table className="detalle">
+                  <thead><tr><th>Material</th><th>{e.estado === 'registrada' ? 'Declarado' : 'Peso'}</th>
+                    {e.estado === 'registrada' && <th>Peso en báscula</th>}<th>Puntos</th></tr></thead>
+                  <tbody>{e.detalles.map((d) => (
+                    <tr key={d.id}>
+                      <td>{nombre(d.material_id)}</td>
+                      <td>{Number(d.peso_kg).toFixed(1)} kg</td>
+                      {e.estado === 'registrada' && <td><input type="number" step="0.1" min="0.1" max="200"
+                        aria-label={`Peso real de ${nombre(d.material_id)} (declarado ${d.peso_kg} kg)`} placeholder={`${d.peso_kg}`}
+                        value={pesos[d.id] ?? ''} onChange={(x) => setPesos({ ...pesos, [d.id]: x.target.value })} /> kg</td>}
+                      <td>{e.estado === 'acreditada' ? d.puntos : '—'}</td>
+                    </tr>
+                  ))}</tbody>
+                </table>
+                {PASOS[e.estado] && <p className="ayuda">{PASOS[e.estado]}</p>}
                 <div className="acciones">
-                  {e.estado === 'registrada' && (<>
-                    {e.detalles.map((d) => (
-                      <input key={d.id} type="number" step="0.1" min="0.1" aria-label={`Peso real del detalle ${d.id}`}
-                        placeholder={`${d.peso_kg} kg`} value={pesos[d.id] ?? ''} onChange={(x) => setPesos({ ...pesos, [d.id]: x.target.value })} />
-                    ))}
-                    <button disabled={a.ocupado} onClick={() => paso(e, 'pesar', {
-                      detalles: e.detalles.map((d) => ({ id: d.id, peso_kg: Number(pesos[d.id] || d.peso_kg) })),
-                    }, `Entrega #${e.id} pesada.`)}>Pesar</button>
-                  </>)}
+                  {e.estado === 'registrada' && <button disabled={a.ocupado} onClick={() => paso(e, 'pesar', {
+                    detalles: e.detalles.map((d) => ({ id: d.id, peso_kg: Number(pesos[d.id] || d.peso_kg) })),
+                  }, `Entrega #${e.id} pesada.`)}>Confirmar pesaje</button>}
                   {e.estado === 'pesada' && <button disabled={a.ocupado} onClick={() => paso(e, 'validar', undefined, `Entrega #${e.id} validada.`)}>Validar</button>}
-                  {e.estado === 'validada' && <button disabled={a.ocupado} onClick={() => paso(e, 'acreditar', undefined, `Entrega #${e.id} acreditada.`)}>Acreditar puntos</button>}
+                  {e.estado === 'validada' && <button disabled={a.ocupado} onClick={() => paso(e, 'acreditar', undefined, (x) => `Entrega #${e.id} acreditada: ${x.detalles.reduce((t, d) => t + (d.puntos || 0), 0)} puntos.`)}>Acreditar puntos</button>}
                   {['registrada', 'pesada', 'validada'].includes(e.estado) && (<>
                     <input aria-label={`Motivo de rechazo de #${e.id}`} placeholder="Motivo de rechazo" maxLength={200}
                       value={motivo[e.id] ?? ''} onChange={(x) => setMotivo({ ...motivo, [e.id]: x.target.value })} />

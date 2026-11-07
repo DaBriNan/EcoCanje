@@ -131,12 +131,18 @@ await paso('ciudadano se registra desde la interfaz', async () => {
 });
 
 // --- Flujo de entrega (operador) ---
+await paso('el ciudadano ve su número y cómo ganar puntos', async () => {
+  await ci.getByText(`Tu número de ciudadano: ${idCi}`).waitFor();
+  await ci.getByText('Aún no tienes puntos').waitFor();
+  await ci.locator('.faltan').first().waitFor();
+});
 await paso('registrar entrega de 4 kg del material nuevo', async () => {
   await op.getByRole('button', { name: 'Entregas' }).click();
-  await op.getByLabel('Id del ciudadano').fill(String(idCi));
-  await op.getByLabel('Material').selectOption({ label: `${mat} v2 (9 pts/kg)` });
-  await op.getByLabel('Peso (kg)').fill('4');
-  await op.getByRole('button', { name: 'Registrar' }).click();
+  await op.getByLabel('Número de ciudadano').fill(String(idCi));
+  await op.getByLabel('Material 1').selectOption({ label: `${mat} v2 (9 pts/kg)` });
+  await op.getByLabel('Peso declarado 1 (kg)').fill('4');
+  await op.getByText('Puntos estimados: 36').waitFor();
+  await op.getByRole('button', { name: 'Registrar entrega' }).click();
   await avisoOk(op, 'registrada');
 });
 await paso('búsqueda de entregas por id de ciudadano', async () => {
@@ -153,7 +159,8 @@ await paso('búsqueda de entregas por id de ciudadano', async () => {
 const filaEntrega = () => op.locator('li.bloque').filter({ hasText: `ciudadano ${idCi}` }).first();
 await paso('pesar (5 kg reales), validar y acreditar', async () => {
   await filaEntrega().getByLabel(/Peso real/).fill('5');
-  await filaEntrega().getByRole('button', { name: 'Pesar' }).click();
+  await filaEntrega().getByRole('cell', { name: `${mat} v2` }).waitFor();
+  await filaEntrega().getByRole('button', { name: 'Confirmar pesaje' }).click();
   await avisoOk(op, 'pesada');
   await filaEntrega().getByRole('button', { name: 'Validar' }).click();
   await avisoOk(op, 'validada');

@@ -1,0 +1,11 @@
+ID: DEP02
+Descripción: Pods de la aplicacion en dev (repeticion)
+Fecha: 2026-11-02T12:39:43-06:00
+Ambiente: dev
+Host: fedora
+Commit: ed81c6b+cambios
+Comando: pods_sanos k3d-dev
+Esperado: todos Running/Completed
+----- salida -----
+todos los pods Running/Completed
+----- fin: OK -----

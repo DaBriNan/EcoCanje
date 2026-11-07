@@ -1,0 +1,36 @@
+ID: E14
+Descripción: Recreacion del cluster de produccion desde cero
+Fecha: 2026-11-02T13:45:55-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/crear-clusters.sh prod
+Esperado: cluster prod creado con 1 servidor y 2 workers
+----- salida -----
+[36mINFO[0m[0000] portmapping '8445:443' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] portmapping '8082:80' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] Prep: Network                                
+[36mINFO[0m[0000] Created network 'k3d-prod'                   
+[36mINFO[0m[0000] Created image volume k3d-prod-images         
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-prod-tools'               
+[36mINFO[0m[0001] Creating node 'k3d-prod-server-0'            
+[36mINFO[0m[0001] Creating node 'k3d-prod-agent-0'             
+[36mINFO[0m[0001] Creating node 'k3d-prod-agent-1'             
+[36mINFO[0m[0001] Creating LoadBalancer 'k3d-prod-serverlb'    
+[36mINFO[0m[0002] Using the k3d-tools node to gather environment information 
+[36mINFO[0m[0002] HostIP: using network gateway 172.21.0.1 address 
+[36mINFO[0m[0002] Starting cluster 'prod'                      
+[36mINFO[0m[0002] Starting servers...                          
+[36mINFO[0m[0003] Starting node 'k3d-prod-server-0'            
+[36mINFO[0m[0012] Starting agents...                           
+[36mINFO[0m[0012] Starting node 'k3d-prod-agent-1'             
+[36mINFO[0m[0012] Starting node 'k3d-prod-agent-0'             
+[36mINFO[0m[0016] Starting helpers...                          
+[36mINFO[0m[0017] Starting node 'k3d-prod-serverlb'            
+[36mINFO[0m[0023] Injecting records for hostAliases (incl. host.k3d.internal) and for 4 network members into CoreDNS configmap... 
+[36mINFO[0m[0025] Cluster 'prod' created successfully!         
+[36mINFO[0m[0025] You can now use it like this:                
+kubectl config use-context k3d-prod
+kubectl cluster-info
+----- fin: OK -----

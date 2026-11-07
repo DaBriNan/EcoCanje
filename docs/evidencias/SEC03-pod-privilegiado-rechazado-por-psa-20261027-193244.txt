@@ -1,0 +1,11 @@
+ID: SEC03
+Descripción: Pod privilegiado rechazado por PSA
+Fecha: 2026-10-27T19:32:44-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 1ab1eb0+cambios
+Comando: bash -c out=$(kubectl --context k3d-dev -n ecocanje run priv --image=busybox --privileged --restart=Never 2>&1); echo "$out" | head -3; echo "$out" | grep -q "violates PodSecurity"
+Esperado: violates PodSecurity restricted
+----- salida -----
+Error from server (Forbidden): pods "priv" is forbidden: violates PodSecurity "restricted:v1.36": privileged (container "priv" must not set securityContext.privileged=true), allowPrivilegeEscalation != false (container "priv" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "priv" must set securityContext.capabilities.drop=["ALL"]), runAsNonRoot != true (pod or container "priv" must set securityContext.runAsNonRoot=true), seccompProfile (pod or container "priv" must set securityContext.seccompProfile.type to "RuntimeDefault" or "Localhost")
+----- fin: OK -----

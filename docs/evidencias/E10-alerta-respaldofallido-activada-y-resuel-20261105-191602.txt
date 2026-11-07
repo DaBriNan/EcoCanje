@@ -1,0 +1,29 @@
+ID: E10
+Descripción: Alerta RespaldoFallido activada y resuelta (fallo por autenticacion)
+Fecha: 2026-11-05T19:16:02-06:00
+Ambiente: prod
+Host: fedora
+Commit: 95fd9c6+cambios
+Comando: scripts/provocar-alerta.sh prod respaldo
+Esperado: pg_dump falla por credencial; firing en Prometheus y Alertmanager, luego inactiva
+----- salida -----
+19:16:04 estado inicial de RespaldoFallido: inactiva
+19:16:04 FALLA: Job manual-falla-191603 de respaldo sin credencial montada (pg_dump debe fallar por autenticación)
+job.batch/manual-falla-191603 created
+job.batch/manual-falla-191603 condition met
+19:16:12 log del Job fallido:
+postgres acepta conexiones; pg_dump sin credencial:
+pg_dump: error: connection to server at "postgres" (10.43.43.22), port 5432 failed: fe_sendauth: no password supplied
+19:16:33 RespaldoFallido en prom: pending (tras 21 s)
+19:17:24 RespaldoFallido en prom: firing (tras 51 s)
+19:17:24 RespaldoFallido en am: firing (tras 0 s)
+  alertmanager: RespaldoFallido critical desde 2026-11-06T01:17:23.611Z | Un Job de respaldo termino en error
+19:17:24 ACCIÓN: eliminar el Job fallido y repetir el respaldo desde el CronJob
+job.batch "manual-falla-191603" deleted from ecocanje namespace
+job.batch/manual-ok-191724 created
+job.batch/manual-ok-191724 condition met
+respaldo_ok archivo=pg-20261106-011726.dump bytes=58024 fecha=2026-11-06T01:17:29+00:00
+19:17:53 RespaldoFallido en prom: inactiva (tras 20 s)
+19:17:54 RespaldoFallido en am: inactiva (tras 1 s)
+19:17:54 RespaldoFallido activada y resuelta
+----- fin: OK -----

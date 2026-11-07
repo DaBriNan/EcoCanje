@@ -1,0 +1,22 @@
+ID: OBS04
+Descripción: Despliegue de exportadores con fsGroup y panel
+Fecha: 2026-11-05T18:34:18-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/observabilidad.sh prod
+Esperado: exportadores Ready, reglas y panel aplicados
+----- salida -----
+serviceaccount/exportador unchanged
+configmap/panel-ecocanje created
+deployment.apps/exportador-mongo configured
+deployment.apps/exportador-postgres configured
+podmonitor.monitoring.coreos.com/exportadores unchanged
+podmonitor.monitoring.coreos.com/traefik unchanged
+prometheusrule.monitoring.coreos.com/ecocanje-alertas unchanged
+networkpolicy.networking.k8s.io/exportadores-desde-prometheus unchanged
+deployment "exportador-postgres" successfully rolled out
+Waiting for deployment "exportador-mongo" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "exportador-mongo" rollout to finish: 1 old replicas are pending termination...
+deployment "exportador-mongo" successfully rolled out
+----- fin: OK -----

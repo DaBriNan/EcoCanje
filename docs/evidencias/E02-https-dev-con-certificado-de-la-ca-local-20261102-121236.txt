@@ -1,0 +1,14 @@
+ID: E02
+Descripción: HTTPS dev con certificado de la CA local
+Fecha: 2026-11-02T12:12:36-06:00
+Ambiente: dev
+Host: fedora
+Commit: 978939b+cambios
+Comando: bash -c curl -fsS -o /dev/null -w "http=%{http_code} verify=%{ssl_verify_result}\n" https://dev.ecocanje.test:8444/api/health/live; echo | openssl s_client -connect dev.ecocanje.test:8444 -servername dev.ecocanje.test 2>/dev/null | openssl x509 -noout -subject -issuer -enddate
+Esperado: http=200 verify=0 y emisor mkcert
+----- salida -----
+http=200 verify=0
+subject=O=mkcert development certificate, OU=dann@fedora
+issuer=O=mkcert development CA, OU=dann@fedora, CN=mkcert dann@fedora
+notAfter=Feb  2 18:09:32 2029 GMT
+----- fin: OK -----

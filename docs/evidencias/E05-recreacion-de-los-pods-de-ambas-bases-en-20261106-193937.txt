@@ -1,0 +1,18 @@
+ID: E05
+Descripción: Recreacion de los Pods de ambas bases en dev sin perdida de registros
+Fecha: 2026-11-06T19:39:37-06:00
+Ambiente: dev
+Host: fedora
+Commit: 40a9a87+cambios
+Comando: tests/recreacion-datos.sh dev
+Esperado: huella identica y no vacia; mismo PVC
+----- salida -----
+antes  PostgreSQL usuarios/entregas/detalles/canjes/suma_puntos/outbox = 37/105/208/5/4900/35 | MongoDB movimientos/fichas = 35/5
+postgres-0 recreado en 8 s (Pod nuevo: sí; PVC data-postgres-0)
+mongo-0 recreado en 8 s (Pod nuevo: sí; PVC data-mongo-0)
+después PostgreSQL = 37/105/208/5/4900/35 | MongoDB = 35/5
+OK    PostgreSQL sin pérdida ni cambios -> 37/105/208/5/4900/35
+OK    MongoDB sin pérdida ni cambios -> 35/5
+OK    la aplicación responde tras la recreación -> 200
+Resultado: 3 correctas, 0 fallidas
+----- fin: OK -----

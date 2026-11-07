@@ -1,0 +1,20 @@
+# Construcción, pruebas estáticas y validación de manifiestos en cada cambio (la misma lógica que scripts/validar.sh local).
+# No publica imágenes ni toca clústeres: la promoción a producción es manual y controlada (D07, scripts/actualizacion.sh).
+name: validar
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+permissions:
+  contents: read
+jobs:
+  validar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Dependencias del script
+        run: python3 -c 'import yaml' || pip install --user pyyaml==6.0.2
+      - name: Validación y construcción de imágenes
+        run: scripts/validar.sh --imagenes

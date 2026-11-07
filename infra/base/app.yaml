@@ -1,0 +1,121 @@
+apiVersion: v1
+kind: Service
+metadata: {name: backend, labels: {app: backend}}
+spec:
+  selector: {app: backend}
+  ports: [{name: http, port: 80, targetPort: http}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: backend, labels: {app: backend}}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy: {type: RollingUpdate, rollingUpdate: {maxSurge: 1, maxUnavailable: 0}}
+  selector: {matchLabels: {app: backend}}
+  template:
+    metadata:
+      labels: {app: backend, postgres-egress: permitido, postgres-ingress: permitido, mongo-egress: permitido, mongo-ingress: permitido}
+    spec:
+      serviceAccountName: backend
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 82, runAsGroup: 82, fsGroup: 82, seccompProfile: {type: RuntimeDefault}}
+      containers:
+      - name: php
+        image: ecocanje-backend
+        imagePullPolicy: IfNotPresent
+        ports: [{name: fpm, containerPort: 9000}]
+        envFrom: [{configMapRef: {name: app-config}}]
+        env:
+        - {name: APP_KEY, valueFrom: {secretKeyRef: {name: app-runtime, key: app-key}}}
+        - {name: DB_USERNAME, value: ecocanje_app}
+        - {name: DB_PASSWORD, valueFrom: {secretKeyRef: {name: app-runtime, key: db-pass}}}
+        - {name: MONGODB_URI, valueFrom: {secretKeyRef: {name: app-runtime, key: mongodb-uri}}}
+        securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 100m, memory: 128Mi}, limits: {cpu: 500m, memory: 384Mi}}
+        livenessProbe: {tcpSocket: {port: fpm}, periodSeconds: 10, failureThreshold: 6}
+        lifecycle: {preStop: {sleep: {seconds: 5}}}   # sigue atendiendo mientras sale de los endpoints
+        volumeMounts: [{name: tmp, mountPath: /tmp}]
+      - name: nginx
+        image: nginxinc/nginx-unprivileged
+        ports: [{name: http, containerPort: 8080}]
+        securityContext: {runAsUser: 101, runAsGroup: 101, allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 20m, memory: 16Mi}, limits: {cpu: 200m, memory: 64Mi}}
+        startupProbe: {httpGet: {path: /api/health/live, port: http}, periodSeconds: 3, failureThreshold: 30}
+        readinessProbe: {httpGet: {path: /api/health/ready, port: http}, periodSeconds: 5, failureThreshold: 3}
+        livenessProbe: {httpGet: {path: /api/health/live, port: http}, periodSeconds: 10, failureThreshold: 6}
+        lifecycle: {preStop: {sleep: {seconds: 5}}}
+        volumeMounts:
+        - {name: nginx-tmp, mountPath: /tmp}
+        - {name: nginx-conf, mountPath: /etc/nginx/conf.d/default.conf, subPath: default.conf, readOnly: true}
+      volumes:
+      - {name: tmp, emptyDir: {}}
+      - {name: nginx-tmp, emptyDir: {}}
+      - {name: nginx-conf, configMap: {name: nginx-conf}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: outbox-worker, labels: {app: outbox-worker}}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: outbox-worker}}
+  template:
+    metadata:
+      labels: {app: outbox-worker, postgres-egress: permitido, postgres-ingress: permitido, mongo-egress: permitido, mongo-ingress: permitido}
+    spec:
+      serviceAccountName: backend
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 82, runAsGroup: 82, fsGroup: 82, seccompProfile: {type: RuntimeDefault}}
+      containers:
+      - name: worker
+        image: ecocanje-backend
+        imagePullPolicy: IfNotPresent
+        command: ["php", "artisan", "outbox:publicar", "--loop"]
+        envFrom: [{configMapRef: {name: app-config}}]
+        env:
+        - {name: APP_KEY, valueFrom: {secretKeyRef: {name: app-runtime, key: app-key}}}
+        - {name: DB_USERNAME, value: ecocanje_app}
+        - {name: DB_PASSWORD, valueFrom: {secretKeyRef: {name: app-runtime, key: db-pass}}}
+        - {name: MONGODB_URI, valueFrom: {secretKeyRef: {name: app-runtime, key: mongodb-uri}}}
+        securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 50m, memory: 64Mi}, limits: {cpu: 250m, memory: 192Mi}}
+        volumeMounts: [{name: tmp, mountPath: /tmp}]
+      volumes: [{name: tmp, emptyDir: {}}]
+---
+apiVersion: batch/v1
+kind: Job
+metadata: {name: migraciones, labels: {app: migraciones}}
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 900
+  template:
+    metadata:
+      labels: {app: migraciones, postgres-egress: permitido, postgres-ingress: permitido, mongo-egress: permitido, mongo-ingress: permitido}
+    spec:
+      restartPolicy: Never
+      serviceAccountName: backend
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 82, runAsGroup: 82, fsGroup: 82, seccompProfile: {type: RuntimeDefault}}
+      initContainers:
+      - name: esperar-bases
+        image: ecocanje-backend
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "until nc -z postgres 5432 && nc -z mongo 27017; do echo esperando bases; sleep 2; done"]
+        securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 10m, memory: 16Mi}, limits: {cpu: 100m, memory: 64Mi}}
+      containers:
+      - name: migrar
+        image: ecocanje-backend
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "php artisan migrate --force && php artisan mongo:preparar && php artisan db:seed --force"]
+        envFrom: [{configMapRef: {name: app-config}}]
+        env:
+        - {name: APP_KEY, valueFrom: {secretKeyRef: {name: app-runtime, key: app-key}}}
+        - {name: DB_USERNAME, value: ecocanje_migrador}
+        - {name: DB_PASSWORD, valueFrom: {secretKeyRef: {name: app-migracion, key: db-pass}}}
+        - {name: MONGODB_URI, valueFrom: {secretKeyRef: {name: app-migracion, key: mongodb-uri}}}
+        - {name: SEED_PASSWORD, valueFrom: {secretKeyRef: {name: app-migracion, key: seed-pass}}}
+        securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 100m, memory: 128Mi}, limits: {cpu: "1", memory: 384Mi}}
+        volumeMounts: [{name: tmp, mountPath: /tmp}]
+      volumes: [{name: tmp, emptyDir: {}}]

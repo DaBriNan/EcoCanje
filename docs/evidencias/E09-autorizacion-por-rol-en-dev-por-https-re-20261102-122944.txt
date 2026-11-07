@@ -1,0 +1,15 @@
+ID: E09
+Descripción: Autorizacion por rol en dev por HTTPS (repeticion con contrasena del cluster)
+Fecha: 2026-11-02T12:29:44-06:00
+Ambiente: dev
+Host: fedora
+Commit: 9f06221+cambios
+Comando: scripts/probar.sh dev tests/roles.sh
+Esperado: 200, 401, 403 y 401
+----- salida -----
+OK    operador en ruta de operador -> 200
+OK    credenciales invalidas -> 401
+OK    ciudadano en ruta de operador -> 403
+OK    sin token -> 401
+Resultado: todas correctas
+----- fin: OK -----

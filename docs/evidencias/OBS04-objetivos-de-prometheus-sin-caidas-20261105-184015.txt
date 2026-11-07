@@ -1,0 +1,11 @@
+ID: OBS04
+Descripción: Objetivos de Prometheus sin caidas
+Fecha: 2026-11-05T18:40:15-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c scripts/prom.sh prod "up == 0"; [ $? -eq 2 ]
+Esperado: up==0 sin resultados
+----- salida -----
+(sin resultados)
+----- fin: OK -----

@@ -1,0 +1,24 @@
+ID: E08
+Descripción: Conexiones permitidas y denegadas por NetworkPolicy (prod)
+Fecha: 2026-11-02T14:13:59-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: tests/netpol.sh k3d-prod
+Esperado: bloqueo por ingreso, egreso e IP directa
+----- salida -----
+OK    pods de prueba creados (4) -> 4
+OK    servicio postgres sano (readiness) -> true
+OK    servicio mongo sano (readiness) -> true
+OK    DNS resuelve el servicio en el pod intruso -> resuelve
+OK    postgres: intruso bloqueado tambien por IP directa -> bloqueado
+OK    postgres: cliente permitido -> abierto
+OK    postgres: bloqueado por INGRESO -> bloqueado
+OK    postgres: bloqueado por EGRESO -> bloqueado
+OK    postgres: intruso sin etiquetas -> bloqueado
+OK    mongo: cliente permitido -> abierto
+OK    mongo: bloqueado por INGRESO -> bloqueado
+OK    mongo: bloqueado por EGRESO -> bloqueado
+OK    mongo: intruso sin etiquetas -> bloqueado
+Resultado: 13 correctas, 0 fallidas
+----- fin: OK -----

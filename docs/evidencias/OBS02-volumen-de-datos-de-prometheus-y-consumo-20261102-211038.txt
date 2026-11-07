@@ -1,0 +1,22 @@
+ID: OBS02
+Descripción: Volumen de datos de Prometheus y consumo de la pila
+Fecha: 2026-11-02T21:10:38-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0+cambios
+Comando: bash -c kubectl --context k3d-prod -n monitoring get pvc; kubectl --context k3d-prod top pods -n monitoring; kubectl --context k3d-prod top pods -n monitoring-nodos
+Esperado: PVC Bound y consumo medido
+----- salida -----
+NAME                                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+prometheus-kps-prometheus-db-prometheus-kps-prometheus-0   Bound    pvc-dcd18c44-d36e-4504-a709-4c4713475909   3Gi        RWO            local-path     <unset>                 99m
+NAME                                     CPU(cores)   MEMORY(bytes)   
+alertmanager-kps-alertmanager-0          2m           25Mi            
+kps-grafana-9fdbd5b4f-qf425              20m          409Mi           
+kps-kube-state-metrics-59d4d4677-b5sfq   2m           16Mi            
+kps-operator-969cb86db-z4kz7             2m           21Mi            
+prometheus-kps-prometheus-0              25m          390Mi           
+NAME                  CPU(cores)   MEMORY(bytes)   
+node-exporter-kn9hk   1m           9Mi             
+node-exporter-kzgms   1m           9Mi             
+node-exporter-nqnpv   1m           9Mi             
+----- fin: OK -----

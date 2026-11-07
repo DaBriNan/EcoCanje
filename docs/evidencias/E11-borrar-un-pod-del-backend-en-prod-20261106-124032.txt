@@ -1,0 +1,16 @@
+ID: E11
+Descripción: Borrar un Pod del backend en prod
+Fecha: 2026-11-06T12:40:32-06:00
+Ambiente: prod
+Host: fedora
+Commit: 21cb157
+Comando: scripts/fallos.sh prod pod
+Esperado: recreacion medida y efecto en solicitudes por la sonda
+----- salida -----
+12:40:32 réplicas: backend-6dfcc5ddf4-dt8kr@15h backend-6dfcc5ddf4-f2gr5@15h 
+12:40:38 FALLA: borrar backend-6dfcc5ddf4-dt8kr
+pod "backend-6dfcc5ddf4-dt8kr" deleted from ecocanje namespace
+12:40:44 réplicas listas de nuevo en 6.473 s
+sonda: 65 solicitudes, 0 sin 200 (0.0%), corte continuo más largo 0.0 s
+réplicas ahora: backend-6dfcc5ddf4-4vvr6@k3d-prod-agent-1 backend-6dfcc5ddf4-f2gr5@15h 
+----- fin: OK -----

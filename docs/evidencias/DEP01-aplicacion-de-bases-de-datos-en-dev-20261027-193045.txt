@@ -1,0 +1,27 @@
+ID: DEP01
+Descripción: Aplicacion de bases de datos en dev
+Fecha: 2026-10-27T19:30:45-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1ab1eb0+cambios
+Comando: kubectl --context k3d-dev apply -k infra/dev
+Esperado: recursos creados sin advertencias de PodSecurity
+----- salida -----
+namespace/ecocanje configured
+resourcequota/cuota-ecocanje created
+serviceaccount/mongo created
+serviceaccount/postgres created
+configmap/mongo-init created
+configmap/postgres-init created
+service/mongo created
+service/postgres created
+limitrange/limites-por-defecto created
+statefulset.apps/mongo created
+statefulset.apps/postgres created
+networkpolicy.networking.k8s.io/clientes-mongo-egreso created
+networkpolicy.networking.k8s.io/clientes-postgres-egreso created
+networkpolicy.networking.k8s.io/denegar-todo created
+networkpolicy.networking.k8s.io/mongo-ingreso created
+networkpolicy.networking.k8s.io/permitir-dns created
+networkpolicy.networking.k8s.io/postgres-ingreso created
+----- fin: OK -----

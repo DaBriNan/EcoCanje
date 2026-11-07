@@ -1,0 +1,53 @@
+ID: E11
+Descripción: Drain y uncordon de agent-0 con nodeTaintsPolicy Honor
+Fecha: 2026-11-06T12:43:32-06:00
+Ambiente: prod
+Host: fedora
+Commit: 21cb157+cambios
+Comando: scripts/fallos.sh prod drain
+Esperado: replicas desalojadas se reprograman en agent-1; impacto medido
+----- salida -----
+12:43:32 nodo a mantener: k3d-prod-agent-0
+pods de ecocanje en k3d-prod-agent-0:
+  backend-579c5c6695-75vrb
+  frontend-656998b56b-kwz25
+  mongo-0
+NAME       MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+backend    1               N/A               1                     3d22h
+frontend   1               N/A               1                     7m37s
+12:43:37 MANTENIMIENTO: drain k3d-prod-agent-0 (respeta PDB; sin --force ni --disable-eviction)
+node/k3d-prod-agent-0 cordoned
+Warning: ignoring DaemonSet-managed Pods: kube-system/svclb-traefik-61db909c-9nmpz, monitoring-nodos/node-exporter-kn9hk
+evicting pod monitoring/prometheus-kps-prometheus-0
+evicting pod ecocanje/frontend-656998b56b-kwz25
+evicting pod ecocanje/backend-579c5c6695-75vrb
+evicting pod ecocanje/mongo-0
+pod/prometheus-kps-prometheus-0 evicted
+pod/mongo-0 evicted
+pod/backend-579c5c6695-75vrb evicted
+pod/frontend-656998b56b-kwz25 evicted
+node/k3d-prod-agent-0 drained
+12:43:45 drain terminó en 8 s; réplicas listas: 2
+  backend-579c5c6695-87628 Running k3d-prod-agent-1
+  backend-579c5c6695-cwc4l Running k3d-prod-agent-1
+  exportador-mongo-5c78595d59-9wtp7 Running k3d-prod-agent-1
+  exportador-postgres-5ff86d5d74-l6t49 Running k3d-prod-agent-1
+  frontend-656998b56b-p8mkx Running k3d-prod-agent-1
+  frontend-656998b56b-qd62g Running k3d-prod-agent-1
+  migraciones-c2n55 Succeeded k3d-prod-server-0
+  mongo-0 Pending 
+  outbox-worker-69fc994d5-c47p2 Running k3d-prod-agent-1
+  postgres-0 Running k3d-prod-agent-1
+capacidad del otro nodo:
+NAME                CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+k3d-prod-agent-0    419m         5%       1187Mi          4%          
+k3d-prod-agent-1    590m         7%       1023Mi          4%          
+k3d-prod-server-0   441m         5%       1170Mi          4%          
+12:44:05 uncordon k3d-prod-agent-0
+node/k3d-prod-agent-0 uncordoned
+sonda: 162 solicitudes, 0 sin 200 (0.0%), corte continuo más largo 0.0 s
+NAME                STATUS   ROLES           AGE     VERSION
+k3d-prod-agent-0    Ready    <none>          3d22h   v1.36.1+k3s1
+k3d-prod-agent-1    Ready    <none>          3d22h   v1.36.1+k3s1
+k3d-prod-server-0   Ready    control-plane   3d22h   v1.36.1+k3s1
+----- fin: OK -----

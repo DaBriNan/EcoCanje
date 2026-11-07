@@ -1,0 +1,29 @@
+sequenceDiagram
+  autonumber
+  actor O as Operador
+  participant UI as SPA (navegador)
+  participant T as Traefik (TLS)
+  participant N as nginx (backend)
+  participant L as Laravel
+  participant PG as PostgreSQL
+  O->>UI: Crear material "PET" 12 pts/kg
+  UI->>T: POST /api/materiales (Bearer)
+  T->>N: HTTP, X-Request-Id
+  N->>L: FastCGI + request_id
+  L->>L: Sanctum valida token, rol operador
+  alt Validación falla (nombre duplicado, tarifa fuera de rango)
+    L-->>UI: 422 {errors por campo}
+    UI-->>O: mensaje bajo cada campo
+  else Correcto
+    L->>PG: BEGIN, INSERT material, INSERT tarifa vigente, COMMIT
+    L-->>UI: 201 {material}
+    UI-->>O: "Material creado"
+  end
+  O->>UI: Editar tarifa a 9
+  UI->>T: POST /api/materiales/{id}/tarifas
+  L->>PG: INSERT tarifa (historial, la vigente es la más reciente)
+  O->>UI: Dar de baja (confirmación)
+  UI->>T: DELETE /api/materiales/{id}
+  L->>PG: UPDATE activo=false (baja lógica: conserva entregas)
+  L-->>UI: 204
+  Note over UI,PG: Sin token o con rol ciudadano: 401 / 403 en JSON

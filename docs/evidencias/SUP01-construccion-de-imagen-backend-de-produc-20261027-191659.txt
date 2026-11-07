@@ -1,0 +1,11 @@
+ID: SUP01
+Descripción: Construccion de imagen backend de produccion
+Fecha: 2026-10-27T19:16:59-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: b8578f9+cambios
+Comando: docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --label org.opencontainers.image.revision=b8578f9 -t ecocanje-backend:0.1.0 backend
+Esperado: imagen ecocanje-backend:0.1.0 construida
+----- salida -----
+sha256:0bd89da3e7e2a131f574e7222191b9f17268d2012e942fb10dd475e54db4485d
+----- fin: OK -----

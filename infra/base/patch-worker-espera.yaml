@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: outbox-worker}
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: esperar-bases
+        image: ecocanje-backend
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c", "until nc -z postgres 5432 && nc -z mongo 27017; do sleep 2; done"]
+        securityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+        resources: {requests: {cpu: 10m, memory: 16Mi}, limits: {cpu: 100m, memory: 64Mi}}

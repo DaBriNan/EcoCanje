@@ -1,0 +1,80 @@
+ID: E06
+Descripción: HPA bajo carga k6 con 0.1.2 (conexiones persistentes)
+Fecha: 2026-11-06T11:40:34-06:00
+Ambiente: prod
+Host: fedora
+Commit: d36699e+cambios
+Comando: scripts/carga.sh prod con-hpa
+Esperado: replicas >2 y regreso a 2; p95<1s y errores<1%
+----- salida -----
+11:40:34 1. API de métricas (requisito antes de probar)
+NAME                       CPU(cores)   MEMORY(bytes)   
+backend-6dfcc5ddf4-76vbk   6m           42Mi            
+backend-6dfcc5ddf4-cm9cs   7m           44Mi            
+backend-6dfcc5ddf4-dt8kr   5m           42Mi            
+backend-6dfcc5ddf4-f2gr5   4m           61Mi            
+backend-6dfcc5ddf4-ncrtt   5m           42Mi            
+HPA min=2 max=6 objetivo=60% actual=5%
+requests por pod (base del % del HPA): php=100m nginx=20m 
+11:40:34 1b. Esperar a que el backend esté en minReplicas=2 antes de la línea base (máx 900 s)
+11:42:50 en 2 réplicas tras 136 s
+11:42:50 2. Línea base sin carga: 300 s
+11:47:50 3. Carga con k6 (grafana/k6:2.2.0@sha256:9bd01d6941fca969cb61bb57d2da5ee9b385fe2aa8881df3798c196564d6ace6), generador limitado a 1.5 CPU en el host fedora
+
+
+  █ THRESHOLDS 
+
+    http_req_duration{scenario:consulta}
+    ✓ 'p(95)<1000' p(95)=991.87ms
+
+    http_req_failed{scenario:consulta}
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 96796   124.004447/s
+    checks_succeeded...: 100.00% 96796 out of 96796
+    checks_failed......: 0.00%   0 out of 96796
+
+    ✓ status 200
+
+    HTTP
+    http_req_duration..............: avg=256.67ms med=141.38ms p(90)=696.99ms p(95)=991.87ms p(99)=1.39s max=2.29s
+      { expected_response:true }...: avg=256.67ms med=141.38ms p(90)=696.99ms p(95)=991.87ms p(99)=1.39s max=2.29s
+      { scenario:consulta }........: avg=256.66ms med=141.38ms p(90)=696.99ms p(95)=991.87ms p(99)=1.39s max=2.29s
+    http_req_failed................: 0.00%  0 out of 96797
+      { scenario:consulta }........: 0.00%  0 out of 96796
+    http_reqs......................: 96797  124.005728/s
+
+    EXECUTION
+    iteration_duration.............: avg=1.02s    med=893.52ms p(90)=1.61s    p(95)=1.79s    p(99)=2.1s  max=2.79s
+    iterations.....................: 24199  31.001112/s
+    vus............................: 1      min=0          max=50
+    vus_max........................: 50     min=50         max=50
+
+    NETWORK
+    data_received..................: 55 MB  70 kB/s
+    data_sent......................: 4.3 MB 5.6 kB/s
+
+
+
+12:00:51 4. Sin carga: esperar regreso a minReplicas (máx 600 s; estabilización declarada 120 s)
+12:06:24 réplicas tras 333 s sin carga: 2
+12:06:44 5. Exportar series de Prometheus (1793986970 a 1793988384)
+Resumen por fase (Prometheus, paso 15 s):
+  base          réplicas max=3  rps prom=0  p95 max=- s  errores max=-  cpu backend max=0.0144 cores  pg max=8  mongo max=7
+  carga         réplicas max=6  rps prom=120  p95 max=3.04 s  errores max=0  cpu backend max=2.97 cores  pg max=38  mongo max=39
+  enfriamiento  réplicas max=6  rps prom=4.95  p95 max=0.297 s  errores max=0  cpu backend max=1.98 cores  pg max=20  mongo max=25
+12:06:45 6. Resultado
+k6 (solo escenario, sin login de setup): solicitudes totales=96797 (124.0/s)  p95=992 ms  p99=1396 ms  max=2294 ms  errores=0.00%
+umbral p95<1000 ms: CUMPLE | umbral errores<1%: CUMPLE
+réplicas: máximo observado=6, final=2 (muestreo kubectl en replicas.csv)
+archivos: docs/evidencias/carga/20261106-1140-con-hpa
+----- fin: OK -----
+
+ANALISIS (2026-11-06 12:10), tramo sostenido de 50 VUs:
+- Cumple: p95 992 ms (<1 s, con poco margen), errores 0/96797. Rendimiento 124 rps (29 rps con 0.1.1). HPA 2->6->2 (regreso en 333 s).
+- "replicas max=3" en la linea base viene de una muestra atrasada de kube-state-metrics (scrape de 30 s); el muestreo kubectl (replicas.csv) registra 2.
+- El cuello de botella se movio a la CPU del backend: php 2.83 de 3 cores (6 replicas x 500m) con 89% de throttling, en el maxReplicas del HPA.
+  PostgreSQL 0.41 de 1 core sin throttling (antes 98%); conexiones 38 de max_connections 100; MongoDB 0.05 cores y 39 conexiones; nodos 63%.

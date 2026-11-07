@@ -1,0 +1,34 @@
+ID: E10
+Descripción: Alerta AplicacionIndisponible activada y resuelta
+Fecha: 2026-11-05T19:10:52-06:00
+Ambiente: prod
+Host: fedora
+Commit: 95fd9c6+cambios
+Comando: scripts/provocar-alerta.sh prod indisponible
+Esperado: firing en Prometheus y Alertmanager, luego inactiva
+----- salida -----
+19:10:53 estado inicial de AplicacionIndisponible: inactiva
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend   2/2     2            2           3d5h
+
+NAME                                          REFERENCE            TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/backend   Deployment/backend   cpu: 13%/60%   2         6         2          3d5h
+19:10:54 FALLA: escalar backend a 0 réplicas
+deployment.apps/backend scaled
+pod/backend-c55cdbc77-hjk72 condition met
+pod/backend-c55cdbc77-pz9xj condition met
+19:10:55 HTTPS durante la falla: 503
+19:11:35 AplicacionIndisponible en prom: pending (tras 40 s)
+19:12:36 AplicacionIndisponible en prom: firing (tras 61 s)
+19:12:36 AplicacionIndisponible en am: firing (tras 0 s)
+  alertmanager: AplicacionIndisponible critical desde 2026-11-06T01:12:28.114Z | El backend no tiene ninguna replica disponible
+19:12:36 ACCIÓN: restaurar 2 réplicas (mínimo del HPA)
+deployment.apps/backend scaled
+Waiting for deployment "backend" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "backend" rollout to finish: 1 of 2 updated replicas are available...
+deployment "backend" successfully rolled out
+19:12:44 HTTPS tras la acción: 200
+19:13:05 AplicacionIndisponible en prom: inactiva (tras 21 s)
+19:13:05 AplicacionIndisponible en am: inactiva (tras 0 s)
+19:13:05 AplicacionIndisponible activada y resuelta
+----- fin: OK -----

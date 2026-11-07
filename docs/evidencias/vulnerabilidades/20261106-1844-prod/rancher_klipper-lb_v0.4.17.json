@@ -1,0 +1,1161 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.76.1"
+  },
+  "ReportID": "01a1b379-7669-7b6d-bc47-ba1734679bd4",
+  "CreatedAt": "2026-11-07T00:47:24.265755043Z",
+  "ArtifactID": "sha256:b7b47cdd04cc8976ab33662e8e357139c369ca6afac7defddefab1acad110be8",
+  "ArtifactName": "rancher/klipper-lb:v0.4.17",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 13392896,
+    "OS": {
+      "Family": "alpine",
+      "Name": "3.23.4"
+    },
+    "ImageID": "sha256:eaa1212a2b4569c811bfa0ad5708428703ad3120a6dbae3b4353ec3cb36f36d2",
+    "DiffIDs": [
+      "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1",
+      "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e",
+      "sha256:286ba4b3cc218aa049843f68f8eae5c2c374cd54b9b033746ea3656a3ba1e3ff"
+    ],
+    "RepoTags": [
+      "rancher/klipper-lb:v0.4.17"
+    ],
+    "RepoDigests": [
+      "rancher/klipper-lb@sha256:910944bb0bd94f060a82a56ca1ea1c577d3e49b3473a093a47a985f32e92d94a"
+    ],
+    "Reference": "rancher/klipper-lb:v0.4.17",
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2026-04-28T23:04:48.698977194Z",
+      "history": [
+        {
+          "created": "2026-04-15T20:01:40.139676757Z",
+          "created_by": "ADD alpine-minirootfs-3.23.4-x86_64.tar.gz / # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-04-15T20:01:40.139676757Z",
+          "created_by": "CMD [\"/bin/sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-04-28T23:04:48.68525309Z",
+          "created_by": "ARG BUILDDATE",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-04-28T23:04:48.68525309Z",
+          "created_by": "LABEL buildDate=",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-04-28T23:04:48.68525309Z",
+          "created_by": "RUN |1 BUILDDATE= /bin/sh -c apk --no-cache upgrade \u0026\u0026     apk add -U --no-cache iptables ip6tables nftables iptables-legacy \u0026\u0026     apk del libcrypto3 libssl3 apk-tools zlib # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-04-28T23:04:48.698977194Z",
+          "created_by": "COPY entry /usr/bin/ # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-04-28T23:04:48.698977194Z",
+          "created_by": "CMD [\"entry\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1",
+          "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e",
+          "sha256:286ba4b3cc218aa049843f68f8eae5c2c374cd54b9b033746ea3656a3ba1e3ff"
+        ]
+      },
+      "config": {
+        "Cmd": [
+          "entry"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ],
+        "Labels": {
+          "buildDate": ""
+        },
+        "WorkingDir": "/",
+        "ArgsEscaped": true
+      }
+    },
+    "Layers": [
+      {
+        "Size": 8732160,
+        "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+        "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+      },
+      {
+        "Size": 4655616,
+        "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+        "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+      },
+      {
+        "Size": 5120,
+        "Digest": "sha256:213c88b9c154a26b0f09d065b4efd46ae5f182eafe04ae91e9efb47459e70ec9",
+        "DiffID": "sha256:286ba4b3cc218aa049843f68f8eae5c2c374cd54b9b033746ea3656a3ba1e3ff"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "rancher/klipper-lb:v0.4.17 (alpine 3.23.4)",
+      "Class": "os-pkgs",
+      "Type": "alpine",
+      "Packages": [
+        {
+          "ID": "alpine-baselayout@3.7.2-r0",
+          "Name": "alpine-baselayout",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-baselayout@3.7.2-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "ff3090489ca40326"
+          },
+          "Version": "3.7.2-r0",
+          "Arch": "x86_64",
+          "SrcName": "alpine-baselayout",
+          "SrcVersion": "3.7.2-r0",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "alpine-baselayout-data@3.7.2-r0",
+            "busybox-binsh@1.37.0-r30"
+          ],
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:545aa6f291209af89932b761d9e422c2778596cc",
+          "InstalledFiles": [
+            "etc/motd",
+            "etc/crontabs/root",
+            "etc/modprobe.d/aliases.conf",
+            "etc/modprobe.d/blacklist.conf",
+            "etc/modprobe.d/i386.conf",
+            "etc/profile.d/20locale.sh",
+            "etc/profile.d/README",
+            "etc/profile.d/color_prompt.sh.disabled",
+            "usr/lib/sysctl.d/00-alpine.conf",
+            "var/lock",
+            "var/run",
+            "var/spool/mail",
+            "var/spool/cron/crontabs"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "alpine-baselayout-data@3.7.2-r0",
+          "Name": "alpine-baselayout-data",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-baselayout-data@3.7.2-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "78c0ed61d7df9a7e"
+          },
+          "Version": "3.7.2-r0",
+          "Arch": "x86_64",
+          "SrcName": "alpine-baselayout",
+          "SrcVersion": "3.7.2-r0",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:85816632dbce07ba7e9e7a629fa59eddbd1687fb",
+          "InstalledFiles": [
+            "etc/fstab",
+            "etc/group",
+            "etc/hostname",
+            "etc/hosts",
+            "etc/inittab",
+            "etc/modules",
+            "etc/mtab",
+            "etc/nsswitch.conf",
+            "etc/passwd",
+            "etc/profile",
+            "etc/protocols",
+            "etc/services",
+            "etc/shadow",
+            "etc/shells",
+            "etc/sysctl.conf"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "alpine-keys@2.6-r0",
+          "Name": "alpine-keys",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-keys@2.6-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "2c7cb90de388aa7d"
+          },
+          "Version": "2.6-r0",
+          "Arch": "x86_64",
+          "SrcName": "alpine-keys",
+          "SrcVersion": "2.6-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:5c45a821cd6b84d543bbd7ff12a7de1855c5cd13",
+          "InstalledFiles": [
+            "etc/apk/keys/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "etc/apk/keys/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub",
+            "etc/apk/keys/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-5243ef4b.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-524d27bb.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-58199dcc.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-58cbb476.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-58e4f17d.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-5e69ca50.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-60ac2099.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-61666e3f.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616a9724.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616abc23.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616ac3bc.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616ae350.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616db30d.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-66ba20fe.rsa.pub",
+            "usr/share/apk/keys/aarch64/alpine-devel@lists.alpinelinux.org-58199dcc.rsa.pub",
+            "usr/share/apk/keys/aarch64/alpine-devel@lists.alpinelinux.org-616ae350.rsa.pub",
+            "usr/share/apk/keys/armhf/alpine-devel@lists.alpinelinux.org-524d27bb.rsa.pub",
+            "usr/share/apk/keys/armhf/alpine-devel@lists.alpinelinux.org-616a9724.rsa.pub",
+            "usr/share/apk/keys/armv7/alpine-devel@lists.alpinelinux.org-524d27bb.rsa.pub",
+            "usr/share/apk/keys/armv7/alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+            "usr/share/apk/keys/loongarch64/alpine-devel@lists.alpinelinux.org-66ba20fe.rsa.pub",
+            "usr/share/apk/keys/mips64/alpine-devel@lists.alpinelinux.org-5e69ca50.rsa.pub",
+            "usr/share/apk/keys/ppc64le/alpine-devel@lists.alpinelinux.org-58cbb476.rsa.pub",
+            "usr/share/apk/keys/ppc64le/alpine-devel@lists.alpinelinux.org-616abc23.rsa.pub",
+            "usr/share/apk/keys/riscv64/alpine-devel@lists.alpinelinux.org-60ac2099.rsa.pub",
+            "usr/share/apk/keys/riscv64/alpine-devel@lists.alpinelinux.org-616db30d.rsa.pub",
+            "usr/share/apk/keys/s390x/alpine-devel@lists.alpinelinux.org-58e4f17d.rsa.pub",
+            "usr/share/apk/keys/s390x/alpine-devel@lists.alpinelinux.org-616ac3bc.rsa.pub",
+            "usr/share/apk/keys/x86/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "usr/share/apk/keys/x86/alpine-devel@lists.alpinelinux.org-5243ef4b.rsa.pub",
+            "usr/share/apk/keys/x86/alpine-devel@lists.alpinelinux.org-61666e3f.rsa.pub",
+            "usr/share/apk/keys/x86_64/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "usr/share/apk/keys/x86_64/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub",
+            "usr/share/apk/keys/x86_64/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "alpine-release@3.23.4-r0",
+          "Name": "alpine-release",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-release@3.23.4-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "114fb0bc8cc9ff31"
+          },
+          "Version": "3.23.4-r0",
+          "Arch": "x86_64",
+          "SrcName": "alpine-base",
+          "SrcVersion": "3.23.4-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "alpine-keys@2.6-r0"
+          ],
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:7ff0b58e52211bb31a84e2afdbcbff0620df55a1",
+          "InstalledFiles": [
+            "etc/alpine-release",
+            "etc/issue",
+            "etc/os-release",
+            "etc/secfixes.d/alpine",
+            "usr/lib/os-release"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "busybox@1.37.0-r30",
+          "Name": "busybox",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/busybox@1.37.0-r30?arch=x86_64\u0026distro=3.23.4",
+            "UID": "9647681d0b54db77"
+          },
+          "Version": "1.37.0-r30",
+          "Arch": "x86_64",
+          "SrcName": "busybox",
+          "SrcVersion": "1.37.0-r30",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Sören Tempel \u003csoeren+alpine@soeren-tempel.net\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:f1347801bb96b1aa40d17f82237c3f4ff02a4725",
+          "InstalledFiles": [
+            "bin/busybox",
+            "etc/securetty",
+            "etc/busybox-paths.d/busybox",
+            "etc/logrotate.d/acpid",
+            "etc/network/if-up.d/dad",
+            "etc/udhcpc/udhcpc.conf",
+            "usr/share/udhcpc/default.script"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "busybox-binsh@1.37.0-r30",
+          "Name": "busybox-binsh",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/busybox-binsh@1.37.0-r30?arch=x86_64\u0026distro=3.23.4",
+            "UID": "3e18d05d46a6f46f"
+          },
+          "Version": "1.37.0-r30",
+          "Arch": "x86_64",
+          "SrcName": "busybox",
+          "SrcVersion": "1.37.0-r30",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Sören Tempel \u003csoeren+alpine@soeren-tempel.net\u003e",
+          "DependsOn": [
+            "busybox@1.37.0-r30"
+          ],
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:188d2d0110afa58e8a3e3e5fd424b2d996df7a09",
+          "InstalledFiles": [
+            "bin/sh"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "gmp@6.3.0-r4",
+          "Name": "gmp",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/gmp@6.3.0-r4?arch=x86_64\u0026distro=3.23.4",
+            "UID": "994ae32f98e255f"
+          },
+          "Version": "6.3.0-r4",
+          "Arch": "x86_64",
+          "SrcName": "gmp",
+          "SrcVersion": "6.3.0-r4",
+          "Licenses": [
+            "LGPL-3.0-or-later",
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:1c9f909d5d86dcbb2e4bdbcfd23137888bb55181",
+          "InstalledFiles": [
+            "usr/lib/libgmp.so.10",
+            "usr/lib/libgmp.so.10.5.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "iptables@1.8.11-r1",
+          "Name": "iptables",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/iptables@1.8.11-r1?arch=x86_64\u0026distro=3.23.4",
+            "UID": "22b2127e15fdf336"
+          },
+          "Version": "1.8.11-r1",
+          "Arch": "x86_64",
+          "SrcName": "iptables",
+          "SrcVersion": "1.8.11-r1",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "busybox-binsh@1.37.0-r30",
+            "libmnl@1.0.5-r2",
+            "libnftnl@1.3.0-r0",
+            "libxtables@1.8.11-r1",
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:a4db93096351769444cb742a65b3a6de91fd9853",
+          "InstalledFiles": [
+            "etc/ethertypes",
+            "usr/lib/xtables/libarpt_mangle.so",
+            "usr/lib/xtables/libebt_802_3.so",
+            "usr/lib/xtables/libebt_among.so",
+            "usr/lib/xtables/libebt_arp.so",
+            "usr/lib/xtables/libebt_arpreply.so",
+            "usr/lib/xtables/libebt_dnat.so",
+            "usr/lib/xtables/libebt_ip.so",
+            "usr/lib/xtables/libebt_ip6.so",
+            "usr/lib/xtables/libebt_log.so",
+            "usr/lib/xtables/libebt_mark.so",
+            "usr/lib/xtables/libebt_mark_m.so",
+            "usr/lib/xtables/libebt_nflog.so",
+            "usr/lib/xtables/libebt_pkttype.so",
+            "usr/lib/xtables/libebt_redirect.so",
+            "usr/lib/xtables/libebt_snat.so",
+            "usr/lib/xtables/libebt_stp.so",
+            "usr/lib/xtables/libebt_vlan.so",
+            "usr/lib/xtables/libip6t_DNPT.so",
+            "usr/lib/xtables/libip6t_HL.so",
+            "usr/lib/xtables/libip6t_NETMAP.so",
+            "usr/lib/xtables/libip6t_REJECT.so",
+            "usr/lib/xtables/libip6t_SNPT.so",
+            "usr/lib/xtables/libip6t_ah.so",
+            "usr/lib/xtables/libip6t_dst.so",
+            "usr/lib/xtables/libip6t_eui64.so",
+            "usr/lib/xtables/libip6t_frag.so",
+            "usr/lib/xtables/libip6t_hbh.so",
+            "usr/lib/xtables/libip6t_hl.so",
+            "usr/lib/xtables/libip6t_icmp6.so",
+            "usr/lib/xtables/libip6t_ipv6header.so",
+            "usr/lib/xtables/libip6t_mh.so",
+            "usr/lib/xtables/libip6t_rt.so",
+            "usr/lib/xtables/libip6t_srh.so",
+            "usr/lib/xtables/libipt_CLUSTERIP.so",
+            "usr/lib/xtables/libipt_ECN.so",
+            "usr/lib/xtables/libipt_NETMAP.so",
+            "usr/lib/xtables/libipt_REJECT.so",
+            "usr/lib/xtables/libipt_TTL.so",
+            "usr/lib/xtables/libipt_ULOG.so",
+            "usr/lib/xtables/libipt_ah.so",
+            "usr/lib/xtables/libipt_icmp.so",
+            "usr/lib/xtables/libipt_realm.so",
+            "usr/lib/xtables/libipt_ttl.so",
+            "usr/lib/xtables/libxt_AUDIT.so",
+            "usr/lib/xtables/libxt_CHECKSUM.so",
+            "usr/lib/xtables/libxt_CLASSIFY.so",
+            "usr/lib/xtables/libxt_CONNMARK.so",
+            "usr/lib/xtables/libxt_CONNSECMARK.so",
+            "usr/lib/xtables/libxt_CT.so",
+            "usr/lib/xtables/libxt_DNAT.so",
+            "usr/lib/xtables/libxt_DSCP.so",
+            "usr/lib/xtables/libxt_HMARK.so",
+            "usr/lib/xtables/libxt_IDLETIMER.so",
+            "usr/lib/xtables/libxt_LED.so",
+            "usr/lib/xtables/libxt_LOG.so",
+            "usr/lib/xtables/libxt_MARK.so",
+            "usr/lib/xtables/libxt_MASQUERADE.so",
+            "usr/lib/xtables/libxt_NAT.so",
+            "usr/lib/xtables/libxt_NFLOG.so",
+            "usr/lib/xtables/libxt_NFQUEUE.so",
+            "usr/lib/xtables/libxt_NOTRACK.so",
+            "usr/lib/xtables/libxt_RATEEST.so",
+            "usr/lib/xtables/libxt_REDIRECT.so",
+            "usr/lib/xtables/libxt_SECMARK.so",
+            "usr/lib/xtables/libxt_SET.so",
+            "usr/lib/xtables/libxt_SNAT.so",
+            "usr/lib/xtables/libxt_SYNPROXY.so",
+            "usr/lib/xtables/libxt_TCPMSS.so",
+            "usr/lib/xtables/libxt_TCPOPTSTRIP.so",
+            "usr/lib/xtables/libxt_TEE.so",
+            "usr/lib/xtables/libxt_TOS.so",
+            "usr/lib/xtables/libxt_TPROXY.so",
+            "usr/lib/xtables/libxt_TRACE.so",
+            "usr/lib/xtables/libxt_addrtype.so",
+            "usr/lib/xtables/libxt_bpf.so",
+            "usr/lib/xtables/libxt_cgroup.so",
+            "usr/lib/xtables/libxt_cluster.so",
+            "usr/lib/xtables/libxt_comment.so",
+            "usr/lib/xtables/libxt_connbytes.so",
+            "usr/lib/xtables/libxt_connlimit.so",
+            "usr/lib/xtables/libxt_connmark.so",
+            "usr/lib/xtables/libxt_conntrack.so",
+            "usr/lib/xtables/libxt_cpu.so",
+            "usr/lib/xtables/libxt_dccp.so",
+            "usr/lib/xtables/libxt_devgroup.so",
+            "usr/lib/xtables/libxt_dscp.so",
+            "usr/lib/xtables/libxt_ecn.so",
+            "usr/lib/xtables/libxt_esp.so",
+            "usr/lib/xtables/libxt_hashlimit.so",
+            "usr/lib/xtables/libxt_helper.so",
+            "usr/lib/xtables/libxt_ipcomp.so",
+            "usr/lib/xtables/libxt_iprange.so",
+            "usr/lib/xtables/libxt_ipvs.so",
+            "usr/lib/xtables/libxt_length.so",
+            "usr/lib/xtables/libxt_limit.so",
+            "usr/lib/xtables/libxt_mac.so",
+            "usr/lib/xtables/libxt_mark.so",
+            "usr/lib/xtables/libxt_multiport.so",
+            "usr/lib/xtables/libxt_nfacct.so",
+            "usr/lib/xtables/libxt_osf.so",
+            "usr/lib/xtables/libxt_owner.so",
+            "usr/lib/xtables/libxt_physdev.so",
+            "usr/lib/xtables/libxt_pkttype.so",
+            "usr/lib/xtables/libxt_policy.so",
+            "usr/lib/xtables/libxt_quota.so",
+            "usr/lib/xtables/libxt_rateest.so",
+            "usr/lib/xtables/libxt_recent.so",
+            "usr/lib/xtables/libxt_rpfilter.so",
+            "usr/lib/xtables/libxt_sctp.so",
+            "usr/lib/xtables/libxt_set.so",
+            "usr/lib/xtables/libxt_socket.so",
+            "usr/lib/xtables/libxt_standard.so",
+            "usr/lib/xtables/libxt_state.so",
+            "usr/lib/xtables/libxt_statistic.so",
+            "usr/lib/xtables/libxt_string.so",
+            "usr/lib/xtables/libxt_tcp.so",
+            "usr/lib/xtables/libxt_tcpmss.so",
+            "usr/lib/xtables/libxt_time.so",
+            "usr/lib/xtables/libxt_tos.so",
+            "usr/lib/xtables/libxt_u32.so",
+            "usr/lib/xtables/libxt_udp.so",
+            "usr/sbin/arptables",
+            "usr/sbin/arptables-nft",
+            "usr/sbin/arptables-nft-restore",
+            "usr/sbin/arptables-nft-save",
+            "usr/sbin/arptables-restore",
+            "usr/sbin/arptables-save",
+            "usr/sbin/arptables-translate",
+            "usr/sbin/ebtables",
+            "usr/sbin/ebtables-nft",
+            "usr/sbin/ebtables-nft-restore",
+            "usr/sbin/ebtables-nft-save",
+            "usr/sbin/ebtables-restore",
+            "usr/sbin/ebtables-save",
+            "usr/sbin/ebtables-translate",
+            "usr/sbin/ip6tables",
+            "usr/sbin/ip6tables-apply",
+            "usr/sbin/ip6tables-nft",
+            "usr/sbin/ip6tables-nft-restore",
+            "usr/sbin/ip6tables-nft-save",
+            "usr/sbin/ip6tables-restore",
+            "usr/sbin/ip6tables-restore-translate",
+            "usr/sbin/ip6tables-save",
+            "usr/sbin/ip6tables-translate",
+            "usr/sbin/iptables",
+            "usr/sbin/iptables-apply",
+            "usr/sbin/iptables-nft",
+            "usr/sbin/iptables-nft-restore",
+            "usr/sbin/iptables-nft-save",
+            "usr/sbin/iptables-restore",
+            "usr/sbin/iptables-restore-translate",
+            "usr/sbin/iptables-save",
+            "usr/sbin/iptables-translate",
+            "usr/sbin/xtables-monitor",
+            "usr/sbin/xtables-nft-multi",
+            "usr/share/xtables/iptables.xslt"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "iptables-legacy@1.8.11-r1",
+          "Name": "iptables-legacy",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/iptables-legacy@1.8.11-r1?arch=x86_64\u0026distro=3.23.4",
+            "UID": "84c8a099c0d7fec2"
+          },
+          "Version": "1.8.11-r1",
+          "Arch": "x86_64",
+          "SrcName": "iptables",
+          "SrcVersion": "1.8.11-r1",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "libip4tc@1.8.11-r1",
+            "libip6tc@1.8.11-r1",
+            "libxtables@1.8.11-r1",
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:63013c94bdbb514a7e16e30f5a38cce83f82389e",
+          "InstalledFiles": [
+            "usr/bin/iptables-xml",
+            "usr/sbin/ip6tables-legacy",
+            "usr/sbin/ip6tables-legacy-restore",
+            "usr/sbin/ip6tables-legacy-save",
+            "usr/sbin/iptables-legacy",
+            "usr/sbin/iptables-legacy-restore",
+            "usr/sbin/iptables-legacy-save",
+            "usr/sbin/xtables-legacy-multi"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "jansson@2.14.1-r0",
+          "Name": "jansson",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/jansson@2.14.1-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "53c0f203238aba0f"
+          },
+          "Version": "2.14.1-r0",
+          "Arch": "x86_64",
+          "SrcName": "jansson",
+          "SrcVersion": "2.14.1-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:5e08e7dc7c733fd0df16280117c4a91619a5cf07",
+          "InstalledFiles": [
+            "usr/lib/libjansson.so.4",
+            "usr/lib/libjansson.so.4.14.1"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libip4tc@1.8.11-r1",
+          "Name": "libip4tc",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libip4tc@1.8.11-r1?arch=x86_64\u0026distro=3.23.4",
+            "UID": "a8ba0af0fc413087"
+          },
+          "Version": "1.8.11-r1",
+          "Arch": "x86_64",
+          "SrcName": "iptables",
+          "SrcVersion": "1.8.11-r1",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:08896201ca34abe6a036949a8492d10990e3e211",
+          "InstalledFiles": [
+            "usr/lib/libip4tc.so.2",
+            "usr/lib/libip4tc.so.2.0.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libip6tc@1.8.11-r1",
+          "Name": "libip6tc",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libip6tc@1.8.11-r1?arch=x86_64\u0026distro=3.23.4",
+            "UID": "c61b5f89b053c93"
+          },
+          "Version": "1.8.11-r1",
+          "Arch": "x86_64",
+          "SrcName": "iptables",
+          "SrcVersion": "1.8.11-r1",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:0e0017a263c6a518cedd30c567ded739f507bcc1",
+          "InstalledFiles": [
+            "usr/lib/libip6tc.so.2",
+            "usr/lib/libip6tc.so.2.0.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libmnl@1.0.5-r2",
+          "Name": "libmnl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libmnl@1.0.5-r2?arch=x86_64\u0026distro=3.23.4",
+            "UID": "ac23d5730ab4ded7"
+          },
+          "Version": "1.0.5-r2",
+          "Arch": "x86_64",
+          "SrcName": "libmnl",
+          "SrcVersion": "1.0.5-r2",
+          "Licenses": [
+            "LGPL-2.1-or-later"
+          ],
+          "Maintainer": "Francesco Colista \u003cfcolista@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:90234eccaf38c30ddefe1ada2e8b7541ba98eca9",
+          "InstalledFiles": [
+            "usr/lib/libmnl.so.0",
+            "usr/lib/libmnl.so.0.2.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libncursesw@6.5_p20251123-r0",
+          "Name": "libncursesw",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libncursesw@6.5_p20251123-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "edc30eb15f442d49"
+          },
+          "Version": "6.5_p20251123-r0",
+          "Arch": "x86_64",
+          "SrcName": "ncurses",
+          "SrcVersion": "6.5_p20251123-r0",
+          "Licenses": [
+            "X-11"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23",
+            "ncurses-terminfo-base@6.5_p20251123-r0"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:649d3041c52b80620fb50a98f5979d25ebbe1523",
+          "InstalledFiles": [
+            "usr/lib/libncursesw.so.6",
+            "usr/lib/libncursesw.so.6.5"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libnftnl@1.3.0-r0",
+          "Name": "libnftnl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libnftnl@1.3.0-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "f42404ebc0194598"
+          },
+          "Version": "1.3.0-r0",
+          "Arch": "x86_64",
+          "SrcName": "libnftnl",
+          "SrcVersion": "1.3.0-r0",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Jakub Jirutka \u003cjakub@jirutka.cz\u003e",
+          "DependsOn": [
+            "libmnl@1.0.5-r2",
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:8c098eab6305b1120e840586fc1a841ee6b8d5ce",
+          "InstalledFiles": [
+            "usr/lib/libnftnl.so.11",
+            "usr/lib/libnftnl.so.11.6.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libxtables@1.8.11-r1",
+          "Name": "libxtables",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libxtables@1.8.11-r1?arch=x86_64\u0026distro=3.23.4",
+            "UID": "621ef7c4b49b97a9"
+          },
+          "Version": "1.8.11-r1",
+          "Arch": "x86_64",
+          "SrcName": "iptables",
+          "SrcVersion": "1.8.11-r1",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:16bcb90b35d4145a094358062fdfe62344a293ed",
+          "InstalledFiles": [
+            "usr/lib/libxtables.so.12",
+            "usr/lib/libxtables.so.12.7.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "musl@1.2.5-r23",
+          "Name": "musl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/musl@1.2.5-r23?arch=x86_64\u0026distro=3.23.4",
+            "UID": "dca30b3fd6708a32"
+          },
+          "Version": "1.2.5-r23",
+          "Arch": "x86_64",
+          "SrcName": "musl",
+          "SrcVersion": "1.2.5-r23",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:1b6c50426d3c0656e9c5a567a5a59601c7f4307a",
+          "InstalledFiles": [
+            "lib/ld-musl-x86_64.so.1",
+            "lib/libc.musl-x86_64.so.1"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "musl-utils@1.2.5-r23",
+          "Name": "musl-utils",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/musl-utils@1.2.5-r23?arch=x86_64\u0026distro=3.23.4",
+            "UID": "ffcf7198a9776c5f"
+          },
+          "Version": "1.2.5-r23",
+          "Arch": "x86_64",
+          "SrcName": "musl",
+          "SrcVersion": "1.2.5-r23",
+          "Licenses": [
+            "MIT",
+            "BSD-2-Clause",
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23",
+            "scanelf@1.3.8-r2"
+          ],
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:92fdbe96d25f13fe3a3d297ada56e4fb907aacec",
+          "InstalledFiles": [
+            "sbin/ldconfig",
+            "usr/bin/getconf",
+            "usr/bin/getent",
+            "usr/bin/iconv",
+            "usr/bin/ldd"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "ncurses-terminfo-base@6.5_p20251123-r0",
+          "Name": "ncurses-terminfo-base",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/ncurses-terminfo-base@6.5_p20251123-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "5acf10991828fa7a"
+          },
+          "Version": "6.5_p20251123-r0",
+          "Arch": "x86_64",
+          "SrcName": "ncurses",
+          "SrcVersion": "6.5_p20251123-r0",
+          "Licenses": [
+            "X-11"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:57bd1d8124ec957eefea2314bdf45b0ed1068cee",
+          "InstalledFiles": [
+            "etc/terminfo/a/alacritty",
+            "etc/terminfo/a/ansi",
+            "etc/terminfo/d/dumb",
+            "etc/terminfo/g/gnome",
+            "etc/terminfo/g/gnome-256color",
+            "etc/terminfo/k/konsole",
+            "etc/terminfo/k/konsole-256color",
+            "etc/terminfo/k/konsole-linux",
+            "etc/terminfo/l/linux",
+            "etc/terminfo/p/putty",
+            "etc/terminfo/p/putty-256color",
+            "etc/terminfo/r/rxvt",
+            "etc/terminfo/r/rxvt-256color",
+            "etc/terminfo/s/screen",
+            "etc/terminfo/s/screen-256color",
+            "etc/terminfo/s/st-0.6",
+            "etc/terminfo/s/st-0.7",
+            "etc/terminfo/s/st-0.8",
+            "etc/terminfo/s/st-0.8.5",
+            "etc/terminfo/s/st-16color",
+            "etc/terminfo/s/st-256color",
+            "etc/terminfo/s/st-direct",
+            "etc/terminfo/s/sun",
+            "etc/terminfo/t/terminator",
+            "etc/terminfo/t/terminology",
+            "etc/terminfo/t/terminology-0.6.1",
+            "etc/terminfo/t/terminology-1.0.0",
+            "etc/terminfo/t/terminology-1.8.1",
+            "etc/terminfo/t/tmux",
+            "etc/terminfo/t/tmux-256color",
+            "etc/terminfo/v/vt100",
+            "etc/terminfo/v/vt102",
+            "etc/terminfo/v/vt200",
+            "etc/terminfo/v/vt220",
+            "etc/terminfo/v/vt52",
+            "etc/terminfo/v/vte",
+            "etc/terminfo/v/vte-256color",
+            "etc/terminfo/x/xterm",
+            "etc/terminfo/x/xterm-256color",
+            "etc/terminfo/x/xterm-color",
+            "etc/terminfo/x/xterm-xfree86"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "nftables@1.1.5-r2",
+          "Name": "nftables",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/nftables@1.1.5-r2?arch=x86_64\u0026distro=3.23.4",
+            "UID": "b0061f8cc8e4c72d"
+          },
+          "Version": "1.1.5-r2",
+          "Arch": "x86_64",
+          "SrcName": "nftables",
+          "SrcVersion": "1.1.5-r2",
+          "Licenses": [
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Francesco Colista \u003cfcolista@alpinelinux.org\u003e",
+          "DependsOn": [
+            "busybox-binsh@1.37.0-r30",
+            "gmp@6.3.0-r4",
+            "jansson@2.14.1-r0",
+            "libmnl@1.0.5-r2",
+            "libnftnl@1.3.0-r0",
+            "musl@1.2.5-r23",
+            "readline@8.3.1-r0"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:11e8081f1a118183461c66acc37cf0bb9161539c",
+          "InstalledFiles": [
+            "etc/nftables.nft",
+            "usr/lib/libnftables.so.1",
+            "usr/lib/libnftables.so.1.1.0",
+            "usr/sbin/nft",
+            "usr/share/nftables/all-in-one.nft",
+            "usr/share/nftables/arp-filter.nft",
+            "usr/share/nftables/bridge-filter.nft",
+            "usr/share/nftables/inet-filter.nft",
+            "usr/share/nftables/inet-nat.nft",
+            "usr/share/nftables/ipv4-filter.nft",
+            "usr/share/nftables/ipv4-mangle.nft",
+            "usr/share/nftables/ipv4-nat.nft",
+            "usr/share/nftables/ipv4-raw.nft",
+            "usr/share/nftables/ipv6-filter.nft",
+            "usr/share/nftables/ipv6-mangle.nft",
+            "usr/share/nftables/ipv6-nat.nft",
+            "usr/share/nftables/ipv6-raw.nft",
+            "usr/share/nftables/netdev-ingress.nft",
+            "usr/share/nftables/osf/pf.os"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "readline@8.3.1-r0",
+          "Name": "readline",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/readline@8.3.1-r0?arch=x86_64\u0026distro=3.23.4",
+            "UID": "6e963727578deb58"
+          },
+          "Version": "8.3.1-r0",
+          "Arch": "x86_64",
+          "SrcName": "readline",
+          "SrcVersion": "8.3.1-r0",
+          "Licenses": [
+            "GPL-3.0-or-later"
+          ],
+          "Maintainer": "Celeste \u003ccielesti@protonmail.com\u003e",
+          "DependsOn": [
+            "libncursesw@6.5_p20251123-r0",
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:3c588108f3434dc16a873d50eaf47955fad38e92342798a058e9b59f6aec4302",
+            "DiffID": "sha256:ff7ebf8e961d0ddcce6e17b84db0b7ed0b95c486e5a94d6860fa220f28f7a24e"
+          },
+          "Digest": "sha1:8aeb81b3a477f922b9b6a533381114c63dd928fe",
+          "InstalledFiles": [
+            "etc/inputrc",
+            "usr/lib/libreadline.so.8",
+            "usr/lib/libreadline.so.8.3"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "scanelf@1.3.8-r2",
+          "Name": "scanelf",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/scanelf@1.3.8-r2?arch=x86_64\u0026distro=3.23.4",
+            "UID": "4efd612ed6f16dca"
+          },
+          "Version": "1.3.8-r2",
+          "Arch": "x86_64",
+          "SrcName": "pax-utils",
+          "SrcVersion": "1.3.8-r2",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.5-r23"
+          ],
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "Digest": "sha1:6ea36dd44ef9f6364f0cdfabe09ea15d2fdbe229",
+          "InstalledFiles": [
+            "usr/bin/scanelf"
+          ],
+          "AnalyzedBy": "apk"
+        }
+      ],
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2026-107891",
+          "PkgID": "musl@1.2.5-r23",
+          "PkgName": "musl",
+          "PkgIdentifier": {
+            "PURL": "pkg:apk/alpine/musl@1.2.5-r23?arch=x86_64\u0026distro=3.23.4",
+            "UID": "dca30b3fd6708a32"
+          },
+          "InstalledVersion": "1.2.5-r23",
+          "FixedVersion": "1.2.5-r24",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107891",
+          "DataSource": {
+            "ID": "alpine",
+            "Name": "Alpine Secdb",
+            "URL": "https://secdb.alpinelinux.org/"
+          },
+          "Fingerprint": "sha256:e261e95e4c761167678d78bfa1b0dba6a15ab2e011d7a17d58dad7c988be1c3d",
+          "Title": "musl: musl: Arbitrary code execution via integer overflow in regcomp",
+          "Description": "musl libc before 1.2.7, when an untrusted regular expression is used with regcomp, has multiple integer overflows, possibly leading to incorrect allocation sizes and out-of-bounds heap writes.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-190"
+          ],
+          "VendorSeverity": {
+            "redhat": 3
+          },
+          "CVSS": {
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "V3Score": 8.1
+            }
+          },
+          "References": [
+            "http://www.openwall.com/lists/oss-security/2026/10/21/18",
+            "https://access.redhat.com/security/cve/CVE-2026-107891",
+            "https://git.musl-libc.org/cgit/musl/commit/?id=7813e9119eb5fe681b6750b8a033a0490bca0941",
+            "https://musl.libc.org",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-107891",
+            "https://www.cve.org/CVERecord?id=CVE-2026-107891",
+            "https://www.openwall.com/lists/musl/2026/10/21/1"
+          ],
+          "PublishedDate": "2026-11-05T16:17:32.15Z",
+          "LastModifiedDate": "2026-11-05T17:17:35.287Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2026-107891",
+          "PkgID": "musl-utils@1.2.5-r23",
+          "PkgName": "musl-utils",
+          "PkgIdentifier": {
+            "PURL": "pkg:apk/alpine/musl-utils@1.2.5-r23?arch=x86_64\u0026distro=3.23.4",
+            "UID": "ffcf7198a9776c5f"
+          },
+          "InstalledVersion": "1.2.5-r23",
+          "FixedVersion": "1.2.5-r24",
+          "Status": "fixed",
+          "Layer": {
+            "Digest": "sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb",
+            "DiffID": "sha256:29df493baa13de438d6d2ece3a8333032e0b7b9b9d8cce4ee82194da255f61e1"
+          },
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-107891",
+          "DataSource": {
+            "ID": "alpine",
+            "Name": "Alpine Secdb",
+            "URL": "https://secdb.alpinelinux.org/"
+          },
+          "Fingerprint": "sha256:5c94bacf44f7a586c3eb7ae3989ecc5a655e4d32ee685d1a4bb41bd8b82a3bf5",
+          "Title": "musl: musl: Arbitrary code execution via integer overflow in regcomp",
+          "Description": "musl libc before 1.2.7, when an untrusted regular expression is used with regcomp, has multiple integer overflows, possibly leading to incorrect allocation sizes and out-of-bounds heap writes.",
+          "Severity": "HIGH",
+          "CweIDs": [
+            "CWE-190"
+          ],
+          "VendorSeverity": {
+            "redhat": 3
+          },
+          "CVSS": {
+            "redhat": {
+              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+              "V3Score": 8.1
+            }
+          },
+          "References": [
+            "http://www.openwall.com/lists/oss-security/2026/10/21/18",
+            "https://access.redhat.com/security/cve/CVE-2026-107891",
+            "https://git.musl-libc.org/cgit/musl/commit/?id=7813e9119eb5fe681b6750b8a033a0490bca0941",
+            "https://musl.libc.org",
+            "https://nvd.nist.gov/vuln/detail/CVE-2026-107891",
+            "https://www.cve.org/CVERecord?id=CVE-2026-107891",
+            "https://www.openwall.com/lists/musl/2026/10/21/1"
+          ],
+          "PublishedDate": "2026-11-05T16:17:32.15Z",
+          "LastModifiedDate": "2026-11-05T17:17:35.287Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+ID: E12
+Descripción: Actualizacion 0.1.1 a 0.1.2, rollback y nueva promocion en prod
+Fecha: 2026-11-05T20:42:52-06:00
+Ambiente: prod
+Host: fedora
+Commit: 5eb23b3+cambios
+Comando: scripts/actualizacion.sh prod 0.1.2 0.1.1
+Esperado: version y funcionalidad verificadas en cada fase; sonda sin errores
+----- salida -----
+20:42:52 0. Imagen 0.1.2 en prod
+[36mINFO[0m[0017] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-prod-agent-0 -> 94410517655dd
+OK    k3d-prod-agent-1 -> 94410517655dd
+OK    k3d-prod-server-0 -> 94410517655dd
+OK    identica a la imagen aprobada (94410517655dd)
+20:43:11 1. Estado inicial
+20:43:11 versión en /health/live: sin campo version | pods: backend=ecocanje-backend:0.1.1 backend=ecocanje-backend:0.1.1 outbox-worker=ecocanje-backend:0.1.1 
+20:43:14 prueba funcional (roles): Resultado: todas correctas
+20:44:15 2. ACTUALIZACIÓN a 0.1.2 (migraciones y rolling update)
+20:44:38 actualización completa en 23 s
+  sonda actualizacion: 70 solicitudes, 3 sin 200 (4.29%)
+1         <none>
+2         <none>
+
+20:44:41 versión en /health/live: 0.1.2 | pods: backend=ecocanje-backend:0.1.2 backend=ecocanje-backend:0.1.2 outbox-worker=ecocanje-backend:0.1.1 outbox-worker=ecocanje-backend:0.1.2 
+  hay pods con otra imagen
+20:44:44 prueba funcional (roles): Resultado: todas correctas
+20:45:45 3. ROLLBACK a 0.1.1 (kubectl rollout undo)
+Warning: resource deployments/backend was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+deployment.apps/backend rolled back
+Warning: resource deployments/outbox-worker was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+deployment.apps/outbox-worker rolled back
+20:45:56 rollback completo en 11 s
+  sonda rollback: 33 solicitudes, 3 sin 200 (9.09%)
+20:45:59 versión en /health/live: sin campo version | pods: backend=ecocanje-backend:0.1.1 backend=ecocanje-backend:0.1.1 outbox-worker=ecocanje-backend:0.1.1 outbox-worker=ecocanje-backend:0.1.2 
+  hay pods con otra imagen
+20:46:02 prueba funcional (roles): Resultado: todas correctas
+20:47:03 4. NUEVA PROMOCIÓN de 0.1.2 desde el estado declarado en git (kubectl apply -k infra/prod)
+20:47:19 promoción completa en 16 s
+  sonda promocion: 49 solicitudes, 3 sin 200 (6.12%)
+20:47:23 versión en /health/live: 0.1.2 | pods: backend=ecocanje-backend:0.1.2 backend=ecocanje-backend:0.1.2 outbox-worker=ecocanje-backend:0.1.1 outbox-worker=ecocanje-backend:0.1.2 
+  hay pods con otra imagen
+20:47:26 prueba funcional (roles): Resultado: todas correctas
+----- fin: FALLA(1) -----
+
+DIAGNOSTICO: (1) "hay pods con otra imagen" fue un falso positivo: el outbox-worker anterior seguia en fase Running mientras terminaba (Terminating); se excluyen pods con deletionTimestamp. (2) Las 3 respuestas no 200 por fase son reales: el backend no tenia preStop y los contenedores se detenian antes de salir de los endpoints de Traefik. Se agrega preStop sleep 5 s y se repite.

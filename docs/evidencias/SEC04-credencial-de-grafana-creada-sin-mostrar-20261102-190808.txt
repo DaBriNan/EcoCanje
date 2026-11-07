@@ -1,0 +1,11 @@
+ID: SEC04
+Descripción: Credencial de Grafana creada sin mostrar valores
+Fecha: 2026-11-02T19:08:08-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0
+Comando: scripts/crear-secretos-monitoreo.sh k3d-prod
+Esperado: secreto creado
+----- salida -----
+creado grafana-admin (clave admin-user, admin-password)
+----- fin: OK -----

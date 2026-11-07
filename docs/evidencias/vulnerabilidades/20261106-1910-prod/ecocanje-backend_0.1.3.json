@@ -1,0 +1,4061 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.76.1"
+  },
+  "ReportID": "01a1b38e-b463-797a-bc9f-dd48f00e1232",
+  "CreatedAt": "2026-11-07T01:10:36.387624661Z",
+  "ArtifactID": "sha256:5d0193c941c4e637b2386c6eef50a752d5f8b3b9ac145b4b8df702200b289db6",
+  "ArtifactName": "ecocanje-backend:0.1.3",
+  "ArtifactType": "container_image",
+  "Metadata": {
+    "Size": 141721088,
+    "OS": {
+      "Family": "alpine",
+      "Name": "3.24.4"
+    },
+    "ImageID": "sha256:bd9da4814ae1aeb6a1d74e0748c649d0c35304d93b9b32757880f8fcf06fbbce",
+    "DiffIDs": [
+      "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064",
+      "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355",
+      "sha256:2a9bf9ac99b64ea7d4adb923e8fb77dd79bfef1a1fcd404ef0e8e8de717fd308",
+      "sha256:c7e396a56564910af3b65c6d4d1144a5d48b78f9e2a0f1f84c3f8d45c49673cd",
+      "sha256:619d31af3e0e21f9aac3bd1c269b272f8c007a00856aff5285ddf3a1043bd9f2",
+      "sha256:27846343a58b728ba5e0a84cd194141f2608d5f7cf1bec84172b42f3f8b631ad",
+      "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28",
+      "sha256:814cb379b8124adb550c7a885de35280a989446efd986dce8674bc7fe208048d",
+      "sha256:14020069f9f2fa2490a3ae62808f5ba77515e6ac141d3f297b5234e4d4505f6c",
+      "sha256:e5eef69b67c6cc7df9a6bef4dd95aa45be9ba0e102db2c90e02c54e63e9e5753",
+      "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "sha256:21f56de1c75448fd8219bc0a0e6a832c3402b7430e1fa5023df9428a88dfa0f2",
+      "sha256:b2e31c5bd5a7eaaf3cd668e68dd079da8a41747c0a7ddfbe6897a7aefdeb357f",
+      "sha256:a67134a9e56626fa9c74b6a9801ba55653ced758deb8b602ec4cb6662e0f340e",
+      "sha256:075df5459d513a7400a8cb0bf5fa4487f660b16a260f65f2552dad9167a12d9d",
+      "sha256:be78c541b2e69c13c39cd436e50acf57da9ea4a865d0e5d1422b30b496c4b57b",
+      "sha256:22586fd22cf86c56c413249b3ab3a8695b0be71951979a68f92419fd3294d045",
+      "sha256:3f4f8c992c5cef376239f20e59ffbb8196f08529cd898eaa349fb5a5f8dd8f60",
+      "sha256:419c12957eb6d1190eedc91bcfda89406cb864a96458d97b7b1bd1de6bea1b6a",
+      "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+    ],
+    "RepoTags": [
+      "ecocanje-backend:0.1.3"
+    ],
+    "RepoDigests": [
+      "ecocanje-backend@sha256:bd9da4814ae1aeb6a1d74e0748c649d0c35304d93b9b32757880f8fcf06fbbce"
+    ],
+    "Reference": "ecocanje-backend:0.1.3",
+    "ImageConfig": {
+      "architecture": "amd64",
+      "created": "2026-11-06T13:13:24.484205125-06:00",
+      "history": [
+        {
+          "created": "2026-11-05T18:00:28Z",
+          "created_by": "ADD alpine-minirootfs-3.24.4-x86_64.tar.gz / # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T18:00:28Z",
+          "created_by": "CMD [\"/bin/sh\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHPIZE_DEPS=autoconf \t\tdpkg-dev dpkg \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkgconf \t\tre2c",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "RUN /bin/sh -c apk add --no-cache \t\tca-certificates \t\tcurl \t\topenssl \t\ttar \t\txz # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "RUN /bin/sh -c set -eux; \tadduser -u 82 -D -S -G www-data www-data # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHP_INI_DIR=/usr/local/etc/php",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "RUN /bin/sh -c set -eux; \tmkdir -p \"$PHP_INI_DIR/conf.d\"; \t[ ! -d /var/www/html ]; \tmkdir -p /var/www/html; \tchown www-data:www-data /var/www/html; \tchmod 1777 /var/www/html # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHP_LDFLAGS=-Wl,-O1 -pie",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV GPG_KEYS=AFD8691FDAEDF03BDF6E460563F15A9B715376CA 9D7F99A0CB8F05C8A6958D6256A97AF7600A39A6 0616E93D95AF471243E26761770426E17EBBB3DD",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHP_VERSION=8.4.27",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHP_URL=https://www.php.net/distributions/php-8.4.27.tar.xz PHP_ASC_URL=https://www.php.net/distributions/php-8.4.27.tar.xz.asc",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:29Z",
+          "created_by": "ENV PHP_SHA256=dcf93923b0e38e0d5252b25b796520b5a47761a08b3488b6d0b5d1115764d3f0",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:00:32Z",
+          "created_by": "RUN /bin/sh -c set -eux; \t\tapk add --no-cache --virtual .fetch-deps gnupg; \t\tmkdir -p /usr/src; \tcd /usr/src; \t\tcurl -fsSL -o php.tar.xz \"$PHP_URL\"; \t\tif [ -n \"$PHP_SHA256\" ]; then \t\techo \"$PHP_SHA256 *php.tar.xz\" | sha256sum -c -; \tfi; \t\tcurl -fsSL -o php.tar.xz.asc \"$PHP_ASC_URL\"; \texport GNUPGHOME=\"$(mktemp -d)\"; \tfor key in $GPG_KEYS; do \t\tgpg --batch --keyserver keyserver.ubuntu.com --recv-keys \"$key\"; \tdone; \tgpg --batch --verify php.tar.xz.asc php.tar.xz; \tgpgconf --kill all; \trm -rf \"$GNUPGHOME\"; \t\tapk del --no-network .fetch-deps # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:00:32Z",
+          "created_by": "COPY docker-php-source /usr/local/bin/ # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:03:35Z",
+          "created_by": "RUN /bin/sh -c set -eux; \tapk add --no-cache --virtual .build-deps \t\t$PHPIZE_DEPS \t\targon2-dev \t\tcoreutils \t\tcurl-dev \t\tgnu-libiconv-dev \t\tlibsodium-dev \t\tlibxml2-dev \t\tlinux-headers \t\toniguruma-dev \t\topenssl-dev \t\treadline-dev \t\tsqlite-dev \t; \t\trm -vf /usr/include/iconv.h; \t\texport \t\tCFLAGS=\"$PHP_CFLAGS\" \t\tCPPFLAGS=\"$PHP_CPPFLAGS\" \t\tLDFLAGS=\"$PHP_LDFLAGS\" \t\tPHP_BUILD_PROVIDER='https://github.com/docker-library/php' \t\tPHP_UNAME='Linux - Docker' \t; \tdocker-php-source extract; \tcd /usr/src/php; \tgnuArch=\"$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)\"; \tcase \"$gnuArch\" in \t\t'i686-linux-'*) \t\t\texport \t\t\t\tCFLAGS=\"$CFLAGS -msse2 -mfpmath=sse\" \t\t\t\tCPPFLAGS=\"$CPPFLAGS -msse2 -mfpmath=sse\" \t\t\t; \t\t\t;; \tesac; \ttest \"$PHP_INI_DIR\" != \"${PHP_INI_DIR%/php}\"; \t./configure \t\t--build=\"$gnuArch\" \t\t--sysconfdir=\"${PHP_INI_DIR%/php}\" \t\t--with-config-file-path=\"$PHP_INI_DIR\" \t\t--with-config-file-scan-dir=\"$PHP_INI_DIR/conf.d\" \t\t\t\t--enable-option-checking=fatal \t\t\t\t--with-mhash \t\t\t\t--with-pic \t\t\t\t--enable-mbstring \t\t--enable-mysqlnd \t\t--with-password-argon2 \t\t--with-sodium=shared \t\t--with-pdo-sqlite=/usr \t\t--with-sqlite3=/usr \t\t\t\t--with-curl \t\t--with-iconv=/usr \t\t--with-openssl \t\t--with-readline \t\t--with-zlib \t\t\t\t--disable-phpdbg \t\t\t\t--with-pear \t\t\t\t\t\t--disable-cgi \t\t\t\t--enable-fpm \t\t--with-fpm-user=www-data \t\t--with-fpm-group=www-data \t; \tmake -j \"$(nproc)\"; \tfind -type f -name '*.a' -delete; \tmake install; \tfind \t\t/usr/local \t\t-type f \t\t-perm '/0111' \t\t-exec sh -euxc ' \t\t\tstrip --strip-all \"$@\" || : \t\t' -- '{}' + \t; \tmake clean; \t\tcp -v php.ini-* \"$PHP_INI_DIR/\"; \t\tcd /; \tdocker-php-source delete; \t\trunDeps=\"$( \t\tscanelf --needed --nobanner --format '%n#p' --recursive /usr/local \t\t\t| tr ',' '\\n' \t\t\t| sort -u \t\t\t| awk 'system(\"[ -e /usr/local/lib/\" $1 \" ]\") == 0 { next } { print \"so:\" $1 }' \t)\"; \tapk add --no-cache $runDeps; \t\tapk del --no-network .build-deps; \t\tpecl update-channels; \trm -rf /tmp/pear ~/.pearrc; \t\tphp --version # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:03:35Z",
+          "created_by": "COPY docker-php-ext-* docker-php-entrypoint /usr/local/bin/ # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "RUN /bin/sh -c docker-php-ext-enable opcache # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "RUN /bin/sh -c docker-php-ext-enable sodium # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "ENTRYPOINT [\"docker-php-entrypoint\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "WORKDIR /var/www/html",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "RUN /bin/sh -c set -eux; \tcd \"${PHP_INI_DIR%/php}\"; \t\tcp -v php-fpm.conf.default php-fpm.conf; \tcp -v php-fpm.d/www.conf.default php-fpm.d/www.conf; \t\tgrep -E '^listen = 127.0.0.1:9000' php-fpm.d/www.conf; \tsed -ri 's/^(listen = 127.0.0.1:9000)/;\\1/' php-fpm.d/www.conf; \tgrep -E '^;listen = 127.0.0.1:9000' php-fpm.d/www.conf; \t\t{ \t\techo '[global]'; \t\techo 'error_log = /proc/self/fd/2'; \t\techo; echo '; https://github.com/docker-library/php/pull/725#issuecomment-443540114'; echo 'log_limit = 8192'; \t\techo; \t\techo '[www]'; \t\techo '; php-fpm closes STDOUT on startup, so sending logs to /proc/self/fd/1 does not work.'; \t\techo '; https://bugs.php.net/bug.php?id=73886'; \t\techo 'access.log = /proc/self/fd/2'; \t\techo; \t\techo 'clear_env = no'; \t\techo; \t\techo '; Ensure worker stdout and stderr are sent to the main error log.'; \t\techo 'catch_workers_output = yes'; \t\techo 'decorate_workers_output = no'; \t\techo; \t\techo '; default listen address for easy override in later php-fpm.d/*.conf files'; \t\techo 'listen = 9000'; \t} | tee php-fpm.d/docker.conf; \t{ \t\techo '[global]'; \t\techo 'daemonize = no'; \t\techo; \t\techo '; the [www] ini section below is for backwards compatibility and will be removed in 8.6+'; \t\techo '[www]'; \t} | tee php-fpm.d/zz-docker.conf; \tmkdir -p \"$PHP_INI_DIR/conf.d\"; \t{ \t\techo '; https://github.com/docker-library/php/issues/878#issuecomment-938595965'; \t\techo 'fastcgi.logging = Off'; \t} \u003e \"$PHP_INI_DIR/conf.d/docker-fpm.ini\" # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "STOPSIGNAL SIGQUIT",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "EXPOSE map[9000/tcp:{}]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-05T19:03:36Z",
+          "created_by": "CMD [\"php-fpm\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-06T19:03:41Z",
+          "created_by": "ARG APP_VERSION=0.1.3",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-06T19:03:41Z",
+          "created_by": "ENV APP_VERSION=0.1.3",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-06T19:03:41Z",
+          "created_by": "RUN |1 APP_VERSION=0.1.3 /bin/sh -c apk add --no-cache libpq # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:03:41Z",
+          "created_by": "COPY /usr/local/lib/php/extensions /usr/local/lib/php/extensions # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:03:41Z",
+          "created_by": "COPY /usr/local/etc/php/conf.d /usr/local/etc/php/conf.d # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:03:42Z",
+          "created_by": "RUN |1 APP_VERSION=0.1.3 /bin/sh -c cp \"$PHP_INI_DIR/php.ini-production\" \"$PHP_INI_DIR/php.ini\" # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:03:42Z",
+          "created_by": "COPY docker/php-prod.ini /usr/local/etc/php/conf.d/zz-ecocanje.ini # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:03:42Z",
+          "created_by": "COPY docker/fpm.conf /usr/local/etc/php-fpm.d/zz-ecocanje.conf # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:03:42Z",
+          "created_by": "WORKDIR /app",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:13:24Z",
+          "created_by": "COPY /app /app # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2026-11-06T19:13:24Z",
+          "created_by": "USER www-data",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-06T19:13:24Z",
+          "created_by": "EXPOSE [9000/tcp]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        },
+        {
+          "created": "2026-11-06T19:13:24Z",
+          "created_by": "CMD [\"php-fpm\"]",
+          "comment": "buildkit.dockerfile.v0",
+          "empty_layer": true
+        }
+      ],
+      "os": "linux",
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064",
+          "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355",
+          "sha256:2a9bf9ac99b64ea7d4adb923e8fb77dd79bfef1a1fcd404ef0e8e8de717fd308",
+          "sha256:c7e396a56564910af3b65c6d4d1144a5d48b78f9e2a0f1f84c3f8d45c49673cd",
+          "sha256:619d31af3e0e21f9aac3bd1c269b272f8c007a00856aff5285ddf3a1043bd9f2",
+          "sha256:27846343a58b728ba5e0a84cd194141f2608d5f7cf1bec84172b42f3f8b631ad",
+          "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28",
+          "sha256:814cb379b8124adb550c7a885de35280a989446efd986dce8674bc7fe208048d",
+          "sha256:14020069f9f2fa2490a3ae62808f5ba77515e6ac141d3f297b5234e4d4505f6c",
+          "sha256:e5eef69b67c6cc7df9a6bef4dd95aa45be9ba0e102db2c90e02c54e63e9e5753",
+          "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "sha256:21f56de1c75448fd8219bc0a0e6a832c3402b7430e1fa5023df9428a88dfa0f2",
+          "sha256:b2e31c5bd5a7eaaf3cd668e68dd079da8a41747c0a7ddfbe6897a7aefdeb357f",
+          "sha256:a67134a9e56626fa9c74b6a9801ba55653ced758deb8b602ec4cb6662e0f340e",
+          "sha256:075df5459d513a7400a8cb0bf5fa4487f660b16a260f65f2552dad9167a12d9d",
+          "sha256:be78c541b2e69c13c39cd436e50acf57da9ea4a865d0e5d1422b30b496c4b57b",
+          "sha256:22586fd22cf86c56c413249b3ab3a8695b0be71951979a68f92419fd3294d045",
+          "sha256:3f4f8c992c5cef376239f20e59ffbb8196f08529cd898eaa349fb5a5f8dd8f60",
+          "sha256:419c12957eb6d1190eedc91bcfda89406cb864a96458d97b7b1bd1de6bea1b6a",
+          "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+        ]
+      },
+      "config": {
+        "Cmd": [
+          "php-fpm"
+        ],
+        "Entrypoint": [
+          "docker-php-entrypoint"
+        ],
+        "Env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "PHPIZE_DEPS=autoconf \t\tdpkg-dev dpkg \t\tfile \t\tg++ \t\tgcc \t\tlibc-dev \t\tmake \t\tpkgconf \t\tre2c",
+          "PHP_INI_DIR=/usr/local/etc/php",
+          "PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+          "PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64",
+          "PHP_LDFLAGS=-Wl,-O1 -pie",
+          "GPG_KEYS=AFD8691FDAEDF03BDF6E460563F15A9B715376CA 9D7F99A0CB8F05C8A6958D6256A97AF7600A39A6 0616E93D95AF471243E26761770426E17EBBB3DD",
+          "PHP_VERSION=8.4.27",
+          "PHP_URL=https://www.php.net/distributions/php-8.4.27.tar.xz",
+          "PHP_ASC_URL=https://www.php.net/distributions/php-8.4.27.tar.xz.asc",
+          "PHP_SHA256=dcf93923b0e38e0d5252b25b796520b5a47761a08b3488b6d0b5d1115764d3f0",
+          "APP_VERSION=0.1.3"
+        ],
+        "Labels": {
+          "org.opencontainers.image.revision": "ef9a452",
+          "org.opencontainers.image.version": "0.1.3"
+        },
+        "User": "www-data",
+        "WorkingDir": "/app",
+        "ExposedPorts": {
+          "9000/tcp": {}
+        },
+        "ArgsEscaped": true,
+        "StopSignal": "SIGQUIT"
+      }
+    },
+    "Layers": [
+      {
+        "Size": 8713728,
+        "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+        "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+      },
+      {
+        "Size": 7656960,
+        "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+        "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+      },
+      {
+        "Size": 10240,
+        "Digest": "sha256:7d3539f881371a0c2af7962298186e8fd40193970d4229473ac57a59876bb7d1",
+        "DiffID": "sha256:2a9bf9ac99b64ea7d4adb923e8fb77dd79bfef1a1fcd404ef0e8e8de717fd308"
+      },
+      {
+        "Size": 5120,
+        "Digest": "sha256:9c159b3858801982d74317e0a3da608eb14c8c437a6c5b5af1a222ff25fd6877",
+        "DiffID": "sha256:c7e396a56564910af3b65c6d4d1144a5d48b78f9e2a0f1f84c3f8d45c49673cd"
+      },
+      {
+        "Size": 13915136,
+        "Digest": "sha256:40cb4b0bdb7371ce619d5c044008b0a19c9c31a0c987caff2c3934763dc7e438",
+        "DiffID": "sha256:619d31af3e0e21f9aac3bd1c269b272f8c007a00856aff5285ddf3a1043bd9f2"
+      },
+      {
+        "Size": 4096,
+        "Digest": "sha256:9ecd5fe73551c12fb13558d77f29a23e74410ec7a638a403d5f04a03cc38253e",
+        "DiffID": "sha256:27846343a58b728ba5e0a84cd194141f2608d5f7cf1bec84172b42f3f8b631ad"
+      },
+      {
+        "Size": 60358144,
+        "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+        "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+      },
+      {
+        "Size": 12800,
+        "Digest": "sha256:8ef6e8d2d0d6fc7ccdb8478a9f54a5d0bd12ef5aca78f1374544bb0009fa680f",
+        "DiffID": "sha256:814cb379b8124adb550c7a885de35280a989446efd986dce8674bc7fe208048d"
+      },
+      {
+        "Size": 67072,
+        "Digest": "sha256:c795d6c145531a3050523433cb640bef64c836df11eccf0893eebd27096204b3",
+        "DiffID": "sha256:14020069f9f2fa2490a3ae62808f5ba77515e6ac141d3f297b5234e4d4505f6c"
+      },
+      {
+        "Size": 68096,
+        "Digest": "sha256:53f732ce9457613e1349cbc210db5d7e13033b2a659e901296e7eb0814830328",
+        "DiffID": "sha256:e5eef69b67c6cc7df9a6bef4dd95aa45be9ba0e102db2c90e02c54e63e9e5753"
+      },
+      {
+        "Size": 1024,
+        "Digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+        "DiffID": "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef"
+      },
+      {
+        "Size": 36864,
+        "Digest": "sha256:3f59a7e74698b19bdb404b43b3c3c2984abe4df92042ca6af7872a6657461cf1",
+        "DiffID": "sha256:21f56de1c75448fd8219bc0a0e6a832c3402b7430e1fa5023df9428a88dfa0f2"
+      },
+      {
+        "Size": 424960,
+        "Digest": "sha256:8f1a34ee597d4d4a2b3b4f55faf0a3aaee4647ed555684f477d6f2e9327a450f",
+        "DiffID": "sha256:b2e31c5bd5a7eaaf3cd668e68dd079da8a41747c0a7ddfbe6897a7aefdeb357f"
+      },
+      {
+        "Size": 14743552,
+        "Digest": "sha256:2dc5a63b1f65dcb949bd7ae812e1918cd1975dc0841caf9ba57f3711ef6c3223",
+        "DiffID": "sha256:a67134a9e56626fa9c74b6a9801ba55653ced758deb8b602ec4cb6662e0f340e"
+      },
+      {
+        "Size": 5632,
+        "Digest": "sha256:e64c07a1a295e65828c3709c80b1d6206d95c86d43828e87ccf4e27b9fb6b744",
+        "DiffID": "sha256:075df5459d513a7400a8cb0bf5fa4487f660b16a260f65f2552dad9167a12d9d"
+      },
+      {
+        "Size": 72704,
+        "Digest": "sha256:7c08a4aa0974c25ad409d8210f087afde219e70a6f58de9220edc068f2b3bc18",
+        "DiffID": "sha256:be78c541b2e69c13c39cd436e50acf57da9ea4a865d0e5d1422b30b496c4b57b"
+      },
+      {
+        "Size": 4608,
+        "Digest": "sha256:c42470218e20988f4a4bd24a86ffd4011d25f2f4de5b50fbeb3e2348e73784e0",
+        "DiffID": "sha256:22586fd22cf86c56c413249b3ab3a8695b0be71951979a68f92419fd3294d045"
+      },
+      {
+        "Size": 4096,
+        "Digest": "sha256:fbde9616c5157bd6084f9a42ce4fcd36d62797bc2c1ab89017ec821cfd3a252d",
+        "DiffID": "sha256:3f4f8c992c5cef376239f20e59ffbb8196f08529cd898eaa349fb5a5f8dd8f60"
+      },
+      {
+        "Size": 1536,
+        "Digest": "sha256:fcfe04ce1d38cf9500ff09535320b1bd9dd16773b112b2d75d47647ebc30767b",
+        "DiffID": "sha256:419c12957eb6d1190eedc91bcfda89406cb864a96458d97b7b1bd1de6bea1b6a"
+      },
+      {
+        "Size": 35614720,
+        "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+        "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+      }
+    ]
+  },
+  "Results": [
+    {
+      "Target": "ecocanje-backend:0.1.3 (alpine 3.24.4)",
+      "Class": "os-pkgs",
+      "Type": "alpine",
+      "Packages": [
+        {
+          "ID": "acl-libs@2.3.2-r1",
+          "Name": "acl-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/acl-libs@2.3.2-r1?arch=x86_64\u0026distro=3.24.4",
+            "UID": "89e44e4ab0414d12"
+          },
+          "Version": "2.3.2-r1",
+          "Arch": "x86_64",
+          "SrcName": "acl",
+          "SrcVersion": "2.3.2-r1",
+          "Licenses": [
+            "LGPL-2.1-or-later",
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:8ca52f792c379ef59a091f5ea6b0bca6157c6aa0",
+          "InstalledFiles": [
+            "usr/lib/libacl.so.1",
+            "usr/lib/libacl.so.1.1.2302"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "alpine-baselayout@3.7.2-r1",
+          "Name": "alpine-baselayout",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-baselayout@3.7.2-r1?arch=x86_64\u0026distro=3.24.4",
+            "UID": "1b9c543300f8073e"
+          },
+          "Version": "3.7.2-r1",
+          "Arch": "x86_64",
+          "SrcName": "alpine-baselayout",
+          "SrcVersion": "3.7.2-r1",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "alpine-baselayout-data@3.7.2-r1",
+            "busybox-binsh@1.37.0-r31"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:f0fcfdc2f4da058af6473bc45c4eab62916225b2",
+          "InstalledFiles": [
+            "etc/motd",
+            "etc/crontabs/root",
+            "etc/modprobe.d/aliases.conf",
+            "etc/modprobe.d/blacklist.conf",
+            "etc/modprobe.d/i386.conf",
+            "etc/profile.d/20locale.sh",
+            "etc/profile.d/README",
+            "etc/profile.d/color_prompt.sh.disabled",
+            "usr/lib/sysctl.d/00-alpine.conf",
+            "var/lock",
+            "var/run",
+            "var/spool/mail",
+            "var/spool/cron/crontabs"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "alpine-baselayout-data@3.7.2-r1",
+          "Name": "alpine-baselayout-data",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-baselayout-data@3.7.2-r1?arch=x86_64\u0026distro=3.24.4",
+            "UID": "fcc3cd90122d8aa7"
+          },
+          "Version": "3.7.2-r1",
+          "Arch": "x86_64",
+          "SrcName": "alpine-baselayout",
+          "SrcVersion": "3.7.2-r1",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:c6f9bded17d844b6f1b0bb5766d2c35c0d5c8508",
+          "InstalledFiles": [
+            "etc/fstab",
+            "etc/group",
+            "etc/hostname",
+            "etc/hosts",
+            "etc/inittab",
+            "etc/modules",
+            "etc/mtab",
+            "etc/nsswitch.conf",
+            "etc/passwd",
+            "etc/profile",
+            "etc/protocols",
+            "etc/services",
+            "etc/shadow",
+            "etc/shells",
+            "etc/sysctl.conf"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "alpine-keys@2.6-r0",
+          "Name": "alpine-keys",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-keys@2.6-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "cb1f6c8fa74713e0"
+          },
+          "Version": "2.6-r0",
+          "Arch": "x86_64",
+          "SrcName": "alpine-keys",
+          "SrcVersion": "2.6-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:d8d6b80e53c059a77e4915da78ba964f3ffea240",
+          "InstalledFiles": [
+            "etc/apk/keys/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "etc/apk/keys/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub",
+            "etc/apk/keys/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-5243ef4b.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-524d27bb.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-58199dcc.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-58cbb476.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-58e4f17d.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-5e69ca50.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-60ac2099.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-61666e3f.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616a9724.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616abc23.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616ac3bc.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616ae350.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-616db30d.rsa.pub",
+            "usr/share/apk/keys/alpine-devel@lists.alpinelinux.org-66ba20fe.rsa.pub",
+            "usr/share/apk/keys/aarch64/alpine-devel@lists.alpinelinux.org-58199dcc.rsa.pub",
+            "usr/share/apk/keys/aarch64/alpine-devel@lists.alpinelinux.org-616ae350.rsa.pub",
+            "usr/share/apk/keys/armhf/alpine-devel@lists.alpinelinux.org-524d27bb.rsa.pub",
+            "usr/share/apk/keys/armhf/alpine-devel@lists.alpinelinux.org-616a9724.rsa.pub",
+            "usr/share/apk/keys/armv7/alpine-devel@lists.alpinelinux.org-524d27bb.rsa.pub",
+            "usr/share/apk/keys/armv7/alpine-devel@lists.alpinelinux.org-616adfeb.rsa.pub",
+            "usr/share/apk/keys/loongarch64/alpine-devel@lists.alpinelinux.org-66ba20fe.rsa.pub",
+            "usr/share/apk/keys/mips64/alpine-devel@lists.alpinelinux.org-5e69ca50.rsa.pub",
+            "usr/share/apk/keys/ppc64le/alpine-devel@lists.alpinelinux.org-58cbb476.rsa.pub",
+            "usr/share/apk/keys/ppc64le/alpine-devel@lists.alpinelinux.org-616abc23.rsa.pub",
+            "usr/share/apk/keys/riscv64/alpine-devel@lists.alpinelinux.org-60ac2099.rsa.pub",
+            "usr/share/apk/keys/riscv64/alpine-devel@lists.alpinelinux.org-616db30d.rsa.pub",
+            "usr/share/apk/keys/s390x/alpine-devel@lists.alpinelinux.org-58e4f17d.rsa.pub",
+            "usr/share/apk/keys/s390x/alpine-devel@lists.alpinelinux.org-616ac3bc.rsa.pub",
+            "usr/share/apk/keys/x86/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "usr/share/apk/keys/x86/alpine-devel@lists.alpinelinux.org-5243ef4b.rsa.pub",
+            "usr/share/apk/keys/x86/alpine-devel@lists.alpinelinux.org-61666e3f.rsa.pub",
+            "usr/share/apk/keys/x86_64/alpine-devel@lists.alpinelinux.org-4a6a0840.rsa.pub",
+            "usr/share/apk/keys/x86_64/alpine-devel@lists.alpinelinux.org-5261cecb.rsa.pub",
+            "usr/share/apk/keys/x86_64/alpine-devel@lists.alpinelinux.org-6165ee59.rsa.pub"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "alpine-release@3.24.4-r0",
+          "Name": "alpine-release",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/alpine-release@3.24.4-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "15b8e9817f0698d8"
+          },
+          "Version": "3.24.4-r0",
+          "Arch": "x86_64",
+          "SrcName": "alpine-base",
+          "SrcVersion": "3.24.4-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "alpine-keys@2.6-r0"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:87bf87b1072870b784437d26bbbb7ab4df851590",
+          "InstalledFiles": [
+            "etc/alpine-release",
+            "etc/issue",
+            "etc/os-release",
+            "etc/secfixes.d/alpine",
+            "usr/lib/os-release"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "apk-tools@3.0.9-r0",
+          "Name": "apk-tools",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/apk-tools@3.0.9-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "cee1f7d4978ea6b0"
+          },
+          "Version": "3.0.9-r0",
+          "Arch": "x86_64",
+          "SrcName": "apk-tools",
+          "SrcVersion": "3.0.9-r0",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "ca-certificates-bundle@20261020-r0",
+            "libapk@3.0.9-r0",
+            "libcrypto3@3.5.9-r0",
+            "musl@1.2.6-r3",
+            "zlib@1.3.2-r1"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:27bc7866754fcf6b1eb12774b5c8e6c0842390d6",
+          "InstalledFiles": [
+            "sbin/apk"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "argon2-libs@20190702-r5",
+          "Name": "argon2-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/argon2-libs@20190702-r5?arch=x86_64\u0026distro=3.24.4",
+            "UID": "8e4784dbf3f821c"
+          },
+          "Version": "20190702-r5",
+          "Arch": "x86_64",
+          "SrcName": "argon2",
+          "SrcVersion": "20190702-r5",
+          "Licenses": [
+            "Apache-2.0",
+            "CC0-1.0"
+          ],
+          "Maintainer": "Corey Oliver \u003ccoreyjonoliver@gmail.com\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:de7c31b35f6df74e77195220bf96b9865479819a",
+          "InstalledFiles": [
+            "usr/lib/libargon2.so.1"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "brotli-libs@1.2.1-r0",
+          "Name": "brotli-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/brotli-libs@1.2.1-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "ea7f1b0dd8326b2a"
+          },
+          "Version": "1.2.1-r0",
+          "Arch": "x86_64",
+          "SrcName": "brotli",
+          "SrcVersion": "1.2.1-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "prspkt \u003cprspkt@protonmail.com\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:f482d0e3f6ec36fd4910358472c6b48be6388584",
+          "InstalledFiles": [
+            "usr/lib/libbrotlicommon.so.1",
+            "usr/lib/libbrotlicommon.so.1.2.1",
+            "usr/lib/libbrotlidec.so.1",
+            "usr/lib/libbrotlidec.so.1.2.1",
+            "usr/lib/libbrotlienc.so.1",
+            "usr/lib/libbrotlienc.so.1.2.1"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "busybox@1.37.0-r31",
+          "Name": "busybox",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/busybox@1.37.0-r31?arch=x86_64\u0026distro=3.24.4",
+            "UID": "fc424f8052296b79"
+          },
+          "Version": "1.37.0-r31",
+          "Arch": "x86_64",
+          "SrcName": "busybox",
+          "SrcVersion": "1.37.0-r31",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Sören Tempel \u003csoeren+alpine@soeren-tempel.net\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:b5405ebc02f7dd8be95b6265c54b243d5456ab8f",
+          "InstalledFiles": [
+            "bin/busybox",
+            "etc/securetty",
+            "etc/busybox-paths.d/busybox",
+            "etc/logrotate.d/acpid",
+            "etc/network/if-up.d/dad",
+            "etc/udhcpc/udhcpc.conf",
+            "usr/share/udhcpc/default.script"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "busybox-binsh@1.37.0-r31",
+          "Name": "busybox-binsh",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/busybox-binsh@1.37.0-r31?arch=x86_64\u0026distro=3.24.4",
+            "UID": "1ec8a3d5d2b63297"
+          },
+          "Version": "1.37.0-r31",
+          "Arch": "x86_64",
+          "SrcName": "busybox",
+          "SrcVersion": "1.37.0-r31",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Sören Tempel \u003csoeren+alpine@soeren-tempel.net\u003e",
+          "DependsOn": [
+            "busybox@1.37.0-r31"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:5cbd14acc6f1804c5bac6c77dc2c492f010b0fc7",
+          "InstalledFiles": [
+            "bin/sh"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "c-ares@1.34.9-r0",
+          "Name": "c-ares",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/c-ares@1.34.9-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "5b0d161f56be5c20"
+          },
+          "Version": "1.34.9-r0",
+          "Arch": "x86_64",
+          "SrcName": "c-ares",
+          "SrcVersion": "1.34.9-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Carlo Landmeter \u003cclandmeter@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:ed15eba84c2a3b24f9efe1941a1dd70c8b5825d2",
+          "InstalledFiles": [
+            "usr/lib/libcares.so.2",
+            "usr/lib/libcares.so.2.19.8"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "ca-certificates@20261020-r0",
+          "Name": "ca-certificates",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/ca-certificates@20261020-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "6e5aa65436c21892"
+          },
+          "Version": "20261020-r0",
+          "Arch": "x86_64",
+          "SrcName": "ca-certificates",
+          "SrcVersion": "20261020-r0",
+          "Licenses": [
+            "MPL-2.0",
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "busybox-binsh@1.37.0-r31",
+            "libcrypto3@3.5.9-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:bb910099b0e7b8aaf6c91497986fdca3abb13d35",
+          "InstalledFiles": [
+            "etc/ca-certificates.conf",
+            "etc/apk/protected_paths.d/ca-certificates.list",
+            "etc/ca-certificates/update.d/certhash",
+            "usr/bin/c_rehash",
+            "usr/sbin/update-ca-certificates",
+            "usr/share/ca-certificates/mozilla/ACCVRAIZ1.crt",
+            "usr/share/ca-certificates/mozilla/AC_RAIZ_FNMT-RCM.crt",
+            "usr/share/ca-certificates/mozilla/AC_RAIZ_FNMT-RCM_SERVIDORES_SEGUROS.crt",
+            "usr/share/ca-certificates/mozilla/ANF_Secure_Server_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/Actalis_Authentication_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/Amazon_Root_CA_1.crt",
+            "usr/share/ca-certificates/mozilla/Amazon_Root_CA_2.crt",
+            "usr/share/ca-certificates/mozilla/Amazon_Root_CA_3.crt",
+            "usr/share/ca-certificates/mozilla/Amazon_Root_CA_4.crt",
+            "usr/share/ca-certificates/mozilla/Atos_TrustedRoot_Root_CA_ECC_TLS_2021.crt",
+            "usr/share/ca-certificates/mozilla/Atos_TrustedRoot_Root_CA_RSA_TLS_2021.crt",
+            "usr/share/ca-certificates/mozilla/Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.crt",
+            "usr/share/ca-certificates/mozilla/BJCA_Global_Root_CA1.crt",
+            "usr/share/ca-certificates/mozilla/BJCA_Global_Root_CA2.crt",
+            "usr/share/ca-certificates/mozilla/Buypass_Class_2_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/Buypass_Class_3_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/CA_Disig_Root_R2.crt",
+            "usr/share/ca-certificates/mozilla/CFCA_EV_ROOT.crt",
+            "usr/share/ca-certificates/mozilla/COMODO_ECC_Certification_Authority.crt",
+            "usr/share/ca-certificates/mozilla/COMODO_RSA_Certification_Authority.crt",
+            "usr/share/ca-certificates/mozilla/Certainly_Root_E1.crt",
+            "usr/share/ca-certificates/mozilla/Certainly_Root_R1.crt",
+            "usr/share/ca-certificates/mozilla/Certigna_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/Certum_EC-384_CA.crt",
+            "usr/share/ca-certificates/mozilla/Certum_Trusted_Network_CA.crt",
+            "usr/share/ca-certificates/mozilla/Certum_Trusted_Network_CA_2.crt",
+            "usr/share/ca-certificates/mozilla/Certum_Trusted_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/D-TRUST_BR_Root_CA_1_2020.crt",
+            "usr/share/ca-certificates/mozilla/D-TRUST_BR_Root_CA_2_2023.crt",
+            "usr/share/ca-certificates/mozilla/D-TRUST_EV_Root_CA_1_2020.crt",
+            "usr/share/ca-certificates/mozilla/D-TRUST_EV_Root_CA_2_2023.crt",
+            "usr/share/ca-certificates/mozilla/D-TRUST_Root_Class_3_CA_2_2009.crt",
+            "usr/share/ca-certificates/mozilla/D-TRUST_Root_Class_3_CA_2_EV_2009.crt",
+            "usr/share/ca-certificates/mozilla/DigiCert_Assured_ID_Root_G2.crt",
+            "usr/share/ca-certificates/mozilla/DigiCert_Assured_ID_Root_G3.crt",
+            "usr/share/ca-certificates/mozilla/DigiCert_Global_Root_G2.crt",
+            "usr/share/ca-certificates/mozilla/DigiCert_Global_Root_G3.crt",
+            "usr/share/ca-certificates/mozilla/DigiCert_TLS_ECC_P384_Root_G5.crt",
+            "usr/share/ca-certificates/mozilla/DigiCert_TLS_RSA4096_Root_G5.crt",
+            "usr/share/ca-certificates/mozilla/DigiCert_Trusted_Root_G4.crt",
+            "usr/share/ca-certificates/mozilla/GDCA_TrustAUTH_R5_ROOT.crt",
+            "usr/share/ca-certificates/mozilla/GTS_Root_R1.crt",
+            "usr/share/ca-certificates/mozilla/GTS_Root_R3.crt",
+            "usr/share/ca-certificates/mozilla/GTS_Root_R4.crt",
+            "usr/share/ca-certificates/mozilla/GlobalSign_ECC_Root_CA_-_R4.crt",
+            "usr/share/ca-certificates/mozilla/GlobalSign_ECC_Root_CA_-_R5.crt",
+            "usr/share/ca-certificates/mozilla/GlobalSign_Root_CA_-_R3.crt",
+            "usr/share/ca-certificates/mozilla/GlobalSign_Root_CA_-_R6.crt",
+            "usr/share/ca-certificates/mozilla/GlobalSign_Root_E46.crt",
+            "usr/share/ca-certificates/mozilla/GlobalSign_Root_R46.crt",
+            "usr/share/ca-certificates/mozilla/Go_Daddy_Root_Certificate_Authority_-_G2.crt",
+            "usr/share/ca-certificates/mozilla/HARICA_TLS_ECC_Root_CA_2021.crt",
+            "usr/share/ca-certificates/mozilla/HARICA_TLS_RSA_Root_CA_2021.crt",
+            "usr/share/ca-certificates/mozilla/Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.crt",
+            "usr/share/ca-certificates/mozilla/Hellenic_Academic_and_Research_Institutions_RootCA_2015.crt",
+            "usr/share/ca-certificates/mozilla/HiPKI_Root_CA_-_G1.crt",
+            "usr/share/ca-certificates/mozilla/Hongkong_Post_Root_CA_3.crt",
+            "usr/share/ca-certificates/mozilla/ISRG_Root_X1.crt",
+            "usr/share/ca-certificates/mozilla/ISRG_Root_X2.crt",
+            "usr/share/ca-certificates/mozilla/IdenTrust_Commercial_Root_CA_1.crt",
+            "usr/share/ca-certificates/mozilla/IdenTrust_Public_Sector_Root_CA_1.crt",
+            "usr/share/ca-certificates/mozilla/Izenpe.com.crt",
+            "usr/share/ca-certificates/mozilla/Microsec_e-Szigno_Root_CA_2009.crt",
+            "usr/share/ca-certificates/mozilla/Microsoft_ECC_Root_Certificate_Authority_2017.crt",
+            "usr/share/ca-certificates/mozilla/Microsoft_RSA_Root_Certificate_Authority_2017.crt",
+            "usr/share/ca-certificates/mozilla/NAVER_Global_Root_Certification_Authority.crt",
+            "usr/share/ca-certificates/mozilla/NetLock_Arany_=Class_Gold=_Főtanúsítvány.crt",
+            "usr/share/ca-certificates/mozilla/OISTE_Server_Root_ECC_G1.crt",
+            "usr/share/ca-certificates/mozilla/OISTE_Server_Root_RSA_G1.crt",
+            "usr/share/ca-certificates/mozilla/OISTE_WISeKey_Global_Root_GB_CA.crt",
+            "usr/share/ca-certificates/mozilla/OISTE_WISeKey_Global_Root_GC_CA.crt",
+            "usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_1_G3.crt",
+            "usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_2_G3.crt",
+            "usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_3_G3.crt",
+            "usr/share/ca-certificates/mozilla/SECOM_TLS_ECC_Root_CA_2024.crt",
+            "usr/share/ca-certificates/mozilla/SECOM_TLS_RSA_Root_CA_2024.crt",
+            "usr/share/ca-certificates/mozilla/SSL.com_EV_Root_Certification_Authority_ECC.crt",
+            "usr/share/ca-certificates/mozilla/SSL.com_EV_Root_Certification_Authority_RSA_R2.crt",
+            "usr/share/ca-certificates/mozilla/SSL.com_Root_Certification_Authority_ECC.crt",
+            "usr/share/ca-certificates/mozilla/SSL.com_Root_Certification_Authority_RSA.crt",
+            "usr/share/ca-certificates/mozilla/SSL.com_TLS_ECC_Root_CA_2022.crt",
+            "usr/share/ca-certificates/mozilla/SSL.com_TLS_RSA_Root_CA_2022.crt",
+            "usr/share/ca-certificates/mozilla/SZAFIR_ROOT_CA2.crt",
+            "usr/share/ca-certificates/mozilla/Sectigo_Public_Server_Authentication_Root_E46.crt",
+            "usr/share/ca-certificates/mozilla/Sectigo_Public_Server_Authentication_Root_R46.crt",
+            "usr/share/ca-certificates/mozilla/SecureSign_Root_CA14.crt",
+            "usr/share/ca-certificates/mozilla/SecureSign_Root_CA15.crt",
+            "usr/share/ca-certificates/mozilla/Security_Communication_ECC_RootCA1.crt",
+            "usr/share/ca-certificates/mozilla/Security_Communication_RootCA2.crt",
+            "usr/share/ca-certificates/mozilla/Starfield_Root_Certificate_Authority_-_G2.crt",
+            "usr/share/ca-certificates/mozilla/Starfield_Services_Root_Certificate_Authority_-_G2.crt",
+            "usr/share/ca-certificates/mozilla/SwissSign_RSA_TLS_Root_CA_2022_-_1.crt",
+            "usr/share/ca-certificates/mozilla/T-TeleSec_GlobalRoot_Class_2.crt",
+            "usr/share/ca-certificates/mozilla/T-TeleSec_GlobalRoot_Class_3.crt",
+            "usr/share/ca-certificates/mozilla/TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.crt",
+            "usr/share/ca-certificates/mozilla/TWCA_CYBER_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/TWCA_Global_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/TWCA_Root_Certification_Authority.crt",
+            "usr/share/ca-certificates/mozilla/Telekom_Security_TLS_ECC_Root_2020.crt",
+            "usr/share/ca-certificates/mozilla/Telekom_Security_TLS_RSA_Root_2023.crt",
+            "usr/share/ca-certificates/mozilla/Telia_EC_TLS_Root_CA_v3.crt",
+            "usr/share/ca-certificates/mozilla/Telia_RSA_TLS_Root_CA_v3.crt",
+            "usr/share/ca-certificates/mozilla/Telia_Root_CA_v2.crt",
+            "usr/share/ca-certificates/mozilla/TrustAsia_Global_Root_CA_G3.crt",
+            "usr/share/ca-certificates/mozilla/TrustAsia_Global_Root_CA_G4.crt",
+            "usr/share/ca-certificates/mozilla/TrustAsia_TLS_ECC_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/TrustAsia_TLS_RSA_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/TunTrust_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/UCA_Extended_Validation_Root.crt",
+            "usr/share/ca-certificates/mozilla/UCA_Global_G2_Root.crt",
+            "usr/share/ca-certificates/mozilla/USERTrust_ECC_Certification_Authority.crt",
+            "usr/share/ca-certificates/mozilla/USERTrust_RSA_Certification_Authority.crt",
+            "usr/share/ca-certificates/mozilla/certSIGN_Root_CA_G2.crt",
+            "usr/share/ca-certificates/mozilla/e-Szigno_Root_CA_2017.crt",
+            "usr/share/ca-certificates/mozilla/e-Szigno_TLS_Root_CA_2023.crt",
+            "usr/share/ca-certificates/mozilla/emSign_Root_CA_-_G1.crt",
+            "usr/share/ca-certificates/mozilla/vTrus_ECC_Root_CA.crt",
+            "usr/share/ca-certificates/mozilla/vTrus_Root_CA.crt"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "ca-certificates-bundle@20261020-r0",
+          "Name": "ca-certificates-bundle",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/ca-certificates-bundle@20261020-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "a70608abcaf07d7a"
+          },
+          "Version": "20261020-r0",
+          "Arch": "x86_64",
+          "SrcName": "ca-certificates",
+          "SrcVersion": "20261020-r0",
+          "Licenses": [
+            "MPL-2.0",
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:7c6e635f86aafb46cb3b015d8505b3a5f61156bd",
+          "InstalledFiles": [
+            "etc/ssl/cert.pem",
+            "etc/ssl/certs/ca-certificates.crt",
+            "etc/ssl1.1/cert.pem",
+            "etc/ssl1.1/certs"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "curl@8.23.0-r0",
+          "Name": "curl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/curl@8.23.0-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "d7992d26398ad8b4"
+          },
+          "Version": "8.23.0-r0",
+          "Arch": "x86_64",
+          "SrcName": "curl",
+          "SrcVersion": "8.23.0-r0",
+          "Licenses": [
+            "curl"
+          ],
+          "Maintainer": "Achill Gilgenast \u003cachill@achill.org\u003e",
+          "DependsOn": [
+            "libcurl@8.23.0-r0",
+            "musl@1.2.6-r3",
+            "zlib@1.3.2-r1"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:9379b89d9475ec26adbf463deff410d01a5a7d80",
+          "InstalledFiles": [
+            "usr/bin/curl",
+            "usr/bin/wcurl"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "gnu-libiconv-libs@1.18-r0",
+          "Name": "gnu-libiconv-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/gnu-libiconv-libs@1.18-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "625dbb22e82815ac"
+          },
+          "Version": "1.18-r0",
+          "Arch": "x86_64",
+          "SrcName": "gnu-libiconv",
+          "SrcVersion": "1.18-r0",
+          "Licenses": [
+            "LGPL-2.1-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:ef0ce31165820d8a101b29b371449bd01c27ed12",
+          "InstalledFiles": [
+            "usr/lib/libcharset.so.1",
+            "usr/lib/libcharset.so.1.0.0",
+            "usr/lib/libiconv.so.2",
+            "usr/lib/libiconv.so.2.7.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libapk@3.0.9-r0",
+          "Name": "libapk",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libapk@3.0.9-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "2a1befcdcd392822"
+          },
+          "Version": "3.0.9-r0",
+          "Arch": "x86_64",
+          "SrcName": "apk-tools",
+          "SrcVersion": "3.0.9-r0",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "libcrypto3@3.5.9-r0",
+            "libssl3@3.5.9-r0",
+            "musl@1.2.6-r3",
+            "zlib@1.3.2-r1"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:a94f4d7f67ee47ba5c5185864af1d4b16113c598",
+          "InstalledFiles": [
+            "usr/lib/libapk.so.3.0.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libcrypto3@3.5.9-r0",
+          "Name": "libcrypto3",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libcrypto3@3.5.9-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "3de134b31d66634f"
+          },
+          "Version": "3.5.9-r0",
+          "Arch": "x86_64",
+          "SrcName": "openssl",
+          "SrcVersion": "3.5.9-r0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:1c0dee9734cf22fc97cdd181913bbd710e6dfb08",
+          "InstalledFiles": [
+            "etc/ssl/ct_log_list.cnf",
+            "etc/ssl/ct_log_list.cnf.dist",
+            "etc/ssl/openssl.cnf",
+            "etc/ssl/openssl.cnf.dist",
+            "usr/lib/libcrypto.so.3",
+            "usr/lib/engines-3/afalg.so",
+            "usr/lib/engines-3/capi.so",
+            "usr/lib/engines-3/loader_attic.so",
+            "usr/lib/engines-3/padlock.so",
+            "usr/lib/ossl-modules/legacy.so"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libcurl@8.23.0-r0",
+          "Name": "libcurl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libcurl@8.23.0-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "a59da8bbde6fe2d1"
+          },
+          "Version": "8.23.0-r0",
+          "Arch": "x86_64",
+          "SrcName": "curl",
+          "SrcVersion": "8.23.0-r0",
+          "Licenses": [
+            "curl"
+          ],
+          "Maintainer": "Achill Gilgenast \u003cachill@achill.org\u003e",
+          "DependsOn": [
+            "brotli-libs@1.2.1-r0",
+            "c-ares@1.34.9-r0",
+            "ca-certificates-bundle@20261020-r0",
+            "libcrypto3@3.5.9-r0",
+            "libidn2@2.3.8-r0",
+            "libpsl@0.21.5-r3",
+            "libssl3@3.5.9-r0",
+            "musl@1.2.6-r3",
+            "nghttp2-libs@1.70.0-r0",
+            "zlib@1.3.2-r1",
+            "zstd-libs@1.5.7-r2"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:7adaabffb7d1facb5cd3de9a522b43bc63373bd4",
+          "InstalledFiles": [
+            "usr/lib/libcurl.so.4",
+            "usr/lib/libcurl.so.4.8.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libgcc@15.2.0-r5",
+          "Name": "libgcc",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libgcc@15.2.0-r5?arch=x86_64\u0026distro=3.24.4",
+            "UID": "a092110f00cd5329"
+          },
+          "Version": "15.2.0-r5",
+          "Arch": "x86_64",
+          "SrcName": "gcc",
+          "SrcVersion": "15.2.0-r5",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "LGPL-2.1-or-later"
+          ],
+          "Maintainer": "Ariadne Conill \u003cariadne@dereferenced.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:379c156c53e0cc140e87c79c0a3dd22b6ee51552",
+          "InstalledFiles": [
+            "usr/lib/libgcc_s.so.1"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libidn2@2.3.8-r0",
+          "Name": "libidn2",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libidn2@2.3.8-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "28f3e7d363a8e783"
+          },
+          "Version": "2.3.8-r0",
+          "Arch": "x86_64",
+          "SrcName": "libidn2",
+          "SrcVersion": "2.3.8-r0",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "LGPL-3.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "libunistring@1.4.2-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:5800d14ce89e16148f4ccc2df74235ce7aedf800",
+          "InstalledFiles": [
+            "usr/lib/libidn2.so.0",
+            "usr/lib/libidn2.so.0.4.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libncursesw@6.6_p20260516-r0",
+          "Name": "libncursesw",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libncursesw@6.6_p20260516-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "3447c1e30d67c496"
+          },
+          "Version": "6.6_p20260516-r0",
+          "Arch": "x86_64",
+          "SrcName": "ncurses",
+          "SrcVersion": "6.6_p20260516-r0",
+          "Licenses": [
+            "X-11"
+          ],
+          "Maintainer": "Milan P. Stanić \u003cmps@arvanta.net\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3",
+            "ncurses-terminfo-base@6.6_p20260516-r0"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:9f318e6e324d6827274829194cf6ac6afbaded12",
+          "InstalledFiles": [
+            "usr/lib/libncursesw.so.6",
+            "usr/lib/libncursesw.so.6.6"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libpq@18.6-r0",
+          "Name": "libpq",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libpq@18.6-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "19d4897a929ab88a"
+          },
+          "Version": "18.6-r0",
+          "Arch": "x86_64",
+          "SrcName": "postgresql18",
+          "SrcVersion": "18.6-r0",
+          "Licenses": [
+            "PostgreSQL"
+          ],
+          "Maintainer": "Jakub Jirutka \u003cjakub@jirutka.cz\u003e",
+          "DependsOn": [
+            "libcrypto3@3.5.9-r0",
+            "libssl3@3.5.9-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:8f1a34ee597d4d4a2b3b4f55faf0a3aaee4647ed555684f477d6f2e9327a450f",
+            "DiffID": "sha256:b2e31c5bd5a7eaaf3cd668e68dd079da8a41747c0a7ddfbe6897a7aefdeb357f"
+          },
+          "Digest": "sha1:a977e227d8432c5e1787063eba526877beb578be",
+          "InstalledFiles": [
+            "usr/lib/libpq.so.5",
+            "usr/lib/libpq.so.5.18"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libpsl@0.21.5-r3",
+          "Name": "libpsl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libpsl@0.21.5-r3?arch=x86_64\u0026distro=3.24.4",
+            "UID": "ff1afc6d2a10263e"
+          },
+          "Version": "0.21.5-r3",
+          "Arch": "x86_64",
+          "SrcName": "libpsl",
+          "SrcVersion": "0.21.5-r3",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "libidn2@2.3.8-r0",
+            "libunistring@1.4.2-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:a551ddd5d6cb3913e1a1f47b02f21ae068b5e90a",
+          "InstalledFiles": [
+            "usr/lib/libpsl.so.5",
+            "usr/lib/libpsl.so.5.3.5"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libsodium@1.0.22-r0",
+          "Name": "libsodium",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libsodium@1.0.22-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "80d0a8abd9c5942b"
+          },
+          "Version": "1.0.22-r0",
+          "Arch": "x86_64",
+          "SrcName": "libsodium",
+          "SrcVersion": "1.0.22-r0",
+          "Licenses": [
+            "ISC"
+          ],
+          "Maintainer": "Daniel Néri \u003cdne+alpine@mayonnaise.net\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:e5bfa7b8c7e0639f44d57d4aaac2621e46523aad",
+          "InstalledFiles": [
+            "usr/lib/libsodium.so.26",
+            "usr/lib/libsodium.so.26.4.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libssl3@3.5.9-r0",
+          "Name": "libssl3",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libssl3@3.5.9-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "c5a60e84169f3215"
+          },
+          "Version": "3.5.9-r0",
+          "Arch": "x86_64",
+          "SrcName": "openssl",
+          "SrcVersion": "3.5.9-r0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "libcrypto3@3.5.9-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:20c4c90ea9d20a9dd3a04deadf2c6c4f64233643",
+          "InstalledFiles": [
+            "usr/lib/libssl.so.3"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libunistring@1.4.2-r0",
+          "Name": "libunistring",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libunistring@1.4.2-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "a7b1d02facc0ee52"
+          },
+          "Version": "1.4.2-r0",
+          "Arch": "x86_64",
+          "SrcName": "libunistring",
+          "SrcVersion": "1.4.2-r0",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "LGPL-3.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:f509c801d070f8ea9f7400d5093c888ff1fee02e",
+          "InstalledFiles": [
+            "usr/lib/libunistring.so.5",
+            "usr/lib/libunistring.so.5.2.1"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "libxml2@2.13.9-r2",
+          "Name": "libxml2",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/libxml2@2.13.9-r2?arch=x86_64\u0026distro=3.24.4",
+            "UID": "be5453936d3ca669"
+          },
+          "Version": "2.13.9-r2",
+          "Arch": "x86_64",
+          "SrcName": "libxml2",
+          "SrcVersion": "2.13.9-r2",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Carlo Landmeter \u003cclandmeter@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3",
+            "xz-libs@5.8.4-r0",
+            "zlib@1.3.2-r1"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:c2c2cb44647ddc8c82ae78c8aca9bd4ad5a736da",
+          "InstalledFiles": [
+            "usr/lib/libxml2.so.2",
+            "usr/lib/libxml2.so.2.13.9"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "musl@1.2.6-r3",
+          "Name": "musl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/musl@1.2.6-r3?arch=x86_64\u0026distro=3.24.4",
+            "UID": "43d4b05c5472a58c"
+          },
+          "Version": "1.2.6-r3",
+          "Arch": "x86_64",
+          "SrcName": "musl",
+          "SrcVersion": "1.2.6-r3",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:770e8304d958dced98d76997df9e8fa1db5ca32f",
+          "InstalledFiles": [
+            "lib/ld-musl-x86_64.so.1",
+            "lib/libc.musl-x86_64.so.1"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "musl-utils@1.2.6-r3",
+          "Name": "musl-utils",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/musl-utils@1.2.6-r3?arch=x86_64\u0026distro=3.24.4",
+            "UID": "1bd73db44d355699"
+          },
+          "Version": "1.2.6-r3",
+          "Arch": "x86_64",
+          "SrcName": "musl",
+          "SrcVersion": "1.2.6-r3",
+          "Licenses": [
+            "MIT",
+            "BSD-2-Clause",
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3",
+            "scanelf@1.3.9-r1"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:51372daafb234646960eca4d7a13f706324f24d6",
+          "InstalledFiles": [
+            "sbin/ldconfig",
+            "usr/bin/getconf",
+            "usr/bin/getent",
+            "usr/bin/iconv",
+            "usr/bin/ldd"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "ncurses-terminfo-base@6.6_p20260516-r0",
+          "Name": "ncurses-terminfo-base",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/ncurses-terminfo-base@6.6_p20260516-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "e7fac5c6a6e9ae8"
+          },
+          "Version": "6.6_p20260516-r0",
+          "Arch": "x86_64",
+          "SrcName": "ncurses",
+          "SrcVersion": "6.6_p20260516-r0",
+          "Licenses": [
+            "X-11"
+          ],
+          "Maintainer": "Milan P. Stanić \u003cmps@arvanta.net\u003e",
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:9d551d828e9c8ee52c5801c1d6046828ebf15752",
+          "InstalledFiles": [
+            "etc/terminfo/a/alacritty",
+            "etc/terminfo/a/ansi",
+            "etc/terminfo/d/dumb",
+            "etc/terminfo/g/gnome",
+            "etc/terminfo/g/gnome-256color",
+            "etc/terminfo/k/konsole",
+            "etc/terminfo/k/konsole-256color",
+            "etc/terminfo/k/konsole-linux",
+            "etc/terminfo/l/linux",
+            "etc/terminfo/p/putty",
+            "etc/terminfo/p/putty-256color",
+            "etc/terminfo/r/rxvt",
+            "etc/terminfo/r/rxvt-256color",
+            "etc/terminfo/s/screen",
+            "etc/terminfo/s/screen-256color",
+            "etc/terminfo/s/st-0.6",
+            "etc/terminfo/s/st-0.7",
+            "etc/terminfo/s/st-0.8",
+            "etc/terminfo/s/st-0.8.5",
+            "etc/terminfo/s/st-16color",
+            "etc/terminfo/s/st-256color",
+            "etc/terminfo/s/st-direct",
+            "etc/terminfo/s/sun",
+            "etc/terminfo/t/terminator",
+            "etc/terminfo/t/terminology",
+            "etc/terminfo/t/terminology-0.6.1",
+            "etc/terminfo/t/terminology-1.0.0",
+            "etc/terminfo/t/terminology-1.8.1",
+            "etc/terminfo/t/tmux",
+            "etc/terminfo/t/tmux-256color",
+            "etc/terminfo/v/vt100",
+            "etc/terminfo/v/vt102",
+            "etc/terminfo/v/vt200",
+            "etc/terminfo/v/vt220",
+            "etc/terminfo/v/vt52",
+            "etc/terminfo/v/vte",
+            "etc/terminfo/v/vte-256color",
+            "etc/terminfo/x/xterm",
+            "etc/terminfo/x/xterm-256color",
+            "etc/terminfo/x/xterm-color",
+            "etc/terminfo/x/xterm-xfree86"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "nghttp2-libs@1.70.0-r0",
+          "Name": "nghttp2-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/nghttp2-libs@1.70.0-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "6de0498001f1f3ed"
+          },
+          "Version": "1.70.0-r0",
+          "Arch": "x86_64",
+          "SrcName": "nghttp2",
+          "SrcVersion": "1.70.0-r0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Maintainer": "Francesco Colista \u003cfcolista@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:63bd319b9af1c3d3c730c96b04a889964696f367",
+          "InstalledFiles": [
+            "usr/lib/libnghttp2.so.14",
+            "usr/lib/libnghttp2.so.14.29.5"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "oniguruma@6.9.10-r0",
+          "Name": "oniguruma",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/oniguruma@6.9.10-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "43840ab3baa2d2ea"
+          },
+          "Version": "6.9.10-r0",
+          "Arch": "x86_64",
+          "SrcName": "oniguruma",
+          "SrcVersion": "6.9.10-r0",
+          "Licenses": [
+            "BSD-2-Clause"
+          ],
+          "Maintainer": "Francesco Colista \u003cfcolista@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:a1a67fc3afbdabdef527ab9b7d84cf8426a40152",
+          "InstalledFiles": [
+            "usr/lib/libonig.so.5",
+            "usr/lib/libonig.so.5.5.0"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "openssl@3.5.9-r0",
+          "Name": "openssl",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/openssl@3.5.9-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "5da5422ed30cee1"
+          },
+          "Version": "3.5.9-r0",
+          "Arch": "x86_64",
+          "SrcName": "openssl",
+          "SrcVersion": "3.5.9-r0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "libcrypto3@3.5.9-r0",
+            "libssl3@3.5.9-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:ea94f01feeb149a85f4402f5f713a25e90f77011",
+          "InstalledFiles": [
+            "usr/bin/openssl"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "readline@8.3.3-r1",
+          "Name": "readline",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/readline@8.3.3-r1?arch=x86_64\u0026distro=3.24.4",
+            "UID": "2c597924503d762b"
+          },
+          "Version": "8.3.3-r1",
+          "Arch": "x86_64",
+          "SrcName": "readline",
+          "SrcVersion": "8.3.3-r1",
+          "Licenses": [
+            "GPL-3.0-or-later"
+          ],
+          "Maintainer": "qaqland \u003cqaq@qaq.land\u003e",
+          "DependsOn": [
+            "libncursesw@6.6_p20260516-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:945b16e378bc00e44d89d4de8124bba7647fdf4d",
+          "InstalledFiles": [
+            "etc/inputrc",
+            "usr/lib/libreadline.so.8",
+            "usr/lib/libreadline.so.8.3"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "scanelf@1.3.9-r1",
+          "Name": "scanelf",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/scanelf@1.3.9-r1?arch=x86_64\u0026distro=3.24.4",
+            "UID": "f832b0b0d6c76e18"
+          },
+          "Version": "1.3.9-r1",
+          "Arch": "x86_64",
+          "SrcName": "pax-utils",
+          "SrcVersion": "1.3.9-r1",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:013f903d0ba219673aebbdd04f74bb5ed82b01f0",
+          "InstalledFiles": [
+            "usr/bin/scanelf"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "sqlite-libs@3.53.4-r0",
+          "Name": "sqlite-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/sqlite-libs@3.53.4-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "705d37789849fc09"
+          },
+          "Version": "3.53.4-r0",
+          "Arch": "x86_64",
+          "SrcName": "sqlite",
+          "SrcVersion": "3.53.4-r0",
+          "Licenses": [
+            "blessing"
+          ],
+          "Maintainer": "Jingyun Hua \u003chuajingyun@loongson.cn\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:9ad2f497a886c9b5c78cac1a90334b351854e3fe48745a5e97fb5075c4175db8",
+            "DiffID": "sha256:7d1c83993a1130da6bdebc6cc24773725f1b7169d03508889e4d72d22290ae28"
+          },
+          "Digest": "sha1:f7630ceb37c232b6609861aeab6cdb9cd120e6fa",
+          "InstalledFiles": [
+            "usr/lib/libsqlite3.so.0",
+            "usr/lib/libsqlite3.so.3.53.4"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "ssl_client@1.37.0-r31",
+          "Name": "ssl_client",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/ssl_client@1.37.0-r31?arch=x86_64\u0026distro=3.24.4",
+            "UID": "3e7a1baa8bc3bfe0"
+          },
+          "Version": "1.37.0-r31",
+          "Arch": "x86_64",
+          "SrcName": "busybox",
+          "SrcVersion": "1.37.0-r31",
+          "Licenses": [
+            "GPL-2.0-only"
+          ],
+          "Maintainer": "Sören Tempel \u003csoeren+alpine@soeren-tempel.net\u003e",
+          "DependsOn": [
+            "libcrypto3@3.5.9-r0",
+            "libssl3@3.5.9-r0",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:c220f4a5125a313af733e98def94132bb1e9d40d",
+          "InstalledFiles": [
+            "usr/bin/ssl_client"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "tar@1.35-r5",
+          "Name": "tar",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/tar@1.35-r5?arch=x86_64\u0026distro=3.24.4",
+            "UID": "90d4aca964768b5b"
+          },
+          "Version": "1.35-r5",
+          "Arch": "x86_64",
+          "SrcName": "tar",
+          "SrcVersion": "1.35-r5",
+          "Licenses": [
+            "GPL-3.0-or-later"
+          ],
+          "Maintainer": "qaqland \u003cqaq@qaq.land\u003e",
+          "DependsOn": [
+            "acl-libs@2.3.2-r1",
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:b25069b76c13a88eb42e621d60bf0637f1585ed6",
+          "InstalledFiles": [
+            "bin/tar",
+            "usr/libexec/rmt"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "xz@5.8.4-r0",
+          "Name": "xz",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/xz@5.8.4-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "f82c548b25a0e650"
+          },
+          "Version": "5.8.4-r0",
+          "Arch": "x86_64",
+          "SrcName": "xz",
+          "SrcVersion": "5.8.4-r0",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "0BSD",
+            "Public-Domain",
+            "LGPL-2.1-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3",
+            "xz-libs@5.8.4-r0"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:6fa572af08b46511f4fb5210e7696e2f53be0fcb",
+          "InstalledFiles": [
+            "usr/bin/lzcat",
+            "usr/bin/lzcmp",
+            "usr/bin/lzdiff",
+            "usr/bin/lzegrep",
+            "usr/bin/lzfgrep",
+            "usr/bin/lzgrep",
+            "usr/bin/lzless",
+            "usr/bin/lzma",
+            "usr/bin/lzmadec",
+            "usr/bin/lzmainfo",
+            "usr/bin/lzmore",
+            "usr/bin/unlzma",
+            "usr/bin/unxz",
+            "usr/bin/xz",
+            "usr/bin/xzcat",
+            "usr/bin/xzcmp",
+            "usr/bin/xzdec",
+            "usr/bin/xzdiff",
+            "usr/bin/xzegrep",
+            "usr/bin/xzfgrep",
+            "usr/bin/xzgrep",
+            "usr/bin/xzless",
+            "usr/bin/xzmore"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "xz-libs@5.8.4-r0",
+          "Name": "xz-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/xz-libs@5.8.4-r0?arch=x86_64\u0026distro=3.24.4",
+            "UID": "6f0223c49816ec31"
+          },
+          "Version": "5.8.4-r0",
+          "Arch": "x86_64",
+          "SrcName": "xz",
+          "SrcVersion": "5.8.4-r0",
+          "Licenses": [
+            "GPL-2.0-or-later",
+            "0BSD",
+            "Public-Domain",
+            "LGPL-2.1-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:8501065b1862821630174c663b45974462c296e1",
+          "InstalledFiles": [
+            "usr/lib/liblzma.so.5",
+            "usr/lib/liblzma.so.5.8.4"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "zlib@1.3.2-r1",
+          "Name": "zlib",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/zlib@1.3.2-r1?arch=x86_64\u0026distro=3.24.4",
+            "UID": "926381dc853769fb"
+          },
+          "Version": "1.3.2-r1",
+          "Arch": "x86_64",
+          "SrcName": "zlib",
+          "SrcVersion": "1.3.2-r1",
+          "Licenses": [
+            "Zlib"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:881fc932939efef04ca120ad44bbd2c0917851eb247aa4995428afb1e80ede17",
+            "DiffID": "sha256:75f1d9657d880da5f75298e8f40e9928bb6e260c50d26f97af196845307e3064"
+          },
+          "Digest": "sha1:4f525c8cc204f84b8b4ca40db3be389958f056c6",
+          "InstalledFiles": [
+            "usr/lib/libz.so.1",
+            "usr/lib/libz.so.1.3.2"
+          ],
+          "AnalyzedBy": "apk"
+        },
+        {
+          "ID": "zstd-libs@1.5.7-r2",
+          "Name": "zstd-libs",
+          "Identifier": {
+            "PURL": "pkg:apk/alpine/zstd-libs@1.5.7-r2?arch=x86_64\u0026distro=3.24.4",
+            "UID": "98d34606d15c4ec0"
+          },
+          "Version": "1.5.7-r2",
+          "Arch": "x86_64",
+          "SrcName": "zstd",
+          "SrcVersion": "1.5.7-r2",
+          "Licenses": [
+            "BSD-3-Clause",
+            "GPL-2.0-or-later"
+          ],
+          "Maintainer": "Natanael Copa \u003cncopa@alpinelinux.org\u003e",
+          "DependsOn": [
+            "musl@1.2.6-r3"
+          ],
+          "Layer": {
+            "Digest": "sha256:f005f09a48cbe729a77c174f66986997a1285ecbd9e13fd4f228883e432cb92f",
+            "DiffID": "sha256:afcd780b6f16ba9044613f78640d19c5deea3fcbc85ba694a3ccf7a317217355"
+          },
+          "Digest": "sha1:9569ce3a97c4109e8e53ddde9f3e1bd272613540",
+          "InstalledFiles": [
+            "usr/lib/libzstd.so.1",
+            "usr/lib/libzstd.so.1.5.7"
+          ],
+          "AnalyzedBy": "apk"
+        }
+      ]
+    },
+    {
+      "Target": "app/vendor/composer/installed.json",
+      "Class": "lang-pkgs",
+      "Type": "composer-vendor",
+      "Packages": [
+        {
+          "ID": "brick/math@0.14.8",
+          "Name": "brick/math",
+          "Identifier": {
+            "PURL": "pkg:composer/brick/math@0.14.8",
+            "UID": "c501b7fd8cdd9776"
+          },
+          "Version": "0.14.8",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3,
+              "EndLine": 65
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "carbonphp/carbon-doctrine-types@3.2.1",
+          "Name": "carbonphp/carbon-doctrine-types",
+          "Identifier": {
+            "PURL": "pkg:composer/carbonphp/carbon-doctrine-types@3.2.1",
+            "UID": "df673d5a0fdde7fb"
+          },
+          "Version": "3.2.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 66,
+              "EndLine": 142
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "dflydev/dot-access-data@v3.0.3",
+          "Name": "dflydev/dot-access-data",
+          "Identifier": {
+            "PURL": "pkg:composer/dflydev/dot-access-data@v3.0.3",
+            "UID": "33168138c5332106"
+          },
+          "Version": "v3.0.3",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 143,
+              "EndLine": 220
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "doctrine/inflector@2.1.1",
+          "Name": "doctrine/inflector",
+          "Identifier": {
+            "PURL": "pkg:composer/doctrine/inflector@2.1.1",
+            "UID": "394056f7c9f29e66"
+          },
+          "Version": "2.1.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 221,
+              "EndLine": 313
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "doctrine/lexer@3.0.3",
+          "Name": "doctrine/lexer",
+          "Identifier": {
+            "PURL": "pkg:composer/doctrine/lexer@3.0.3",
+            "UID": "1e48117d06f3dae"
+          },
+          "Version": "3.0.3",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 314,
+              "EndLine": 391
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "dragonmantank/cron-expression@v3.6.1",
+          "Name": "dragonmantank/cron-expression",
+          "Identifier": {
+            "PURL": "pkg:composer/dragonmantank/cron-expression@v3.6.1",
+            "UID": "aece0c4193a67cd6"
+          },
+          "Version": "v3.6.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 392,
+              "EndLine": 458
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "egulias/email-validator@4.0.4",
+          "Name": "egulias/email-validator",
+          "Identifier": {
+            "PURL": "pkg:composer/egulias/email-validator@4.0.4",
+            "UID": "9523849595c9f7b1"
+          },
+          "Version": "4.0.4",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "doctrine/lexer@3.0.3",
+            "symfony/polyfill-intl-idn@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 459,
+              "EndLine": 528
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "fruitcake/php-cors@v1.4.0",
+          "Name": "fruitcake/php-cors",
+          "Identifier": {
+            "PURL": "pkg:composer/fruitcake/php-cors@v1.4.0",
+            "UID": "8d083d2e3750606f"
+          },
+          "Version": "v1.4.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/http-foundation@v7.4.21"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 529,
+              "EndLine": 602
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "graham-campbell/result-type@v1.2.0",
+          "Name": "graham-campbell/result-type",
+          "Identifier": {
+            "PURL": "pkg:composer/graham-campbell/result-type@v1.2.0",
+            "UID": "561f464dda9b3451"
+          },
+          "Version": "v1.2.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "phpoption/phpoption@1.10.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 603,
+              "EndLine": 667
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "guzzlehttp/guzzle@7.16.1",
+          "Name": "guzzlehttp/guzzle",
+          "Identifier": {
+            "PURL": "pkg:composer/guzzlehttp/guzzle@7.16.1",
+            "UID": "88b8275ccc29606"
+          },
+          "Version": "7.16.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "guzzlehttp/promises@2.6.0",
+            "guzzlehttp/psr7@2.13.2",
+            "psr/http-client@1.0.3",
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/polyfill-php80@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 668,
+              "EndLine": 798
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "guzzlehttp/promises@2.6.0",
+          "Name": "guzzlehttp/promises",
+          "Identifier": {
+            "PURL": "pkg:composer/guzzlehttp/promises@2.6.0",
+            "UID": "2197e9ea339d8b0f"
+          },
+          "Version": "2.6.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/deprecation-contracts@v3.7.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 799,
+              "EndLine": 885
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "guzzlehttp/psr7@2.13.2",
+          "Name": "guzzlehttp/psr7",
+          "Identifier": {
+            "PURL": "pkg:composer/guzzlehttp/psr7@2.13.2",
+            "UID": "dfb08d1c887cf7eb"
+          },
+          "Version": "2.13.2",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/http-factory@1.1.0",
+            "psr/http-message@2.0",
+            "ralouphie/getallheaders@3.0.3",
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/polyfill-php80@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 886,
+              "EndLine": 1007
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "guzzlehttp/uri-template@v1.0.11",
+          "Name": "guzzlehttp/uri-template",
+          "Identifier": {
+            "PURL": "pkg:composer/guzzlehttp/uri-template@v1.0.11",
+            "UID": "1e17b8373317ad2f"
+          },
+          "Version": "v1.0.11",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/polyfill-php80@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1008,
+              "EndLine": 1096
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "laravel/framework@v12.70.1",
+          "Name": "laravel/framework",
+          "Identifier": {
+            "PURL": "pkg:composer/laravel/framework@v12.70.1",
+            "UID": "bc2614dc42e30178"
+          },
+          "Version": "v12.70.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "brick/math@0.14.8",
+            "doctrine/inflector@2.1.1",
+            "dragonmantank/cron-expression@v3.6.1",
+            "egulias/email-validator@4.0.4",
+            "fruitcake/php-cors@v1.4.0",
+            "guzzlehttp/guzzle@7.16.1",
+            "guzzlehttp/uri-template@v1.0.11",
+            "laravel/prompts@v0.3.26",
+            "laravel/serializable-closure@v2.1.0",
+            "league/commonmark@2.10.4",
+            "league/flysystem-local@3.35.3",
+            "league/flysystem@3.36.0",
+            "league/uri@7.9.0",
+            "monolog/monolog@3.12.1",
+            "nesbot/carbon@3.15.1",
+            "nunomaduro/termwind@v2.4.0",
+            "psr/container@2.0.2",
+            "psr/log@3.0.2",
+            "psr/simple-cache@3.0.0",
+            "ramsey/uuid@4.9.4",
+            "symfony/console@v7.4.21",
+            "symfony/error-handler@v7.4.20",
+            "symfony/finder@v7.4.20",
+            "symfony/http-foundation@v7.4.21",
+            "symfony/http-kernel@v7.4.21",
+            "symfony/mailer@v7.4.19",
+            "symfony/mime@v7.4.19",
+            "symfony/polyfill-php83@v1.43.0",
+            "symfony/polyfill-php84@v1.43.0",
+            "symfony/polyfill-php85@v1.43.0",
+            "symfony/process@v7.4.21",
+            "symfony/routing@v7.4.21",
+            "symfony/uid@v7.4.21",
+            "symfony/var-dumper@v7.4.21",
+            "tijsverkoyen/css-to-inline-styles@v2.4.0",
+            "vlucas/phpdotenv@v5.8.0",
+            "voku/portable-ascii@2.1.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1097,
+              "EndLine": 1321
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "laravel/prompts@v0.3.26",
+          "Name": "laravel/prompts",
+          "Identifier": {
+            "PURL": "pkg:composer/laravel/prompts@v0.3.26",
+            "UID": "bca1fbf93a4bb9bc"
+          },
+          "Version": "v0.3.26",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/console@v7.4.21"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1322,
+              "EndLine": 1382
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "laravel/sanctum@v4.3.3",
+          "Name": "laravel/sanctum",
+          "Identifier": {
+            "PURL": "pkg:composer/laravel/sanctum@v4.3.3",
+            "UID": "ad90c120e1f0a3bb"
+          },
+          "Version": "v4.3.3",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/console@v7.4.21"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1383,
+              "EndLine": 1448
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "laravel/serializable-closure@v2.1.0",
+          "Name": "laravel/serializable-closure",
+          "Identifier": {
+            "PURL": "pkg:composer/laravel/serializable-closure@v2.1.0",
+            "UID": "5646979556413b1b"
+          },
+          "Version": "v2.1.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1449,
+              "EndLine": 1512
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "laravel/tinker@v2.11.1",
+          "Name": "laravel/tinker",
+          "Identifier": {
+            "PURL": "pkg:composer/laravel/tinker@v2.11.1",
+            "UID": "6c9a4166cc06dc0e"
+          },
+          "Version": "v2.11.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psy/psysh@v0.12.24",
+            "symfony/var-dumper@v7.4.21"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1513,
+              "EndLine": 1581
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "league/commonmark@2.10.4",
+          "Name": "league/commonmark",
+          "Identifier": {
+            "PURL": "pkg:composer/league/commonmark@2.10.4",
+            "UID": "b39c5a651c6fce2"
+          },
+          "Version": "2.10.4",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "DependsOn": [
+            "league/config@v1.2.0",
+            "psr/event-dispatcher@1.0.0",
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/polyfill-php80@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1582,
+              "EndLine": 1691
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "league/config@v1.2.0",
+          "Name": "league/config",
+          "Identifier": {
+            "PURL": "pkg:composer/league/config@v1.2.0",
+            "UID": "a40e4b269fbfa92a"
+          },
+          "Version": "v1.2.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "DependsOn": [
+            "dflydev/dot-access-data@v3.0.3",
+            "nette/schema@v1.4.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1692,
+              "EndLine": 1776
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "league/flysystem@3.36.0",
+          "Name": "league/flysystem",
+          "Identifier": {
+            "PURL": "pkg:composer/league/flysystem@3.36.0",
+            "UID": "20155d2e130b2fac"
+          },
+          "Version": "3.36.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "league/flysystem-local@3.35.3",
+            "league/mime-type-detection@1.17.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1777,
+              "EndLine": 1862
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "league/flysystem-local@3.35.3",
+          "Name": "league/flysystem-local",
+          "Identifier": {
+            "PURL": "pkg:composer/league/flysystem-local@3.35.3",
+            "UID": "62f52b92c94a4959"
+          },
+          "Version": "3.35.3",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "league/flysystem@3.36.0",
+            "league/mime-type-detection@1.17.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1863,
+              "EndLine": 1914
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "league/mime-type-detection@1.17.0",
+          "Name": "league/mime-type-detection",
+          "Identifier": {
+            "PURL": "pkg:composer/league/mime-type-detection@1.17.0",
+            "UID": "b238394ee3356152"
+          },
+          "Version": "1.17.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1915,
+              "EndLine": 1973
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "league/uri@7.9.0",
+          "Name": "league/uri",
+          "Identifier": {
+            "PURL": "pkg:composer/league/uri@7.9.0",
+            "UID": "343ed1bc571640a"
+          },
+          "Version": "7.9.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "league/uri-interfaces@7.9.0",
+            "psr/http-factory@1.1.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 1974,
+              "EndLine": 2075
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "league/uri-interfaces@7.9.0",
+          "Name": "league/uri-interfaces",
+          "Identifier": {
+            "PURL": "pkg:composer/league/uri-interfaces@7.9.0",
+            "UID": "c65b3a56a9c0a892"
+          },
+          "Version": "7.9.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/http-message@2.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2076,
+              "EndLine": 2162
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "mongodb/laravel-mongodb@5.12.0",
+          "Name": "mongodb/laravel-mongodb",
+          "Identifier": {
+            "PURL": "pkg:composer/mongodb/laravel-mongodb@5.12.0",
+            "UID": "c30ec702fac287b8"
+          },
+          "Version": "5.12.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "mongodb/mongodb@2.5.0",
+            "symfony/polyfill-php86@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2163,
+              "EndLine": 2275
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "mongodb/mongodb@2.5.0",
+          "Name": "mongodb/mongodb",
+          "Identifier": {
+            "PURL": "pkg:composer/mongodb/mongodb@2.5.0",
+            "UID": "46253b3d42420a59"
+          },
+          "Version": "2.5.0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "DependsOn": [
+            "psr/log@3.0.2",
+            "symfony/polyfill-php84@v1.43.0",
+            "symfony/polyfill-php85@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2276,
+              "EndLine": 2352
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "monolog/monolog@3.12.1",
+          "Name": "monolog/monolog",
+          "Identifier": {
+            "PURL": "pkg:composer/monolog/monolog@3.12.1",
+            "UID": "f1132d9bcd61a586"
+          },
+          "Version": "3.12.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/log@3.0.2"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2353,
+              "EndLine": 2460
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "nesbot/carbon@3.15.1",
+          "Name": "nesbot/carbon",
+          "Identifier": {
+            "PURL": "pkg:composer/nesbot/carbon@3.15.1",
+            "UID": "523c8737e304b22a"
+          },
+          "Version": "3.15.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "carbonphp/carbon-doctrine-types@3.2.1",
+            "psr/clock@1.0.0",
+            "symfony/clock@v8.1.9",
+            "symfony/polyfill-mbstring@v1.43.0",
+            "symfony/polyfill-time@v1.42.0",
+            "symfony/translation@v8.1.5"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2461,
+              "EndLine": 2569
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "nette/schema@v1.4.0",
+          "Name": "nette/schema",
+          "Identifier": {
+            "PURL": "pkg:composer/nette/schema@v1.4.0",
+            "UID": "9f5f23f3409a570e"
+          },
+          "Version": "v1.4.0",
+          "Licenses": [
+            "BSD-3-Clause",
+            "GPL-2.0-only",
+            "GPL-3.0-only"
+          ],
+          "DependsOn": [
+            "nette/utils@v4.1.6"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2570,
+              "EndLine": 2639
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "nette/utils@v4.1.6",
+          "Name": "nette/utils",
+          "Identifier": {
+            "PURL": "pkg:composer/nette/utils@v4.1.6",
+            "UID": "5390f06350fec7b3"
+          },
+          "Version": "v4.1.6",
+          "Licenses": [
+            "BSD-3-Clause",
+            "GPL-2.0-only",
+            "GPL-3.0-only"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2640,
+              "EndLine": 2733
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "nikic/php-parser@v5.9.0",
+          "Name": "nikic/php-parser",
+          "Identifier": {
+            "PURL": "pkg:composer/nikic/php-parser@v5.9.0",
+            "UID": "dd74561b5b1f48f3"
+          },
+          "Version": "v5.9.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2734,
+              "EndLine": 2793
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "nunomaduro/termwind@v2.4.0",
+          "Name": "nunomaduro/termwind",
+          "Identifier": {
+            "PURL": "pkg:composer/nunomaduro/termwind@v2.4.0",
+            "UID": "caf497a554955753"
+          },
+          "Version": "v2.4.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/console@v7.4.21"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2794,
+              "EndLine": 2883
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "phpoption/phpoption@1.10.0",
+          "Name": "phpoption/phpoption",
+          "Identifier": {
+            "PURL": "pkg:composer/phpoption/phpoption@1.10.0",
+            "UID": "b3ecaf5d4d7f4f53"
+          },
+          "Version": "1.10.0",
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2884,
+              "EndLine": 2961
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/clock@1.0.0",
+          "Name": "psr/clock",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/clock@1.0.0",
+            "UID": "f847ef7e80d9aebf"
+          },
+          "Version": "1.0.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 2962,
+              "EndLine": 3012
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/container@2.0.2",
+          "Name": "psr/container",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/container@2.0.2",
+            "UID": "6774799c8881dcbf"
+          },
+          "Version": "2.0.2",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3013,
+              "EndLine": 3068
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/event-dispatcher@1.0.0",
+          "Name": "psr/event-dispatcher",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/event-dispatcher@1.0.0",
+            "UID": "e3bc2125f32535fc"
+          },
+          "Version": "1.0.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3069,
+              "EndLine": 3121
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/http-client@1.0.3",
+          "Name": "psr/http-client",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/http-client@1.0.3",
+            "UID": "33320b42187249b4"
+          },
+          "Version": "1.0.3",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/http-message@2.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3122,
+              "EndLine": 3176
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/http-factory@1.1.0",
+          "Name": "psr/http-factory",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/http-factory@1.1.0",
+            "UID": "f32e5bfb378393d1"
+          },
+          "Version": "1.1.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/http-message@2.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3177,
+              "EndLine": 3234
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/http-message@2.0",
+          "Name": "psr/http-message",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/http-message@2.0",
+            "UID": "1a9b57534f884b9a"
+          },
+          "Version": "2.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3235,
+              "EndLine": 3290
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/log@3.0.2",
+          "Name": "psr/log",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/log@3.0.2",
+            "UID": "d89a1c7fd495533e"
+          },
+          "Version": "3.0.2",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3291,
+              "EndLine": 3343
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psr/simple-cache@3.0.0",
+          "Name": "psr/simple-cache",
+          "Identifier": {
+            "PURL": "pkg:composer/psr/simple-cache@3.0.0",
+            "UID": "28c7b9f5d610dec9"
+          },
+          "Version": "3.0.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3344,
+              "EndLine": 3397
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "psy/psysh@v0.12.24",
+          "Name": "psy/psysh",
+          "Identifier": {
+            "PURL": "pkg:composer/psy/psysh@v0.12.24",
+            "UID": "1dbdc59bde34f787"
+          },
+          "Version": "v0.12.24",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "nikic/php-parser@v5.9.0",
+            "symfony/console@v7.4.21",
+            "symfony/var-dumper@v7.4.21"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3398,
+              "EndLine": 3479
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "ralouphie/getallheaders@3.0.3",
+          "Name": "ralouphie/getallheaders",
+          "Identifier": {
+            "PURL": "pkg:composer/ralouphie/getallheaders@3.0.3",
+            "UID": "d083a3c29ee9ad45"
+          },
+          "Version": "3.0.3",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3480,
+              "EndLine": 3526
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "ramsey/collection@2.1.1",
+          "Name": "ramsey/collection",
+          "Identifier": {
+            "PURL": "pkg:composer/ramsey/collection@2.1.1",
+            "UID": "dcde756dde013483"
+          },
+          "Version": "2.1.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3527,
+              "EndLine": 3605
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "ramsey/uuid@4.9.4",
+          "Name": "ramsey/uuid",
+          "Identifier": {
+            "PURL": "pkg:composer/ramsey/uuid@4.9.4",
+            "UID": "59f258f682d34933"
+          },
+          "Version": "4.9.4",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "brick/math@0.14.8",
+            "ramsey/collection@2.1.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3606,
+              "EndLine": 3686
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/clock@v8.1.9",
+          "Name": "symfony/clock",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/clock@v8.1.9",
+            "UID": "670213460d239b83"
+          },
+          "Version": "v8.1.9",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/clock@1.0.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3687,
+              "EndLine": 3766
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/console@v7.4.21",
+          "Name": "symfony/console",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/console@v7.4.21",
+            "UID": "85398b62eeaae40b"
+          },
+          "Version": "v7.4.21",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/polyfill-mbstring@v1.43.0",
+            "symfony/service-contracts@v3.7.3",
+            "symfony/string@v8.1.9"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3767,
+              "EndLine": 3867
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/css-selector@v8.1.6",
+          "Name": "symfony/css-selector",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/css-selector@v8.1.6",
+            "UID": "56068b75fc97629"
+          },
+          "Version": "v8.1.6",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3868,
+              "EndLine": 3939
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/deprecation-contracts@v3.7.1",
+          "Name": "symfony/deprecation-contracts",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/deprecation-contracts@v3.7.1",
+            "UID": "a0ab9fb4afe240df"
+          },
+          "Version": "v3.7.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 3940,
+              "EndLine": 4013
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/error-handler@v7.4.20",
+          "Name": "symfony/error-handler",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/error-handler@v7.4.20",
+            "UID": "7809586f055b7570"
+          },
+          "Version": "v7.4.20",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/log@3.0.2",
+            "symfony/polyfill-php85@v1.43.0",
+            "symfony/var-dumper@v7.4.21"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4014,
+              "EndLine": 4098
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/event-dispatcher@v8.1.5",
+          "Name": "symfony/event-dispatcher",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/event-dispatcher@v8.1.5",
+            "UID": "4e2f4d54020212c0"
+          },
+          "Version": "v8.1.5",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/event-dispatcher-contracts@v3.7.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4099,
+              "EndLine": 4187
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/event-dispatcher-contracts@v3.7.1",
+          "Name": "symfony/event-dispatcher-contracts",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/event-dispatcher-contracts@v3.7.1",
+            "UID": "58d53e44c81bb823"
+          },
+          "Version": "v3.7.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/event-dispatcher@1.0.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4188,
+              "EndLine": 4270
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/finder@v7.4.20",
+          "Name": "symfony/finder",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/finder@v7.4.20",
+            "UID": "7dfae9d4142fc4e5"
+          },
+          "Version": "v7.4.20",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4271,
+              "EndLine": 4341
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/http-foundation@v7.4.21",
+          "Name": "symfony/http-foundation",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/http-foundation@v7.4.21",
+            "UID": "c195735ea45b239e"
+          },
+          "Version": "v7.4.21",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/polyfill-mbstring@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4342,
+              "EndLine": 4426
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/http-kernel@v7.4.21",
+          "Name": "symfony/http-kernel",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/http-kernel@v7.4.21",
+            "UID": "8c251b95ea78eea5"
+          },
+          "Version": "v7.4.21",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/log@3.0.2",
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/error-handler@v7.4.20",
+            "symfony/event-dispatcher@v8.1.5",
+            "symfony/http-foundation@v7.4.21",
+            "symfony/polyfill-ctype@v1.37.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4427,
+              "EndLine": 4548
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/mailer@v7.4.19",
+          "Name": "symfony/mailer",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/mailer@v7.4.19",
+            "UID": "2e9a6fb398f1434a"
+          },
+          "Version": "v7.4.19",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "egulias/email-validator@4.0.4",
+            "psr/event-dispatcher@1.0.0",
+            "psr/log@3.0.2",
+            "symfony/event-dispatcher@v8.1.5",
+            "symfony/mime@v7.4.19",
+            "symfony/service-contracts@v3.7.3"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4549,
+              "EndLine": 4635
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/mime@v7.4.19",
+          "Name": "symfony/mime",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/mime@v7.4.19",
+            "UID": "a80f7748a1170867"
+          },
+          "Version": "v7.4.19",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/polyfill-intl-idn@v1.43.0",
+            "symfony/polyfill-mbstring@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4636,
+              "EndLine": 4727
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-ctype@v1.37.0",
+          "Name": "symfony/polyfill-ctype",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-ctype@v1.37.0",
+            "UID": "86c1aa9b83169e2c"
+          },
+          "Version": "v1.37.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4728,
+              "EndLine": 4813
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-intl-grapheme@v1.43.0",
+          "Name": "symfony/polyfill-intl-grapheme",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-intl-grapheme@v1.43.0",
+            "UID": "232762864b3fe0ca"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4814,
+              "EndLine": 4898
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-intl-idn@v1.43.0",
+          "Name": "symfony/polyfill-intl-idn",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-intl-idn@v1.43.0",
+            "UID": "ebe6a8a9f19aec53"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/polyfill-intl-normalizer@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4899,
+              "EndLine": 4988
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-intl-normalizer@v1.43.0",
+          "Name": "symfony/polyfill-intl-normalizer",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-intl-normalizer@v1.43.0",
+            "UID": "e7cf5ee38276f04"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 4989,
+              "EndLine": 5076
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-mbstring@v1.43.0",
+          "Name": "symfony/polyfill-mbstring",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-mbstring@v1.43.0",
+            "UID": "420e87c30ef1f8ad"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5077,
+              "EndLine": 5164
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-php80@v1.43.0",
+          "Name": "symfony/polyfill-php80",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-php80@v1.43.0",
+            "UID": "e3471940091de61f"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5165,
+              "EndLine": 5251
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-php83@v1.43.0",
+          "Name": "symfony/polyfill-php83",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-php83@v1.43.0",
+            "UID": "262d5fe8a8e7ca5e"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5252,
+              "EndLine": 5334
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-php84@v1.43.0",
+          "Name": "symfony/polyfill-php84",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-php84@v1.43.0",
+            "UID": "65b9b33b34076ee1"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5335,
+              "EndLine": 5417
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-php85@v1.43.0",
+          "Name": "symfony/polyfill-php85",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-php85@v1.43.0",
+            "UID": "a0f4e8411557b9ff"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5418,
+              "EndLine": 5500
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-php86@v1.43.0",
+          "Name": "symfony/polyfill-php86",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-php86@v1.43.0",
+            "UID": "d829ce4cbe61f022"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5501,
+              "EndLine": 5583
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-time@v1.42.0",
+          "Name": "symfony/polyfill-time",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-time@v1.42.0",
+            "UID": "15d356e345debed6"
+          },
+          "Version": "v1.42.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5584,
+              "EndLine": 5669
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/polyfill-uuid@v1.43.0",
+          "Name": "symfony/polyfill-uuid",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/polyfill-uuid@v1.43.0",
+            "UID": "c257f19e0802ad46"
+          },
+          "Version": "v1.43.0",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5670,
+              "EndLine": 5755
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/process@v7.4.21",
+          "Name": "symfony/process",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/process@v7.4.21",
+            "UID": "ee0f23d429c20a4c"
+          },
+          "Version": "v7.4.21",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5756,
+              "EndLine": 5823
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/routing@v7.4.21",
+          "Name": "symfony/routing",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/routing@v7.4.21",
+            "UID": "c4a71fa3fed3eee0"
+          },
+          "Version": "v7.4.21",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/deprecation-contracts@v3.7.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5824,
+              "EndLine": 5911
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/service-contracts@v3.7.3",
+          "Name": "symfony/service-contracts",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/service-contracts@v3.7.3",
+            "UID": "15f889cbcbf3880f"
+          },
+          "Version": "v3.7.3",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "psr/container@2.0.2",
+            "symfony/deprecation-contracts@v3.7.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 5912,
+              "EndLine": 6001
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/string@v8.1.9",
+          "Name": "symfony/string",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/string@v8.1.9",
+            "UID": "4db0ae49ca951f5e"
+          },
+          "Version": "v8.1.9",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/polyfill-ctype@v1.37.0",
+            "symfony/polyfill-intl-grapheme@v1.43.0",
+            "symfony/polyfill-intl-normalizer@v1.43.0",
+            "symfony/polyfill-mbstring@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6002,
+              "EndLine": 6094
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/translation@v8.1.5",
+          "Name": "symfony/translation",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/translation@v8.1.5",
+            "UID": "82138f885a92ce34"
+          },
+          "Version": "v8.1.5",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/polyfill-mbstring@v1.43.0",
+            "symfony/translation-contracts@v3.7.1"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6095,
+              "EndLine": 6190
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/translation-contracts@v3.7.1",
+          "Name": "symfony/translation-contracts",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/translation-contracts@v3.7.1",
+            "UID": "bebde107c7955009"
+          },
+          "Version": "v3.7.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6191,
+              "EndLine": 6275
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/uid@v7.4.21",
+          "Name": "symfony/uid",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/uid@v7.4.21",
+            "UID": "28a9446fd71cd6bb"
+          },
+          "Version": "v7.4.21",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/polyfill-uuid@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6276,
+              "EndLine": 6356
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "symfony/var-dumper@v7.4.21",
+          "Name": "symfony/var-dumper",
+          "Identifier": {
+            "PURL": "pkg:composer/symfony/var-dumper@v7.4.21",
+            "UID": "66be1ff31ee0e34e"
+          },
+          "Version": "v7.4.21",
+          "Licenses": [
+            "MIT"
+          ],
+          "DependsOn": [
+            "symfony/deprecation-contracts@v3.7.1",
+            "symfony/polyfill-mbstring@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6357,
+              "EndLine": 6446
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "tijsverkoyen/css-to-inline-styles@v2.4.0",
+          "Name": "tijsverkoyen/css-to-inline-styles",
+          "Identifier": {
+            "PURL": "pkg:composer/tijsverkoyen/css-to-inline-styles@v2.4.0",
+            "UID": "8f1131ca30401ac5"
+          },
+          "Version": "v2.4.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "DependsOn": [
+            "symfony/css-selector@v8.1.6"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6447,
+              "EndLine": 6504
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "vlucas/phpdotenv@v5.8.0",
+          "Name": "vlucas/phpdotenv",
+          "Identifier": {
+            "PURL": "pkg:composer/vlucas/phpdotenv@v5.8.0",
+            "UID": "3255a0814e70ee47"
+          },
+          "Version": "v5.8.0",
+          "Licenses": [
+            "BSD-3-Clause"
+          ],
+          "DependsOn": [
+            "graham-campbell/result-type@v1.2.0",
+            "phpoption/phpoption@1.10.0",
+            "symfony/polyfill-ctype@v1.37.0",
+            "symfony/polyfill-mbstring@v1.43.0",
+            "symfony/polyfill-php80@v1.43.0"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6505,
+              "EndLine": 6591
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        },
+        {
+          "ID": "voku/portable-ascii@2.1.1",
+          "Name": "voku/portable-ascii",
+          "Identifier": {
+            "PURL": "pkg:composer/voku/portable-ascii@2.1.1",
+            "UID": "2788895d47cdc497"
+          },
+          "Version": "2.1.1",
+          "Licenses": [
+            "MIT"
+          ],
+          "Layer": {
+            "Digest": "sha256:bf29b24adae6cfd4b89937dfa5fe51dff51bcc42bb5080f8725fd6ef07387987",
+            "DiffID": "sha256:58c926ce18e992375b5e16e99f7ebdfc424d7e88d1dc9b20106f3a0ff600ee06"
+          },
+          "Locations": [
+            {
+              "StartLine": 6592,
+              "EndLine": 6668
+            }
+          ],
+          "AnalyzedBy": "composer-vendor"
+        }
+      ]
+    }
+  ]
+}

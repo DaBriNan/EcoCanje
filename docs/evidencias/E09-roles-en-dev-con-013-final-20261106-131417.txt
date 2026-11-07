@@ -1,0 +1,16 @@
+ID: E09
+Descripción: Roles en dev con 0.1.3 final
+Fecha: 2026-11-06T13:14:17-06:00
+Ambiente: dev
+Host: fedora
+Commit: ef9a452+cambios
+Comando: scripts/probar.sh dev tests/roles.sh
+Esperado: todas correctas (incluye 401 sin Accept)
+----- salida -----
+OK    operador en ruta de operador -> 200
+OK    credenciales invalidas -> 401
+OK    ciudadano en ruta de operador -> 403
+OK    sin token -> 401
+OK    sin token ni Accept JSON (navegador) -> 401
+Resultado: todas correctas
+----- fin: OK -----

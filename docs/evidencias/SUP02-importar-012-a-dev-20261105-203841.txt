@@ -1,0 +1,12 @@
+ID: SUP02
+Descripción: Importar 0.1.2 a dev
+Fecha: 2026-11-05T20:38:41-06:00
+Ambiente: dev
+Host: fedora
+Commit: 5eb23b3+cambios
+Comando: bash -c k3d image import ecocanje-backend:0.1.2 -c dev 2>&1 | tail -1 && scripts/verificar-imagen.sh dev 0.1.2
+Esperado: imagen presente con el mismo id en el nodo
+----- salida -----
+[36mINFO[0m[0014] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-dev-server-0 -> 94410517655dd
+----- fin: OK -----

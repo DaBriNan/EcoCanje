@@ -1,0 +1,31 @@
+flowchart LR
+  subgraph Actores
+    C([Ciudadano])
+    O([Operador])
+  end
+  subgraph Interfaz["Interfaz (SPA React, nginx)"]
+    UI[Pantallas de ciudadano y operador<br/>token Bearer en sessionStorage]
+  end
+  subgraph API["API Laravel 12 (PHP-FPM + nginx)"]
+    AUTH[Autenticación Sanctum<br/>login con límite 5/min]
+    ROL[Autorización por rol<br/>ciudadano / operador]
+    CAT[Catálogo: materiales,<br/>tarifas, recompensas, fichas]
+    ENT[Entregas: registrar, pesar,<br/>validar, acreditar, rechazar]
+    CAN[Canjes: solicitar, aprobar,<br/>entregar, cancelar]
+    PTS[Puntos: lotes FIFO, vigencia 12 meses,<br/>tope diario 500]
+    OUT[(Outbox en PostgreSQL)]
+  end
+  W[Worker outbox:publicar<br/>idempotente, reintentos]
+  PG[(PostgreSQL<br/>fuente de verdad)]
+  MG[(MongoDB<br/>movimientos y fichas)]
+  C -- HTTPS --> UI
+  O -- HTTPS --> UI
+  UI -- "HTTPS /api (JSON, mismo origen)" --> AUTH --> ROL
+  ROL --> CAT & ENT & CAN
+  ENT & CAN --> PTS
+  CAT & ENT & CAN & PTS -- "SQL (PDO persistente)" --> PG
+  ENT & CAN -- "evento en la misma transacción" --> OUT
+  OUT -. "lee pendientes" .-> W
+  W -- "upsert por _id (sin duplicados)" --> MG
+  CAT -- "fichas (lectura/escritura)" --> MG
+  API -. "historial (lectura)" .-> MG

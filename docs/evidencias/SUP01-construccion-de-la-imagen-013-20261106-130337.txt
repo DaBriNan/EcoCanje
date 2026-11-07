@@ -1,0 +1,16 @@
+ID: SUP01
+Descripción: Construccion de la imagen 0.1.3
+Fecha: 2026-11-06T13:03:38-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 62df988
+Comando: bash -c docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --build-arg APP_VERSION=0.1.3 --label org.opencontainers.image.revision=62df988 --label org.opencontainers.image.version=0.1.3 -t ecocanje-backend:0.1.3 backend && docker run --rm --entrypoint sh ecocanje-backend:0.1.3 -c 'echo APP_VERSION=$APP_VERSION; ls bootstrap/cache | tr "\n" " "; echo; grep -c RequestId bootstrap/cache/routes-v7.php >/dev/null; php artisan route:list --path=api/materiales 2>/dev/null | head -3'
+Esperado: imagen construida; APP_VERSION=0.1.3
+----- salida -----
+sha256:380a80a44703100bd69ca9a1dac6ba19571d2a8cc047915ae472915f76dcf7dc
+APP_VERSION=0.1.3
+events.php packages.php routes-v7.php services.php 
+
+  GET|HEAD  api/materiales generated::bnPtSMYdgmyeRas5 › CatalogoController@m…
+  POST      api/materiales generated::FgOQMsuTWvx9p53w › MaterialController@s…
+----- fin: OK -----

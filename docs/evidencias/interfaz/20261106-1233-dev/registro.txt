@@ -1,0 +1,52 @@
+Unable to find image 'mcr.microsoft.com/playwright:v1.64.1-noble@sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f' locally
+mcr.microsoft.com/playwright@sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f: Pulling from playwright
+7f09f8b6ee13: Pulling fs layer
+7a48b8f0e5c7: Pulling fs layer
+81918556fc04: Pulling fs layer
+1838e4eb65d9: Pulling fs layer
+6a04ac251623: Pulling fs layer
+cc4939249994: Pulling fs layer
+ec6213bdc8d0: Pulling fs layer
+7a48b8f0e5c7: Download complete
+1838e4eb65d9: Download complete
+7a48b8f0e5c7: Pull complete
+81918556fc04: Download complete
+7f09f8b6ee13: Download complete
+ec6213bdc8d0: Download complete
+1838e4eb65d9: Pull complete
+7f09f8b6ee13: Pull complete
+cc4939249994: Download complete
+6a04ac251623: Download complete
+6a04ac251623: Pull complete
+cc4939249994: Pull complete
+ec6213bdc8d0: Pull complete
+81918556fc04: Pull complete
+Digest: sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f
+Status: Downloaded newer image for mcr.microsoft.com/playwright@sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+marca de la prueba: UI-mw5be614
+OK    contraseña incorrecta muestra error
+OK    operador inicia sesión
+OK    validación: tarifa 0 se rechaza con mensaje
+OK    crear material
+OK    editar nombre y tarifa del material
+OK    guardar ficha del material en MongoDB
+OK    crear recompensa
+OK    editar stock de la recompensa
+      ciudadano id=34
+OK    ciudadano se registra desde la interfaz
+OK    registrar entrega de 4 kg del material nuevo
+OK    pesar (5 kg reales), validar y acreditar
+OK    ciudadano ve 45 puntos (5 kg x 9)
+OK    canje con confirmación
+OK    operador aprueba y entrega el canje
+OK    ciudadano ve el canje entregado y su historial en MongoDB
+OK    baja lógica de recompensa con confirmación
+OK    baja lógica de material con confirmación
+OK    cerrar sesión
+OK    sin errores de JavaScript en las páginas
+Resultado: 19 correctas, 0 fallidas (capturas en /out)

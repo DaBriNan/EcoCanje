@@ -1,0 +1,20 @@
+ID: DEP05
+Descripción: Frontend 0.1.3 en prod
+Fecha: 2026-11-06T19:19:17-06:00
+Ambiente: prod
+Host: fedora
+Commit: da8caa5+cambios
+Comando: bash -c k3d image import ecocanje-frontend:0.1.3 -c prod 2>&1 | tail -1 && IMG=ecocanje-frontend scripts/verificar-imagen.sh prod 0.1.3 && scripts/desplegar.sh prod >/dev/null && kubectl --context k3d-prod -n ecocanje rollout status deploy/frontend --timeout=180s
+Esperado: imagen identica a la aprobada
+----- salida -----
+[36mINFO[0m[0008] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-prod-agent-0 -> 79b8fa604e6dd
+OK    k3d-prod-agent-1 -> 79b8fa604e6dd
+OK    k3d-prod-server-0 -> 79b8fa604e6dd
+OK    identica a la imagen aprobada (79b8fa604e6dd)
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "frontend" rollout to finish: 1 old replicas are pending termination...
+deployment "frontend" successfully rolled out
+----- fin: OK -----
+
+NOTA DE PROCEDIMIENTO: esta promocion no debio ocurrir. La prueba de interfaz en dev (E03 19:17) fallo 21/23, pero la cadena de comandos filtraba su salida con grep y no detecto el codigo de salida. Prod paso 23/23 con 0.1.3. Causa del fallo en dev: un 401 tardio de la sesion anterior borraba la sesion nueva (defecto desde 0.1.0). Se corrige en 0.1.4 y las cadenas verifican PIPESTATUS.

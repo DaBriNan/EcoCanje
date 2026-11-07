@@ -1,0 +1,14 @@
+ID: E10
+Descripción: Panel EcoCanje cargado por el sidecar de Grafana
+Fecha: 2026-11-05T18:40:17-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c kubectl --context k3d-prod -n monitoring get cm panel-ecocanje --show-labels; kubectl --context k3d-prod -n monitoring logs deploy/kps-grafana -c grafana-sc-dashboard --tail=200 | grep -m1 ecocanje; kubectl --context k3d-prod -n monitoring exec deploy/kps-grafana -c grafana -- sh -c "curl -s -u \"\$GF_SECURITY_ADMIN_USER:\$GF_SECURITY_ADMIN_PASSWORD\" \"localhost:3000/api/search?query=EcoCanje\"" | grep -o "\"title\":\"EcoCanje[^\"]*\""
+Esperado: ConfigMap con etiqueta y panel visible en la API de Grafana
+----- salida -----
+NAME             DATA   AGE     LABELS
+panel-ecocanje   1      5m58s   grafana_dashboard=1
+{"time": "2026-11-06T00:34:19.962543+00:00", "level": "INFO", "msg": "Writing /tmp/dashboards/ecocanje.json (ascii)"}
+error: Internal error occurred: Internal error occurred: error executing command in container: failed to exec in container: failed to start exec "5527fc72d06cef5a2ac058930259892da344a7e7f121eeaa943b9caeff74d655": OCI runtime exec failed: exec failed: unable to start container process: exec: "sh": executable file not found in $PATH
+----- fin: FALLA(1) -----

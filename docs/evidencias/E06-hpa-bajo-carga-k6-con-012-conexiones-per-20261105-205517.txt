@@ -1,0 +1,12 @@
+ID: E06
+Descripción: HPA bajo carga k6 con 0.1.2 (conexiones persistentes)
+Fecha: 2026-11-05T20:55:17-06:00
+Ambiente: prod
+Host: fedora
+Commit: d36699e
+Comando: scripts/carga.sh prod con-hpa
+Esperado: replicas >2 y regreso a 2; p95<1s y errores<1%
+----- salida -----
+
+INVALIDADA (2026-11-06 11:40): el equipo se suspendio a las 21:09:15 (journal: "PM: suspend entry (deep)") a mitad de la carga y reanudo a las 11:33:18; k6 completo los minutos restantes 14 h despues. Las metricas mezclan dos momentos y no se usan. Datos validos solo hasta 21:09: HPA 2->6 en ~60 s y backend a ~4 cores (el doble que con 0.1.1). Se detuvo el proceso y se repite con systemd-inhibit.
+----- fin: INVALIDADA -----

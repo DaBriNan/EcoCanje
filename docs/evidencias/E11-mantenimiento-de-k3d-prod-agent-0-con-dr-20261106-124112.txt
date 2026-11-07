@@ -1,0 +1,61 @@
+ID: E11
+Descripción: Mantenimiento de k3d-prod-agent-0 con drain y uncordon
+Fecha: 2026-11-06T12:41:12-06:00
+Ambiente: prod
+Host: fedora
+Commit: 21cb157+cambios
+Comando: scripts/fallos.sh prod drain
+Esperado: drain respeta PDB; impacto medido; nodo vuelve a Ready
+----- salida -----
+12:41:12 nodo a mantener: k3d-prod-agent-0
+pods de ecocanje en k3d-prod-agent-0:
+  backend-6dfcc5ddf4-f2gr5
+  frontend-677bff95-kmg9s
+  manual-ok-191454-btvjn
+  manual-ok-191724-59mrm
+  mongo-0
+  respaldo-mongo-29897770-zqlxd
+  respaldo-postgres-29897760-mk6cv
+NAME       MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+backend    1               N/A               1                     3d22h
+frontend   1               N/A               1                     5m17s
+12:41:17 MANTENIMIENTO: drain k3d-prod-agent-0 (respeta PDB; sin --force ni --disable-eviction)
+evicting pod monitoring/kps-kube-state-metrics-59d4d4677-ksgsn
+evicting pod ecocanje/respaldo-postgres-29897760-mk6cv
+evicting pod ecocanje/manual-ok-191724-59mrm
+pod/manual-ok-191454-btvjn evicted
+pod/respaldo-mongo-29897770-zqlxd evicted
+pod/respaldo-postgres-29897760-mk6cv evicted
+pod/manual-ok-191724-59mrm evicted
+pod/kps-operator-969cb86db-gvm4v evicted
+pod/prometheus-kps-prometheus-0 evicted
+pod/kps-kube-state-metrics-59d4d4677-ksgsn evicted
+pod/mongo-0 evicted
+pod/kps-grafana-9fdbd5b4f-kw2jh evicted
+pod/frontend-677bff95-kmg9s evicted
+pod/backend-6dfcc5ddf4-f2gr5 evicted
+node/k3d-prod-agent-0 drained
+12:41:25 drain terminó en 8 s; réplicas listas: 1
+  backend-6dfcc5ddf4-4vvr6 Running k3d-prod-agent-1
+  backend-6dfcc5ddf4-8pjcl Pending 
+  exportador-mongo-5c78595d59-9wtp7 Running k3d-prod-agent-1
+  exportador-postgres-5ff86d5d74-l6t49 Running k3d-prod-agent-1
+  frontend-677bff95-cfcpq Pending 
+  frontend-677bff95-mm5rc Running k3d-prod-agent-1
+  migraciones-2xk8t Succeeded k3d-prod-server-0
+  mongo-0 Pending 
+  outbox-worker-69fc994d5-c47p2 Running k3d-prod-agent-1
+  postgres-0 Running k3d-prod-agent-1
+capacidad del otro nodo:
+NAME                CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+k3d-prod-agent-0    183m         2%       1484Mi          6%          
+k3d-prod-agent-1    163m         2%       445Mi           1%          
+k3d-prod-server-0   170m         2%       1164Mi          4%          
+12:41:46 uncordon k3d-prod-agent-0
+node/k3d-prod-agent-0 uncordoned
+sonda: 178 solicitudes, 0 sin 200 (0.0%), corte continuo más largo 0.0 s
+NAME                STATUS   ROLES           AGE     VERSION
+k3d-prod-agent-0    Ready    <none>          3d22h   v1.36.1+k3s1
+k3d-prod-agent-1    Ready    <none>          3d22h   v1.36.1+k3s1
+k3d-prod-server-0   Ready    control-plane   3d22h   v1.36.1+k3s1
+----- fin: OK -----

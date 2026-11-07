@@ -1,0 +1,53 @@
+fullnameOverride: kps
+crds: {enabled: true}
+defaultRules:
+  create: true
+  rules: {etcd: false, kubeControllerManager: false, kubeSchedulerAlerting: false, kubeSchedulerRecording: false, kubeProxy: false}
+kubeEtcd: {enabled: false}
+kubeControllerManager: {enabled: false}
+kubeScheduler: {enabled: false}
+kubeProxy: {enabled: false}
+nodeExporter: {enabled: false}
+prometheusOperator:
+  admissionWebhooks: {enabled: false}
+  tls: {enabled: false}
+  resources: {requests: {cpu: 20m, memory: 64Mi}, limits: {cpu: 200m, memory: 192Mi}}
+  affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+prometheus:
+  prometheusSpec:
+    retention: 2d
+    retentionSize: 2GB
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    probeSelectorNilUsesHelmValues: false
+    resources: {requests: {cpu: 100m, memory: 400Mi}, limits: {cpu: "1", memory: 1Gi}}
+    affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes: [ReadWriteOnce]
+          resources: {requests: {storage: 3Gi}}
+alertmanager:
+  alertmanagerSpec:
+    resources: {requests: {cpu: 10m, memory: 32Mi}, limits: {cpu: 100m, memory: 128Mi}}
+    affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+kube-state-metrics:
+  resources: {requests: {cpu: 10m, memory: 48Mi}, limits: {cpu: 100m, memory: 128Mi}}
+  affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+  securityContext: {enabled: true, runAsNonRoot: true, runAsUser: 65534, runAsGroup: 65534, fsGroup: 65534, seccompProfile: {type: RuntimeDefault}}
+  containerSecurityContext: {allowPrivilegeEscalation: false, readOnlyRootFilesystem: true, capabilities: {drop: [ALL]}}
+grafana:
+  enabled: true
+  admin: {existingSecret: grafana-admin, userKey: admin-user, passwordKey: admin-password}
+  defaultDashboardsTimezone: America/Mexico_City
+  persistence: {enabled: false}
+  initChownData: {enabled: false}
+  resources: {requests: {cpu: 50m, memory: 192Mi}, limits: {cpu: 500m, memory: 512Mi}}   # 300m/384Mi: sondas agotadas al arrancar y tras reanudar
+  affinity: {nodeAffinity: {requiredDuringSchedulingIgnoredDuringExecution: {nodeSelectorTerms: [{matchExpressions: [{key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}]}]}}}
+  securityContext: {runAsNonRoot: true, runAsUser: 472, runAsGroup: 472, fsGroup: 472, seccompProfile: {type: RuntimeDefault}}
+  containerSecurityContext: {allowPrivilegeEscalation: false, capabilities: {drop: [ALL]}}
+  sidecar:
+    securityContext: {allowPrivilegeEscalation: false, capabilities: {drop: [ALL]}}
+    dashboards: {enabled: true, searchNamespace: ALL}

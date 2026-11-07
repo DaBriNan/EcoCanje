@@ -1,0 +1,15 @@
+ID: SUP02
+Descripción: Importar 0.1.3 a dev y desplegar (tercera construccion)
+Fecha: 2026-11-06T13:05:41-06:00
+Ambiente: dev
+Host: fedora
+Commit: c3f3272+cambios
+Comando: bash -c k3d image import ecocanje-backend:0.1.3 -c dev 2>&1 | tail -1 && kubectl --context k3d-dev -n ecocanje rollout restart deploy/backend deploy/outbox-worker >/dev/null && kubectl --context k3d-dev -n ecocanje rollout status deploy/backend --timeout=180s >/dev/null && scripts/verificar-imagen.sh dev 0.1.3 && C=$(curl -s -o /dev/null -w %{http_code} https://dev.ecocanje.test:8444/api/materiales) && echo "sin token ni Accept: $C" && [ "$C" = 401 ]
+Esperado: 401 sin token ni Accept
+----- salida -----
+[36mINFO[0m[0008] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-dev-server-0 -> 3b8dc48b19fa2
+sin token ni Accept: 500
+----- fin: FALLA(1) -----
+
+NOTA: el 500 vino del Pod anterior (0.1.3 previa), que seguia atendiendo durante su preStop de 5 s justo despues de rollout status; la verificacion se repite a continuacion.

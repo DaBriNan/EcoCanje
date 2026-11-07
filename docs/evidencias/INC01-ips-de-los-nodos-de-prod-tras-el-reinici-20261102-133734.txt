@@ -1,0 +1,14 @@
+ID: INC01
+Descripción: IPs de los nodos de prod tras el reinicio
+Fecha: 2026-11-02T13:37:35-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: bash -c docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' k3d-prod-server-0 k3d-prod-agent-0 k3d-prod-agent-1 k3d-prod-serverlb
+Esperado: IPs registradas
+----- salida -----
+/k3d-prod-server-0 172.21.0.2
+/k3d-prod-agent-0 172.21.0.4
+/k3d-prod-agent-1 172.21.0.3
+/k3d-prod-serverlb invalid IP
+----- fin: OK -----

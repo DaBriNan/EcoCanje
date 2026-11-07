@@ -1,0 +1,18 @@
+ID: SUP01
+Descripción: Construccion de la imagen 0.1.2
+Fecha: 2026-11-05T20:38:16-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 5eb23b3
+Comando: bash -c docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --build-arg APP_VERSION=0.1.2 --label org.opencontainers.image.revision=5eb23b3 --label org.opencontainers.image.version=0.1.2 -t ecocanje-backend:0.1.2 backend && docker run --rm --entrypoint sh ecocanje-backend:0.1.2 -c 'echo APP_VERSION=$APP_VERSION; ls bootstrap/cache; grep -c Pail bootstrap/cache/packages.php || true' && docker inspect -f 'revision={{index .Config.Labels "org.opencontainers.image.revision"}} id={{.Id}}' ecocanje-backend:0.1.2
+Esperado: imagen construida; APP_VERSION=0.1.2 y caches de rutas y eventos
+----- salida -----
+sha256:70f41dfd8c86e7f1dbd0e796d42c053aaef7085d7e11dbe0e335be4f7a9a9347
+APP_VERSION=0.1.2
+events.php
+packages.php
+routes-v7.php
+services.php
+0
+revision=5eb23b3 id=sha256:70f41dfd8c86e7f1dbd0e796d42c053aaef7085d7e11dbe0e335be4f7a9a9347
+----- fin: OK -----

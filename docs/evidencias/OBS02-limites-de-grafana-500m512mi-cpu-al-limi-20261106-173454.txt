@@ -1,0 +1,12 @@
+ID: OBS02
+Descripción: Limites de Grafana 500m/512Mi (CPU al limite tras reanudar)
+Fecha: 2026-11-06T17:34:55-06:00
+Ambiente: prod
+Host: fedora
+Commit: ef9a452+cambios
+Comando: bash -c helm --kube-context k3d-prod upgrade kps prometheus-community/kube-prometheus-stack -n monitoring --version 92.17.1 -f infra/observabilidad/kps-values.yaml --wait --timeout 10m >/dev/null && kubectl --context k3d-prod -n monitoring rollout status deploy/kps-grafana --timeout=300s && kubectl --context k3d-prod -n monitoring get deploy kps-grafana -o jsonpath="{.spec.template.spec.containers[?(@.name==\"grafana\")].resources}{\"\n\"}"
+Esperado: helm upgrade OK y Grafana Ready
+----- salida -----
+deployment "kps-grafana" successfully rolled out
+{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"50m","memory":"192Mi"}}
+----- fin: OK -----

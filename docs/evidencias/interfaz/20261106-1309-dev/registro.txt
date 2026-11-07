@@ -1,0 +1,27 @@
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+marca de la prueba: UI-mw5cmb16
+OK    contraseña incorrecta muestra error
+OK    operador inicia sesión
+OK    validación: tarifa 0 se rechaza con mensaje
+OK    crear material
+FALLA editar nombre y tarifa del material: locator.waitFor: Timeout 30000ms exceeded.
+OK    guardar ficha del material en MongoDB
+OK    crear recompensa
+OK    editar stock de la recompensa
+      ciudadano id=36
+OK    ciudadano se registra desde la interfaz
+FALLA registrar entrega de 4 kg del material nuevo: locator.selectOption: Timeout 30000ms exceeded.
+FALLA pesar (5 kg reales), validar y acreditar: locator.fill: Timeout 30000ms exceeded.
+FALLA ciudadano ve 45 puntos (5 kg x 9): locator.waitFor: Timeout 10000ms exceeded.
+FALLA canje con confirmación: locator.click: Timeout 30000ms exceeded.
+FALLA operador aprueba y entrega el canje: locator.click: Timeout 30000ms exceeded.
+FALLA ciudadano ve el canje entregado y su historial en MongoDB: locator.waitFor: Timeout 10000ms exceeded.
+OK    baja lógica de recompensa con confirmación
+OK    baja lógica de material con confirmación
+OK    cerrar sesión
+OK    sin errores de JavaScript en las páginas
+Resultado: 12 correctas, 7 fallidas (capturas en /out)

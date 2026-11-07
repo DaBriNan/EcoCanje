@@ -1,0 +1,12 @@
+ID: DEP05
+Descripción: Despliegue del frontend en dev
+Fecha: 2026-11-06T12:31:53-06:00
+Ambiente: dev
+Host: fedora
+Commit: 4b44ecf+cambios
+Comando: bash -c scripts/desplegar.sh dev >/dev/null && kubectl --context k3d-dev -n ecocanje rollout status deploy/frontend --timeout=120s && kubectl --context k3d-dev -n ecocanje get pods -l app=frontend -o wide --no-headers
+Esperado: rollout completo del frontend y backend
+----- salida -----
+deployment "frontend" successfully rolled out
+frontend-9d4566dc5-vr65v   1/1   Running   0     7s    10.42.0.95   k3d-dev-server-0   <none>   <none>
+----- fin: OK -----

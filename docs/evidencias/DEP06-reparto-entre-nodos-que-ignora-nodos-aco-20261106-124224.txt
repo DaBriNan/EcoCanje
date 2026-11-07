@@ -1,0 +1,18 @@
+ID: DEP06
+Descripción: Reparto entre nodos que ignora nodos acordonados (nodeTaintsPolicy Honor)
+Fecha: 2026-11-06T12:42:24-06:00
+Ambiente: prod
+Host: fedora
+Commit: 21cb157+cambios
+Comando: bash -c scripts/desplegar.sh prod >/dev/null && kubectl --context k3d-prod -n ecocanje get pods -l "app in (backend,frontend)" -o jsonpath="{range .items[*]}{.metadata.name} {.spec.nodeName}{\"\n\"}{end}" && kubectl --context k3d-prod -n ecocanje get deploy backend -o jsonpath="{.spec.template.spec.topologySpreadConstraints[0].nodeTaintsPolicy}{\"\n\"}"
+Esperado: rollout completo; 1 replica por worker
+----- salida -----
+backend-6dfcc5ddf4-4vvr6 k3d-prod-agent-1
+backend-7967fc9979-5q7kk k3d-prod-agent-0
+backend-7967fc9979-q9spt k3d-prod-agent-0
+frontend-5fb4ccc55d-j26vm k3d-prod-agent-0
+frontend-5fb4ccc55d-wnzn8 k3d-prod-agent-0
+Honor
+----- fin: OK -----
+
+NOTA POSTERIOR: el despliegue termino OK pero dejo las 4 replicas (2 backend, 2 frontend) en k3d-prod-agent-0: el reparto contaba tambien los pods de la revision anterior. Corregido con matchLabelKeys [pod-template-hash] (DEP06 siguiente).

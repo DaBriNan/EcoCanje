@@ -1,0 +1,21 @@
+ID: E02
+Descripción: Datos, credenciales y volumenes independientes entre dev y prod
+Fecha: 2026-11-02T18:45:00-06:00
+Ambiente: dev y prod
+Host: fedora
+Commit: 2ecc113+cambios
+Comando: tests/independencia.sh
+Esperado: marcador solo en dev, credenciales y volumenes distintos
+----- salida -----
+OK    sesion de operador en dev y en prod -> si
+OK    se crea un material marcador solo en dev -> 201
+OK    el marcador existe en dev -> 1
+OK    el marcador NO existe en prod -> 0
+OK    credencial postgres-credenciales/admin distinta entre dev y prod -> distinta
+OK    credencial postgres-credenciales/app distinta entre dev y prod -> distinta
+OK    credencial mongo-credenciales/app distinta entre dev y prod -> distinta
+OK    credencial app-runtime/app-key distinta entre dev y prod -> distinta
+OK    volumenes persistentes compartidos entre ambientes -> 0
+OK    servidores de API distintos -> distintos
+Resultado: 10 correctas, 0 fallidas
+----- fin: OK -----

@@ -1,0 +1,154 @@
+ID: E14
+Descripción: Segunda reconstruccion desde cero (API y entrada solo en 127.0.0.1)
+Fecha: 2026-11-06T18:21:23-06:00
+Ambiente: prod
+Host: fedora
+Commit: b16862e
+Comando: scripts/bootstrap.sh
+Esperado: ambos ambientes verificados; diferencias con la primera corrida registradas
+----- salida -----
+
+18:21:23 ==== 0. Prerrequisitos del host
+k3d version v5.8.3
+Client Version: v1.37.1
+v4.2.2+gb05881c
+Docker version 29.9.3, build 5457199
+versiones a desplegar: backend 0.1.3, frontend 0.1.0, k3s v1.36.1-k3s1
+gancho pre-commit instalado
+
+18:21:24 ==== 1. Imágenes de la aplicación
+backend 0.1.3 presente (artefacto existente)
+frontend 0.1.0 presente (artefacto existente)
+
+18:21:24 ==== 2. Clústeres k3d (dev 1 nodo, prod 1+2)
+[36mINFO[0m[0000] portmapping '127.0.0.1:8081:80' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] portmapping '127.0.0.1:8444:443' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] Prep: Network                                
+[36mINFO[0m[0000] Created network 'k3d-dev'                    
+[36mINFO[0m[0000] Created image volume k3d-dev-images          
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-dev-tools'                
+[36mINFO[0m[0001] Creating node 'k3d-dev-server-0'             
+[36mINFO[0m[0001] Creating LoadBalancer 'k3d-dev-serverlb'     
+[36mINFO[0m[0001] Using the k3d-tools node to gather environment information 
+[36mINFO[0m[0002] HostIP: using network gateway 172.20.0.1 address 
+[36mINFO[0m[0002] Starting cluster 'dev'                       
+[36mINFO[0m[0002] Starting servers...                          
+[36mINFO[0m[0002] Starting node 'k3d-dev-server-0'             
+[36mINFO[0m[0011] All agents already running.                  
+[36mINFO[0m[0011] Starting helpers...                          
+[36mINFO[0m[0011] Starting node 'k3d-dev-serverlb'             
+[36mINFO[0m[0018] Injecting records for hostAliases (incl. host.k3d.internal) and for 2 network members into CoreDNS configmap... 
+[36mINFO[0m[0020] Cluster 'dev' created successfully!          
+[36mINFO[0m[0020] You can now use it like this:                
+kubectl config use-context k3d-dev
+kubectl cluster-info
+[36mINFO[0m[0000] portmapping '127.0.0.1:8082:80' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] portmapping '127.0.0.1:8445:443' targets the loadbalancer: defaulting to [servers:*:proxy agents:*:proxy] 
+[36mINFO[0m[0000] Prep: Network                                
+[36mINFO[0m[0000] Created network 'k3d-prod'                   
+[36mINFO[0m[0000] Created image volume k3d-prod-images         
+[36mINFO[0m[0000] Starting new tools node...                   
+[36mINFO[0m[0000] Starting node 'k3d-prod-tools'               
+[36mINFO[0m[0001] Creating node 'k3d-prod-server-0'            
+[36mINFO[0m[0001] Creating node 'k3d-prod-agent-0'             
+[36mINFO[0m[0001] Creating node 'k3d-prod-agent-1'             
+[36mINFO[0m[0002] Creating LoadBalancer 'k3d-prod-serverlb'    
+[36mINFO[0m[0002] Using the k3d-tools node to gather environment information 
+[36mINFO[0m[0002] HostIP: using network gateway 172.21.0.1 address 
+[36mINFO[0m[0002] Starting cluster 'prod'                      
+[36mINFO[0m[0002] Starting servers...                          
+[36mINFO[0m[0002] Starting node 'k3d-prod-server-0'            
+[36mINFO[0m[0011] Starting agents...                           
+[36mINFO[0m[0012] Starting node 'k3d-prod-agent-0'             
+[36mINFO[0m[0012] Starting node 'k3d-prod-agent-1'             
+[36mINFO[0m[0017] Starting helpers...                          
+[36mINFO[0m[0017] Starting node 'k3d-prod-serverlb'            
+[36mINFO[0m[0023] Injecting records for hostAliases (incl. host.k3d.internal) and for 4 network members into CoreDNS configmap... 
+[36mINFO[0m[0025] Cluster 'prod' created successfully!         
+[36mINFO[0m[0025] You can now use it like this:                
+kubectl config use-context k3d-prod
+kubectl cluster-info
+k3d-prod-agent-0    Ready   <none>          11s   v1.36.1+k3s1
+k3d-prod-agent-1    Ready   <none>          11s   v1.36.1+k3s1
+k3d-prod-server-0   Ready   control-plane   16s   v1.36.1+k3s1
+
+18:22:13 ==== 3. Imágenes en dev (importar y comparar con las aprobadas)
+[36mINFO[0m[0019] Successfully imported 2 image(s) into 1 cluster(s) 
+OK    k3d-dev-server-0 -> 41f344a148ebb
+OK    identica a la imagen aprobada (41f344a148ebb)
+OK    k3d-dev-server-0 -> 6451729c69f9b
+OK    identica a la imagen aprobada (6451729c69f9b)
+
+18:22:33 ==== 4. Aplicación en dev (secretos, TLS, migraciones, despliegue)
+backend-848c46f885-jjvmc         2/2   Running     0     2m11s
+frontend-9d4566dc5-lbnc9         1/1   Running     0     2m11s
+migraciones-jv6v7                0/1   Completed   0     2m11s
+mongo-0                          1/1   Running     0     2m11s
+outbox-worker-578d769c45-vcd4r   1/1   Running     0     2m11s
+postgres-0                       1/1   Running     0     2m11s
+
+18:24:49 ==== 3. Imágenes en prod (importar y comparar con las aprobadas)
+[36mINFO[0m[0021] Successfully imported 2 image(s) into 1 cluster(s) 
+OK    k3d-prod-agent-0 -> 41f344a148ebb
+OK    k3d-prod-agent-1 -> 41f344a148ebb
+OK    k3d-prod-server-0 -> 41f344a148ebb
+OK    identica a la imagen aprobada (41f344a148ebb)
+OK    k3d-prod-agent-0 -> 6451729c69f9b
+OK    k3d-prod-agent-1 -> 6451729c69f9b
+OK    k3d-prod-server-0 -> 6451729c69f9b
+OK    identica a la imagen aprobada (6451729c69f9b)
+
+18:25:13 ==== 4. Aplicación en prod (secretos, TLS, migraciones, despliegue)
+backend-867c7d495f-7c97m         2/2   Running     0     78s
+backend-867c7d495f-zt42v         2/2   Running     0     78s
+frontend-656998b56b-2b7ns        1/1   Running     0     78s
+frontend-656998b56b-vnh29        1/1   Running     0     78s
+migraciones-m66bn                0/1   Completed   0     78s
+mongo-0                          1/1   Running     0     78s
+outbox-worker-667cdd6788-bv6lp   1/1   Running     0     78s
+postgres-0                       1/1   Running     0     78s
+
+18:26:36 ==== 5. Observabilidad en prod (métricas, exportadores, alertas, panel)
+creado grafana-admin (clave admin-user, admin-password)
+
+18:29:34 ==== 6. Logs en prod (Loki y Alloy)
+
+18:31:29 ==== 7. Verificación final
+todos los pods Running/Completed
+todos los pods Running/Completed
+dev: live={"status":"ok","version":"0.1.3"} ready=200 interfaz=200
+prod: live={"status":"ok","version":"0.1.3"} ready=200 interfaz=200
+(sin resultados)
+- -> 8
+app=backend -> 76
+app=exportador-postgres -> 2
+app=frontend -> 1
+app=migraciones -> 4
+app=mongo -> 102
+app=outbox-worker -> 59
+app=postgres -> 2
+- -> 3
+
+18:32:34 ==== fin
+
+Tiempos por fase:
+  0. Prerrequisitos del host                      1 s
+  1. Imágenes de la aplicación                  0 s
+  2. Clústeres k3d (dev 1 nodo, prod 1+2)       49 s
+  3. Imágenes en dev (importar y comparar con las aprobadas)   20 s
+  4. Aplicación en dev (secretos, TLS, migraciones, despliegue)  136 s
+  3. Imágenes en prod (importar y comparar con las aprobadas)   24 s
+  4. Aplicación en prod (secretos, TLS, migraciones, despliegue)   83 s
+  5. Observabilidad en prod (métricas, exportadores, alertas, panel)  178 s
+  6. Logs en prod (Loki y Alloy)                115 s
+  7. Verificación final                         65 s
+  TOTAL 671 s
+RECONSTRUCCIÓN COMPLETA Y VERIFICADA
+----- fin: OK -----
+
+DIFERENCIAS CON LA PRIMERA CORRIDA (759 s, 2026-11-06 17:59):
+- Unico cambio de procedimiento: crear-clusters.sh publica API (6550/6551) y entrada solo en 127.0.0.1 (antes 0.0.0.0).
+- Tiempo total 671 s (-88 s). Las fases de aplicacion variaron en ambos sentidos (dev 88->136 s, prod 198->83 s),
+  por la espera de las bases y de las migraciones; no se atribuye a la configuracion. Ningun paso manual adicional.
+- tests/exposicion.sh: 6/6 (antes 2/6): nada responde en la Wi-Fi ni en ZeroTier.

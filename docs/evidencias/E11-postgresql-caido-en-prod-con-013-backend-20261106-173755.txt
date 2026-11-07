@@ -1,0 +1,26 @@
+ID: E11
+Descripción: PostgreSQL caido en prod con 0.1.3: backend y worker sin reinicios
+Fecha: 2026-11-06T17:37:55-06:00
+Ambiente: prod
+Host: fedora
+Commit: ef9a452+cambios
+Comando: scripts/fallos.sh prod postgres
+Esperado: 0 reinicios de backend y outbox-worker; recuperacion medida
+----- salida -----
+17:37:56 reinicios antes: backend-79d68bd768-k964p=0 0 backend-79d68bd768-m7wxt=0 0 outbox-worker-667cdd6788-w8j6s=0 
+17:37:59 FALLA: PostgreSQL a 0 réplicas
+statefulset.apps/postgres scaled
+pod/postgres-0 condition met
+17:39:00 tras 60 s sin base: réplicas listas= | /health/live=503
+reinicios durante la caída: backend-79d68bd768-k964p=0 0 backend-79d68bd768-m7wxt=0 0 outbox-worker-667cdd6788-w8j6s=0 
+17:39:01 RECUPERACIÓN: PostgreSQL a 1 réplica
+statefulset.apps/postgres scaled
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+17:39:14 backend listo tras 75 s desde la caída
+sonda: 259 solicitudes, 219 sin 200 (84.6%), corte continuo más largo 70.1 s
+  código 000: 2
+  código 503: 217
+reinicios después: backend-79d68bd768-k964p=0 0 backend-79d68bd768-m7wxt=0 0 outbox-worker-667cdd6788-w8j6s=0 
+la liveness no reinició contenedores
+----- fin: OK -----

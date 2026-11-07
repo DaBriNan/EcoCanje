@@ -1,0 +1,21 @@
+ID: E08
+Descripción: Exposicion de API y entrada en interfaces externas (antes de corregir)
+Fecha: 2026-11-06T18:16:37-06:00
+Ambiente: prod
+Host: fedora
+Commit: 154113a+cambios
+Comando: tests/exposicion.sh
+Esperado: hallazgo: alcanzables desde la IP de la red
+----- salida -----
+puertos publicados por k3d:
+k3d-prod-serverlb 0.0.0.0:8082->80/tcp, [::]:8082->80/tcp, 0.0.0.0:8445->443/tcp, [::]:8445->443/tcp, 0.0.0.0:38741->6443/tcp
+k3d-dev-serverlb 0.0.0.0:8081->80/tcp, [::]:8081->80/tcp, 0.0.0.0:8444->443/tcp, [::]:8444->443/tcp, 0.0.0.0:42649->6443/tcp
+OK    control: interfaz por 127.0.0.1:8445 -> alcanzable
+OK    control: API de prod por 127.0.0.1:38741 -> alcanzable
+FALLA interfaz por 192.168.0.239:8445 -> alcanzable (esperado cerrado)
+FALLA API de prod por 192.168.0.239:38741 -> alcanzable (esperado cerrado)
+FALLA interfaz por 200.168.0.179:8445 -> alcanzable (esperado cerrado)
+FALLA API de prod por 200.168.0.179:38741 -> alcanzable (esperado cerrado)
+Resultado: 2 correctas, 4 fallidas
+tests/exposicion.sh failed with exit status 1.
+----- fin: FALLA(1) -----

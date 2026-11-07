@@ -1,0 +1,13 @@
+ID: OBS06
+Descripción: Eventos de Kubernetes en Loki
+Fecha: 2026-11-06T13:02:00-06:00
+Ambiente: prod
+Host: fedora
+Commit: 745fac0+cambios
+Comando: scripts/loki.sh prod {job="loki.source.kubernetes_events", namespace="ecocanje"} 2h 3
+Esperado: eventos recientes de ecocanje
+----- salida -----
+12:47:30 | cluster=prod, job=loki.source.kubernetes_events, namespace=ecocanje | name=outbox-worker-69fc994d5-c47p2 kind=Pod objectAPIversion=v1 objectRV=49573 eventRV=56358 reportinginstance=k3d-prod-agent-1 reportingcontroller=kubelet sour
+12:47:29 | cluster=prod, job=loki.source.kubernetes_events, namespace=ecocanje | name=outbox-worker-69fc994d5-c47p2 kind=Pod objectAPIversion=v1 objectRV=49573 eventRV=56357 reportinginstance=k3d-prod-agent-1 reportingcontroller=kubelet sour
+12:47:29 | cluster=prod, job=loki.source.kubernetes_events, namespace=ecocanje | name=outbox-worker-69fc994d5-c47p2 kind=Pod objectAPIversion=v1 objectRV=49573 eventRV=56355 reportinginstance=k3d-prod-agent-1 reportingcontroller=kubelet sour
+----- fin: OK -----

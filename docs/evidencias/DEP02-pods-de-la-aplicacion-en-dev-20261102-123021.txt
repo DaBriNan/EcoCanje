@@ -1,0 +1,11 @@
+ID: DEP02
+Descripción: Pods de la aplicacion en dev
+Fecha: 2026-11-02T12:30:21-06:00
+Ambiente: dev
+Host: fedora
+Commit: 9f06221+cambios
+Comando: pods_sanos k3d-dev
+Esperado: todos Running/Completed
+----- salida -----
+ecocanje      cliente-ext                               1/1   Terminating   0             32s
+----- fin: FALLA(1) -----

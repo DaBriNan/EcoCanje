@@ -1,0 +1,16 @@
+ID: E01
+Descripción: Versiones de herramientas
+Fecha: 2026-10-27T17:52:23-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 1428352+cambios
+Comando: bash -c k3d version; kubectl version --client; helm version --short; docker --version
+Esperado: versiones registradas
+----- salida -----
+k3d version v5.8.3
+k3s version v1.31.5-k3s1 (default)
+Client Version: v1.37.1
+Kustomize Version: v5.8.1
+v4.2.2+gb05881c
+Docker version 29.9.0, build f415da8
+----- fin: OK -----

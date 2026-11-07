@@ -1,0 +1,17 @@
+ID: OBS03
+Descripción: Metricas habilitadas en Traefik
+Fecha: 2026-11-02T21:10:38-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0+cambios
+Comando: bash -c kubectl --context k3d-prod -n kube-system get deploy traefik -o jsonpath="{.spec.template.spec.containers[0].args}" | tr "," "\n" | grep -i metric; kubectl --context k3d-prod -n kube-system get deploy traefik -o jsonpath="{range .spec.template.spec.containers[0].ports[*]}{.name}{\" \"}{.containerPort}{\"\n\"}{end}"
+Esperado: argumento --metrics.prometheus y puerto de metricas
+----- salida -----
+["--entryPoints.metrics.address=:9100/tcp"
+"--metrics.prometheus=true"
+"--metrics.prometheus.entrypoint=metrics"
+metrics 9100
+traefik 8080
+web 8000
+websecure 8443
+----- fin: OK -----

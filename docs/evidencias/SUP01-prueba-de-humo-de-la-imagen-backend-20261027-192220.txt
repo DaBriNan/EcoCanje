@@ -1,0 +1,17 @@
+ID: SUP01
+Descripción: Prueba de humo de la imagen backend
+Fecha: 2026-10-27T19:22:20-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: b8578f9+cambios
+Comando: docker run --rm --read-only --tmpfs /tmp -e APP_PACKAGES_CACHE=/tmp/packages.php -e APP_SERVICES_CACHE=/tmp/services.php ecocanje-backend:0.1.0 sh -c id -u; php -v | head -1; php -m | grep -Ei "^(mongodb|pdo_pgsql|zend opcache)$"; php artisan --version
+Esperado: mongodb, pdo_pgsql y opcache cargados; usuario no root; fs de solo lectura
+----- salida -----
+82
+PHP 8.4.27 (cli) (built: Oct 21 2026 22:52:58) (NTS)
+mongodb
+pdo_pgsql
+Zend OPcache
+Zend OPcache
+Laravel Framework 12.70.1
+----- fin: OK -----

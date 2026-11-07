@@ -1,0 +1,12 @@
+ID: SUP02
+Descripción: Importar frontend 0.1.0 a dev
+Fecha: 2026-11-06T12:31:48-06:00
+Ambiente: dev
+Host: fedora
+Commit: 4b44ecf+cambios
+Comando: bash -c k3d image import ecocanje-frontend:0.1.0 -c dev 2>&1 | tail -1 && IMG=ecocanje-frontend scripts/verificar-imagen.sh dev 0.1.0
+Esperado: imagen presente con el mismo id
+----- salida -----
+[36mINFO[0m[0004] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-dev-server-0 -> 6451729c69f9b
+----- fin: OK -----

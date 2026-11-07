@@ -1,0 +1,11 @@
+flowchart LR
+  U([Navegador]) -- "HTTPS prod.ecocanje.test:8445" --> LB["Balanceador k3d<br/>127.0.0.1:8445"]
+  LB --> TR["Traefik<br/>Ingress + TLS"]
+  TR -- "/" --> SF{{"Service frontend<br/>ClusterIP"}}
+  TR -- "/api" --> SB{{"Service backend<br/>ClusterIP"}}
+  SF --> F["2 réplicas frontend"]
+  SB --> B["2–6 réplicas backend<br/>(HPA)"]
+  B --> SP{{"Service postgres"}} --> PG[("postgres-0")]
+  B --> SM{{"Service mongo"}} --> MG[("mongo-0")]
+  W["outbox-worker"] --> SP
+  W --> SM

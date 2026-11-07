@@ -1,0 +1,23 @@
+ID: E11
+Descripción: Caida real de workers tras reinicio del host
+Fecha: 2026-11-05T18:28:48-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c kubectl --context k3d-prod get nodes; kubectl --context k3d-prod get nodes -o custom-columns=N:.metadata.name,IP:.status.addresses[0].address,ANOT:.metadata.annotations.alpha\.kubernetes\.io/provided-node-ip,TAINT:.spec.taints[*].key; for a in agent-0 agent-1; do echo "$a ip actual: $(docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" k3d-prod-$a)"; docker logs k3d-prod-$a 2>&1 | grep "Shutdown request" | tail -1; done; echo "pods no sanos: $(kubectl --context k3d-prod get pods -A --no-headers | grep -vc Running)"; ! kubectl --context k3d-prod get nodes --no-headers | grep -q NotReady
+Esperado: diagnostico: workers NotReady por IP intercambiada
+----- salida -----
+NAME                STATUS     ROLES           AGE    VERSION
+k3d-prod-agent-0    NotReady   <none>          3d4h   v1.36.1+k3s1
+k3d-prod-agent-1    NotReady   <none>          3d4h   v1.36.1+k3s1
+k3d-prod-server-0   Ready      control-plane   3d4h   v1.36.1+k3s1
+N                   IP           ANOT     TAINT
+k3d-prod-agent-0    172.21.0.5   <none>   node.kubernetes.io/unreachable,node.kubernetes.io/unreachable
+k3d-prod-agent-1    172.21.0.3   <none>   node.kubernetes.io/unreachable,node.kubernetes.io/unreachable
+k3d-prod-server-0   172.21.0.4   <none>   <none>
+agent-0 ip actual: 172.21.0.5
+time="2026-11-05T23:33:27Z" level=error msg="Shutdown request received: \"failed to start networking: unable to initialize network policy controller: error getting node subnet: failed to find interface with specified node ip\""
+agent-1 ip actual: 172.21.0.3
+time="2026-11-05T23:33:19Z" level=error msg="Shutdown request received: \"failed to start networking: unable to initialize network policy controller: error getting node subnet: failed to find interface with specified node ip\""
+pods no sanos: 42
+----- fin: FALLA(1) -----

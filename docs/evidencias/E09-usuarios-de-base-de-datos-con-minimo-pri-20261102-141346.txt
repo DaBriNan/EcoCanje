@@ -1,0 +1,37 @@
+ID: E09
+Descripción: Usuarios de base de datos con minimo privilegio (prod)
+Fecha: 2026-11-02T14:13:47-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/verificar-bd.sh k3d-prod
+Esperado: todas las verificaciones OK
+----- salida -----
+== PostgreSQL: roles
+                                 List of roles
+     Role name     |                         Attributes                         
+-------------------+------------------------------------------------------------
+ ecocanje_admin    | Superuser, Create role, Create DB, Replication, Bypass RLS
+ ecocanje_app      | 
+ ecocanje_backup   | 
+ ecocanje_migrador | 
+ ecocanje_monitor  | 
+
+OK    pg: app conecta con su contrasena
+OK    pg: app no es superusuario
+OK    pg: app no puede crear tablas
+OK    pg: migrador crea y borra tablas
+OK    pg: backup no puede escribir
+OK    pg: monitor lee estadisticas
+OK    pg: sin contrasena (localhost) rechazada
+OK    pg: sin contrasena (socket) rechazada
+== MongoDB
+OK    mongo: sin credenciales no lee
+OK    mongo: app escribe en su base
+OK    mongo: app no puede modificar colecciones
+OK    mongo: app no puede crear usuarios
+OK    mongo: migrador modifica colecciones
+OK    mongo: migrador limpia la prueba
+OK    mongo: monitor lee estado del servidor
+Resultado: 15 correctas, 0 fallidas
+----- fin: OK -----

@@ -1,0 +1,12 @@
+ID: E01
+Descripción: Instalacion de k3d fijada
+Fecha: 2026-10-27T17:43:56-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 1428352+cambios
+Comando: k3d version
+Esperado: k3d v5.8.3 instalado
+----- salida -----
+k3d version v5.8.3
+k3s version v1.31.5-k3s1 (default)
+----- fin: OK -----

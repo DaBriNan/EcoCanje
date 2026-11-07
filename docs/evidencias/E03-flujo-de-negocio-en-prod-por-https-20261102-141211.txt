@@ -1,0 +1,36 @@
+ID: E03
+Descripción: Flujo de negocio en prod por HTTPS
+Fecha: 2026-11-02T14:12:12-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/probar.sh prod tests/flujo.sh
+Esperado: todas las verificaciones OK
+----- salida -----
+Ciudadano de prueba id=32
+OK    peso negativo -> 422
+OK    material duplicado -> 422
+OK    registrar 5 kg aluminio -> 201
+OK    acreditar sin validar -> 409
+OK    pesar 101 -> 200
+OK    validar 101 -> 200
+OK    acreditar (150 pts) -> 200
+OK    acreditar de nuevo -> 409
+OK    registrar 12 kg aluminio -> 201
+OK    pesar 102 -> 200
+OK    validar 102 -> 200
+OK    tope diario (150+360>500) -> 422
+OK    rechazar con motivo -> 200
+OK    ciudadano no registra entregas -> 403
+saldo: {"saldo":150,"vence_en_30_dias":0,"tope_diario_restante":350}
+OK    canje saldo insuficiente (500) -> 422
+OK    canje vale 150 -> 201
+OK    segundo canje sin saldo -> 422
+OK    aprobar canje -> 200
+OK    cancelar canje aprobado -> 200
+OK    entregar canje cancelado -> 409
+saldo tras cancelar: {"saldo":150,"vence_en_30_dias":0,"tope_diario_restante":350}
+OK    canje otra vez (puntos devueltos) -> 201
+OK    reporte mensual -> 200
+Resultado: 22 correctas, 0 fallidas
+----- fin: OK -----

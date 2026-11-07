@@ -244,3 +244,6 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T19:24:08-06:00 [compose-local] `scripts/promover-frontend.sh 0.1.4` → OK (DEP05)
 - 2026-11-06T19:25:43-06:00 [dev] `scripts/probar.sh dev tests/interfaz/correr.sh` → OK (E03)
 - 2026-11-06T19:27:11-06:00 [dev] `scripts/probar.sh dev tests/interfaz/correr.sh` → OK (E03)
+- 2026-11-06T19:38:45-06:00 [prod] `tests/recreacion-datos.sh prod` → OK (E05)
+- 2026-11-06T19:39:27-06:00 [prod] `tests/recreacion-datos.sh prod` → OK (E05)
+- 2026-11-06T19:40:00-06:00 [dev] `tests/recreacion-datos.sh dev` → OK (E05)

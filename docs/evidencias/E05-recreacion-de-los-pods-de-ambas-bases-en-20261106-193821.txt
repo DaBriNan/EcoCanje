@@ -1,0 +1,28 @@
+ID: E05
+Descripción: Recreacion de los Pods de ambas bases en prod sin perdida de registros
+Fecha: 2026-11-06T19:38:22-06:00
+Ambiente: prod
+Host: fedora
+Commit: 40a9a87
+Comando: tests/recreacion-datos.sh prod
+Esperado: huella de datos identica antes y despues; mismo PVC
+----- salida -----
+ERROR:  column "/" does not exist
+LINE 1: select (select count(*) from users)||"/"||(select count(*) f...
+                                             ^
+command terminated with exit code 1
+antes  PostgreSQL usuarios/entregas/detalles/canjes/suma_puntos/outbox =  | MongoDB movimientos/fichas = 28/4
+postgres-0 recreado en 8 s (Pod nuevo: sí; PVC data-postgres-0)
+mongo-0 recreado en 8 s (Pod nuevo: sí; PVC data-mongo-0)
+ERROR:  column "/" does not exist
+LINE 1: select (select count(*) from users)||"/"||(select count(*) f...
+                                             ^
+command terminated with exit code 1
+después PostgreSQL =  | MongoDB = 28/4
+OK    PostgreSQL sin pérdida ni cambios -> 
+OK    MongoDB sin pérdida ni cambios -> 28/4
+OK    la aplicación responde tras la recreación -> 200
+Resultado: 3 correctas, 0 fallidas
+----- fin: OK -----
+
+INVALIDA (falso OK): la consulta de PostgreSQL fallo (separador "/" escrito como identificador) y la huella quedo vacia antes y despues; la comparacion de vacios paso. MongoDB si se comparo (28/4). Se corrige la consulta, la comparacion falla con huella vacia y se repite.

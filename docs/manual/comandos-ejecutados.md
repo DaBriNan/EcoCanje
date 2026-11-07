@@ -241,3 +241,6 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T19:19:17-06:00 [dev] `bash -c IMG=ecocanje-frontend scripts/verificar-imagen.sh dev 0.1.3 --registrar` → OK (SUP02)
 - 2026-11-06T19:19:49-06:00 [prod] `bash -c k3d image import ecocanje-frontend:0.1.3 -c prod 2>&1 | tail -1 && IMG=ecocanje-frontend scripts/verificar-imagen.sh prod 0.1.3 && scripts/desplegar.sh prod >/dev/null && kubectl --context k3d-prod -n ecocanje rollout status deploy/frontend --timeout=180s` → OK (DEP05)
 - 2026-11-06T19:20:21-06:00 [prod] `scripts/probar.sh prod tests/interfaz/correr.sh` → OK (E03)
+- 2026-11-06T19:24:08-06:00 [compose-local] `scripts/promover-frontend.sh 0.1.4` → OK (DEP05)
+- 2026-11-06T19:25:43-06:00 [dev] `scripts/probar.sh dev tests/interfaz/correr.sh` → OK (E03)
+- 2026-11-06T19:27:11-06:00 [dev] `scripts/probar.sh dev tests/interfaz/correr.sh` → OK (E03)

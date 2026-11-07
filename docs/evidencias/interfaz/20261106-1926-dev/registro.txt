@@ -1,0 +1,31 @@
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+marca de la prueba: UI-mw5q3ibs
+OK    contraseña incorrecta muestra error
+OK    operador inicia sesión
+OK    validación en el cliente: el navegador bloquea tarifa 0
+OK    validación en el servidor: la API rechaza tarifa 0 aunque se evite la interfaz (422)
+OK    crear material
+OK    editar nombre y tarifa del material
+OK    guardar ficha del material en MongoDB
+OK    crear recompensa
+OK    editar stock de la recompensa
+      ciudadano id=37
+OK    ciudadano se registra desde la interfaz
+OK    registrar entrega de 4 kg del material nuevo
+OK    búsqueda de entregas por id de ciudadano
+OK    pesar (5 kg reales), validar y acreditar
+OK    ciudadano ve 45 puntos (5 kg x 9)
+OK    canje con confirmación
+OK    operador aprueba y entrega el canje
+OK    ciudadano ve el canje entregado y su historial en MongoDB
+OK    baja lógica de recompensa con confirmación
+OK    baja lógica de material con confirmación
+OK    sesión expirada: token inválido devuelve al login con aviso
+OK    volver a entrar tras la expiración
+OK    cerrar sesión
+OK    sin errores de JavaScript en las páginas
+Resultado: 23 correctas, 0 fallidas (capturas en /out)

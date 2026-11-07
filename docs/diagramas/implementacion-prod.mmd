@@ -1,35 +1,25 @@
 flowchart TB
-  subgraph HOST["Host Fedora (Docker) — k3d-prod, k3s v1.36.5"]
-    LB["k3d-prod-serverlb<br/>127.0.0.1:8445→443, :8082→80<br/>API 127.0.0.1:6551→6443"]
-    subgraph S["k3d-prod-server-0 (control plane, sin cargas de la app)"]
-      TR[Traefik 3.7 IngressController<br/>kube-system]
-      CORE[CoreDNS, metrics-server,<br/>local-path-provisioner]
-      MIG[Job migraciones]
-    end
-    subgraph A0["k3d-prod-agent-0 (worker)"]
-      B0[backend Pod<br/>php-fpm + nginx]
-      F0[frontend Pod nginx]
-      MG[(StatefulSet mongo-0<br/>PVC data-mongo-0 2Gi)]
-      RES[(PVC respaldos)]
-      PR[(Prometheus<br/>PVC 3Gi)]
-    end
-    subgraph A1["k3d-prod-agent-1 (worker)"]
-      B1[backend Pod]
-      F1[frontend Pod]
-      PG[(StatefulSet postgres-0<br/>PVC data-postgres-0)]
-      W[outbox-worker]
-    end
+  LB["k3d-prod-serverlb · 172.21.0.5<br/>publica 127.0.0.1:8445 (HTTPS) y 127.0.0.1:6551 (API)"]
+  subgraph S["k3d-prod-server-0 · 172.21.0.2 · control plane"]
+    direction TB
+    S1["API server · scheduler · controladores"]
+    S2["CoreDNS · metrics-server · local-path-provisioner"]
+    S3["Jobs: migraciones, instalación de Traefik"]
   end
-  LB --> TR
-  TR -- "Ingress / → Service frontend" --> F0 & F1
-  TR -- "Ingress /api → Service backend" --> B0 & B1
-  B0 & B1 & W --> PG
-  B0 & B1 & W --> MG
-  subgraph NS["Namespaces"]
-    E[ecocanje: app, bases, respaldos, RBAC, NetworkPolicy, cuota, Pod Security restricted]
-    M[monitoring: Prometheus, Alertmanager, Grafana, kube-state-metrics, Loki, Alloy — restricted]
-    MN[monitoring-nodos: node-exporter — privileged (excepción)]
+  subgraph A1["k3d-prod-agent-1 · 172.21.0.3 · worker"]
+    direction TB
+    T1["Traefik 3.7.13 (Ingress + TLS)"]
+    B1["backend · nginx + php-fpm"]
+    F1["frontend · nginx"]
+    P1[("postgres-0 · PVC 2 Gi")]
+    M1[("Prometheus · PVC 3 Gi · Alertmanager")]
   end
-  HPA[HPA backend 2–6, CPU 60%]:::nota -.-> B0
-  PDB[PDB backend y frontend minAvailable 1]:::nota -.-> B1
-  classDef nota fill:#fff7d6,stroke:#c9a400
+  subgraph A0["k3d-prod-agent-0 · 172.21.0.4 · worker"]
+    direction TB
+    B0["backend · nginx + php-fpm"]
+    F0["frontend · nginx"]
+    W0["outbox-worker"]
+    G0[("mongo-0 · PVC 2 Gi")]
+    L0[("Loki · PVC 2 Gi · Grafana · Alloy")]
+  end
+  LB --> S & A1 & A0

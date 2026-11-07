@@ -15,13 +15,13 @@ sequenceDiagram
     L-->>UI: 422 {errors por campo}
     UI-->>O: mensaje bajo cada campo
   else Correcto
-    L->>PG: BEGIN; INSERT material; INSERT tarifa vigente; COMMIT
+    L->>PG: BEGIN, INSERT material, INSERT tarifa vigente, COMMIT
     L-->>UI: 201 {material}
     UI-->>O: "Material creado"
   end
   O->>UI: Editar tarifa a 9
   UI->>T: POST /api/materiales/{id}/tarifas
-  L->>PG: INSERT tarifa (historial; la vigente es la más reciente)
+  L->>PG: INSERT tarifa (historial, la vigente es la más reciente)
   O->>UI: Dar de baja (confirmación)
   UI->>T: DELETE /api/materiales/{id}
   L->>PG: UPDATE activo=false (baja lógica: conserva entregas)

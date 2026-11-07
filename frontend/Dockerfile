@@ -9,6 +9,11 @@ ENV VITE_VERSION=${VITE_VERSION}
 RUN npm run build
 
 FROM nginxinc/nginx-unprivileged@sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03
+# Paquetes de Alpine al día: la base 1.30.6 trae brotli 1.2.0 (CVE-2026-111497, crítica) y otras corregidas
+# aguas arriba que aún no llegan a una imagen publicada de nginx (análisis SUP03).
+USER root
+RUN apk upgrade --no-cache
+USER 101
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY seguridad.conf /etc/nginx/seguridad.conf
 COPY --from=build /app/dist /usr/share/nginx/html

@@ -1,0 +1,30 @@
+ID: SUP04
+Descripción: CI en GitHub Actions: validacion y construccion de imagenes
+Fecha: 2026-11-06T18:44:32-06:00
+Ambiente: ci
+Host: fedora
+Commit: bb89e11
+Comando: bash -c gh run view 42319448727 --repo DaBriNan/EcoCanje --json conclusion,headSha,event,headBranch,createdAt,updatedAt,url --jq "\"conclusion=\(.conclusion) rama=\(.headBranch) commit=\(.headSha[:7]) evento=\(.event) inicio=\(.createdAt) fin=\(.updatedAt) \(.url)\"" && gh run view 42319448727 --repo DaBriNan/EcoCanje --log | grep -E "OK    |FALLA|Resultado" | sed "s/^.*Z //" && gh run view 42319448727 --repo DaBriNan/EcoCanje --json conclusion --jq .conclusion | grep -qx success
+Esperado: 18/18 y ejecucion success
+----- salida -----
+conclusion=success rama=dev commit=f0d9a23 evento=push inicio=2026-11-07T00:38:27Z fin=2026-11-07T00:43:34Z https://github.com/DaBriNan/EcoCanje/actions/runs/42319448727
+OK    shellcheck de scripts y pruebas
+OK    sintaxis PHP del backend
+OK    kustomize build infra/dev
+OK    kubeconform infra/dev
+OK    kustomize build infra/prod
+OK    kubeconform infra/prod
+OK    kustomize build infra/observabilidad/prod
+OK    kubeconform infra/observabilidad/prod
+OK    kustomize build infra/recuperacion
+OK    kubeconform infra/recuperacion
+OK    helm kube-prometheus-stack 92.17.1
+OK    helm prometheus-node-exporter 4.60.1
+OK    helm loki 19.1.1
+OK    helm alloy 1.14.2
+OK    configuración de Alloy (alloy fmt)
+OK    sin secretos ni claves versionados
+OK    build frontend
+OK    build backend
+Resultado: 18 correctas, 0 fallidas
+----- fin: OK -----

@@ -15,15 +15,69 @@ erDiagram
   entregas ||--|{ entrega_detalles : contiene
   entregas ||--o| puntos_lotes : genera
   recompensas ||--o{ canjes : "se canjea"
-  users { bigint id PK; string email UK; string rol; string password "hash bcrypt" }
-  materiales { bigint id PK; string nombre UK; bool activo }
-  tarifas { bigint id PK; bigint material_id FK; int puntos_por_kg; timestamp vigente_desde }
-  entregas { bigint id PK; bigint user_id FK; bigint operador_id FK; string estado; string motivo_rechazo }
-  entrega_detalles { bigint id PK; bigint entrega_id FK; bigint material_id FK; bigint tarifa_id FK; decimal peso_kg; int puntos }
-  recompensas { bigint id PK; string nombre; string tipo; int costo_puntos; int stock; bool activa }
-  canjes { bigint id PK; bigint user_id FK; bigint recompensa_id FK; int puntos; string estado; json lotes }
-  puntos_lotes { bigint id PK; bigint user_id FK; bigint entrega_id FK; int puntos; int restantes; timestamp vence_en }
-  outbox { uuid id PK; string tipo; json payload; timestamp publicado_en; smallint intentos }
+  users {
+    bigint id PK
+    string email UK
+    string rol
+    string password "hash bcrypt"
+  }
+  materiales {
+    bigint id PK
+    string nombre UK
+    bool activo
+  }
+  tarifas {
+    bigint id PK
+    bigint material_id FK
+    int puntos_por_kg
+    timestamp vigente_desde
+  }
+  entregas {
+    bigint id PK
+    bigint user_id FK
+    bigint operador_id FK
+    string estado
+    string motivo_rechazo
+  }
+  entrega_detalles {
+    bigint id PK
+    bigint entrega_id FK
+    bigint material_id FK
+    bigint tarifa_id FK
+    decimal peso_kg
+    int puntos
+  }
+  recompensas {
+    bigint id PK
+    string nombre
+    string tipo
+    int costo_puntos
+    int stock
+    bool activa
+  }
+  canjes {
+    bigint id PK
+    bigint user_id FK
+    bigint recompensa_id FK
+    int puntos
+    string estado
+    json lotes
+  }
+  puntos_lotes {
+    bigint id PK
+    bigint user_id FK
+    bigint entrega_id FK
+    int puntos
+    int restantes
+    timestamp vence_en
+  }
+  outbox {
+    uuid id PK
+    string tipo
+    json payload
+    timestamp publicado_en
+    smallint intentos
+  }
 ```
 
 ### Diccionario
@@ -32,7 +86,7 @@ erDiagram
 |---|---|---|---|---|
 | users | rol | varchar(20) | default `ciudadano` | `ciudadano` u `operador`; define la autorización en la API |
 | materiales | nombre | varchar(80) | UNIQUE | Material reciclable; `activo=false` es baja lógica |
-| tarifas | material_id, vigente_desde | FK, timestamp | índice (material_id, vigente_desde) | Historial de precios; vigente = la más reciente ≤ ahora (desempate por id) |
+| tarifas | material_id, vigente_desde | FK, timestamp | índice (material_id, vigente_desde) | Historial de precios; vigente = la más reciente <= ahora (desempate por id) |
 | entregas | estado | varchar(20) | índice (user_id, estado) | `registrada, pesada, validada, acreditada, rechazada` |
 | entrega_detalles | tarifa_id | FK a tarifas | | Tarifa congelada al registrar: un cambio posterior no altera la entrega |
 | entrega_detalles | peso_kg | decimal(8,2) | validación 0.1–200 en la API | Peso registrado y después pesado |

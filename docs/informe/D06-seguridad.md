@@ -18,13 +18,13 @@
 
 | Acción en `ecocanje` | lectura | despliegue | operaciones | administrador |
 |---|---|---|---|---|
-| Ver Pods, logs, eventos, Deployments, HPA, Jobs, Ingress, NetworkPolicy | ✔ | ✔ | ✔ | ✔ |
-| Leer Secrets | ✘ | ✘ | ✘ | ✔ |
-| Cambiar imagen, escalar, reiniciar o deshacer rollouts; borrar Pods | ✘ | ✔ | ✔ | ✔ |
-| Crear Jobs (migraciones, respaldos manuales) | ✘ | ✔ | ✔ | ✔ |
-| `exec` y `port-forward` (diagnóstico, respaldos) | ✘ | ✘ | ✔ | ✔ |
-| Modificar NetworkPolicy, RBAC, cuotas, PVC | ✘ | ✘ | ✘ | ✔ |
-| Otros namespaces (`monitoring`, `kube-system`) | ✘ | ✘ | ✘ | ✔ |
+| Ver Pods, logs, eventos, Deployments, HPA, Jobs, Ingress, NetworkPolicy | sí | sí | sí | sí |
+| Leer Secrets | no | no | no | sí |
+| Cambiar imagen, escalar, reiniciar o deshacer rollouts; borrar Pods | no | sí | sí | sí |
+| Crear Jobs (migraciones, respaldos manuales) | no | sí | sí | sí |
+| `exec` y `port-forward` (diagnóstico, respaldos) | no | no | sí | sí |
+| Modificar NetworkPolicy, RBAC, cuotas, PVC | no | no | no | sí |
+| Otros namespaces (`monitoring`, `kube-system`) | no | no | no | sí |
 
 Los permisos se otorgan a grupos (`ecocanje:lectura`, `ecocanje:despliegue`, `ecocanje:operaciones`); la identidad viaja
 en un certificado de cliente emitido por la API `CertificateSigningRequest`, con vigencia de 30 días. Kubernetes no
@@ -90,7 +90,7 @@ salientes siguen permitidas. Se activa, revierte y exporta con `infra/firewall/a
 
 | Hallazgo CRITICAL | Componente | Decisión |
 |---|---|---|
-| CVE-2026-111497 (brotli) | frontend ≤ 0.1.0 | **Corregido**: `apk upgrade` sobre la base; frontend 0.1.1+ con 0 CRITICAL y 0 HIGH |
+| CVE-2026-111497 (brotli) | frontend <= 0.1.0 | **Corregido**: `apk upgrade` sobre la base; frontend 0.1.1+ con 0 CRITICAL y 0 HIGH |
 | CVE-2026-111497 (brotli) | sidecar nginx del backend (imagen oficial 1.30.6) | **Aceptado**: no hay compilación corregida publicada; nginx no enlaza brotli (solo `image_filter`, no cargado, y curl/freetype, no usados) |
 | CVE-2025-68121 (Go en `gosu`) | postgres, mongo oficiales | **Aceptado**: corren como uid 70/999, `gosu` no se ejecuta y no usa TLS |
 | CVE-2026-65600, CVE-2026-88007 | Traefik 3.6.13 | **Corregido**: k3s v1.36.5 trae Traefik 3.7.13 (0 CRITICAL) |

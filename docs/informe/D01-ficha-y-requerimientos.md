@@ -16,7 +16,7 @@
 | Regla | Implementación |
 |---|---|
 | Una entrega pasa por `registrada → pesada → validada → acreditada`; puede rechazarse con motivo desde los tres primeros estados. Cualquier otra transición devuelve 409. | `EntregaController::paso()` con bloqueo de fila (`lockForUpdate`) |
-| Los puntos se calculan con la tarifa vigente **al registrar** cada detalle (peso × puntos/kg, redondeado). La tarifa vigente es la más reciente con `vigente_desde ≤ ahora`; empate en el mismo segundo: la de mayor id. | `EntregaController::store`, `acreditar` |
+| Los puntos se calculan con la tarifa vigente **al registrar** cada detalle (peso × puntos/kg, redondeado). La tarifa vigente es la más reciente con `vigente_desde <= ahora`; empate en el mismo segundo: la de mayor id. | `EntregaController::store`, `acreditar` |
 | Tope diario de 500 puntos acreditados por ciudadano; los puntos vencen a los 12 meses. | `PuntosService::TOPE_DIARIO`, `VIGENCIA_MESES` |
 | Un canje consume puntos de los lotes más antiguos primero (FIFO); cancelarlo devuelve los puntos a sus lotes y el stock. | `PuntosService::consumir`, `CanjeController::cancelar` |
 | Un canje pasa por `solicitado → aprobado → entregado`; puede cancelarse desde los dos primeros. | `CanjeController::paso()` |

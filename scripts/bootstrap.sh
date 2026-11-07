@@ -81,7 +81,7 @@ for e in "dev 8444" "prod 8445"; do set -- $e
 done
 sleep 60   # primer ciclo de scrape de todos los objetivos
 scripts/prom.sh prod 'up == 0'; [ $? -eq 2 ] || { echo "hay objetivos caídos en Prometheus"; rc=1; }
-scripts/prom.sh prod 'count(prometheus_rule_group_rules{rule_group=~".*ecocanje.*"})' || rc=1
+scripts/prom.sh prod 'sum(prometheus_rule_group_rules{rule_group=~".*ecocanje.*"}) == 8' || { echo "no estan las 8 reglas de ecocanje"; rc=1; }
 scripts/loki.sh prod 'sum by (app) (count_over_time({namespace="ecocanje"}[2m]))' || rc=1
 resumen
 [ $rc -eq 0 ] && echo "RECONSTRUCCIÓN COMPLETA Y VERIFICADA" || echo "RECONSTRUCCIÓN CON VERIFICACIONES FALLIDAS"

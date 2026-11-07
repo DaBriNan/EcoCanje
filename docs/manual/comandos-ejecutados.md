@@ -202,3 +202,6 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T17:36:51-06:00 [prod] `bash -c set -e; source scripts/ev.sh; kubectl --context k3d-prod get nodes --no-headers; pods_sanos k3d-prod; kubectl --context k3d-prod -n ecocanje get hpa backend --no-headers; scripts/prom.sh prod "up == 0" && exit 1 || [ $? -eq 2 ]` → OK (E01)
 - 2026-11-06T17:37:43-06:00 [prod] `scripts/probar.sh prod tests/correlacion.sh` → OK (OBS07)
 - 2026-11-06T17:39:19-06:00 [prod] `scripts/fallos.sh prod postgres` → OK (E11)
+- 2026-11-06T17:52:41-06:00 [prod] `bash -c scripts/respaldar.sh prod 2>&1 | tail -3 && scripts/exportar-respaldos.sh prod 2>&1 | tail -4 && ls -la ~/ecocanje-respaldos/prod | tail -4` → OK (E13)
+- 2026-11-06T17:53:27-06:00 [prod] `bash -c k3d cluster list; kubectl config get-contexts -o name; for f in infra/imagen-aprobada-*.id; do echo "$f: $(cat $f)"; done; docker image ls --format "{{.Repository}}:{{.Tag}} {{.ID}}" | grep ecocanje-; git rev-parse --short HEAD` → OK (E14)
+- 2026-11-06T18:11:47-06:00 [prod] `scripts/bootstrap.sh` → OK (E14)

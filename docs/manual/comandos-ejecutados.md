@@ -209,3 +209,7 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T18:32:34-06:00 [prod] `scripts/bootstrap.sh` → OK (E14)
 - 2026-11-06T18:32:36-06:00 [prod] `tests/exposicion.sh` → OK (E08)
 - 2026-11-06T18:33:21-06:00 [prod] `scripts/probar.sh prod tests/interfaz/correr.sh` → OK (E14)
+- 2026-11-06T18:42:32-06:00 [dev] `tests/rbac.sh dev` → FALLA(1) (E09)
+- 2026-11-06T18:42:44-06:00 [prod] `tests/rbac.sh prod` → FALLA(1) (E09)
+- 2026-11-06T18:43:09-06:00 [dev] `tests/rbac.sh dev` → OK (E09)
+- 2026-11-06T18:43:21-06:00 [prod] `tests/rbac.sh prod` → OK (E09)

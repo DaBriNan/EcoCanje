@@ -1,0 +1,85 @@
+# RBAC por función para personas (D06). Los permisos se otorgan a grupos, no a usuarios: el grupo viaja en el
+# certificado de cliente (campo O) que emite scripts/crear-usuario.sh. Todo es de alcance namespace (ecocanje).
+# Ninguna función lee Secrets ni modifica NetworkPolicy, RBAC, cuotas o PVC; eso queda para el administrador.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: lectura}
+rules:
+- apiGroups: [""]
+  resources: [pods, pods/log, services, endpoints, events, configmaps, persistentvolumeclaims, serviceaccounts]
+  verbs: [get, list, watch]
+- apiGroups: [apps]
+  resources: [deployments, replicasets, statefulsets]
+  verbs: [get, list, watch]
+- apiGroups: [batch]
+  resources: [jobs, cronjobs]
+  verbs: [get, list, watch]
+- apiGroups: [autoscaling]
+  resources: [horizontalpodautoscalers]
+  verbs: [get, list, watch]
+- apiGroups: [policy]
+  resources: [poddisruptionbudgets]
+  verbs: [get, list, watch]
+- apiGroups: [networking.k8s.io]
+  resources: [ingresses, networkpolicies]
+  verbs: [get, list, watch]
+- apiGroups: [events.k8s.io]
+  resources: [events]
+  verbs: [get, list, watch]
+---
+# Publicación (D07): cambiar imagen, escalar, reiniciar o deshacer un rollout, lanzar Jobs (migraciones, respaldos).
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: despliegue}
+rules:
+- apiGroups: [apps]
+  resources: [deployments, statefulsets]
+  verbs: [patch, update]
+- apiGroups: [apps]
+  resources: [deployments/scale, statefulsets/scale]
+  verbs: [get, patch, update]
+- apiGroups: [apps]
+  resources: [replicasets]
+  verbs: [delete]
+- apiGroups: [batch]
+  resources: [jobs]
+  verbs: [create, delete, patch]
+- apiGroups: [""]
+  resources: [pods]
+  verbs: [delete]
+- apiGroups: [autoscaling]
+  resources: [horizontalpodautoscalers]
+  verbs: [patch, update]
+---
+# Operación e incidentes (D08, D09): ejecutar comandos en contenedores y abrir túneles locales.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: operaciones}
+rules:
+- apiGroups: [""]
+  resources: [pods/exec, pods/portforward]
+  verbs: [create, get]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: lectura}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: lectura}
+subjects:
+- {apiGroup: rbac.authorization.k8s.io, kind: Group, name: "ecocanje:lectura"}
+- {apiGroup: rbac.authorization.k8s.io, kind: Group, name: "ecocanje:despliegue"}
+- {apiGroup: rbac.authorization.k8s.io, kind: Group, name: "ecocanje:operaciones"}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: despliegue}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: despliegue}
+subjects:
+- {apiGroup: rbac.authorization.k8s.io, kind: Group, name: "ecocanje:despliegue"}
+- {apiGroup: rbac.authorization.k8s.io, kind: Group, name: "ecocanje:operaciones"}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: operaciones}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: operaciones}
+subjects:
+- {apiGroup: rbac.authorization.k8s.io, kind: Group, name: "ecocanje:operaciones"}

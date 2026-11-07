@@ -1,0 +1,39 @@
+ID: E09
+Descripción: RBAC por funcion con certificados de cliente en dev
+Fecha: 2026-11-06T18:42:21-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1f44cf6+cambios
+Comando: tests/rbac.sh dev
+Esperado: lectura, despliegue y operaciones permitidos o denegados segun la matriz
+----- salida -----
+usuario ana (grupo ecocanje:lectura) en dev; vence: Dec  7 00:37:22 2026 GMT
+usuario beto (grupo ecocanje:despliegue) en dev; vence: Dec  7 00:37:24 2026 GMT
+usuario caro (grupo ecocanje:operaciones) en dev; vence: Dec  7 00:37:26 2026 GMT
+== ana (ecocanje:lectura)
+OK    listar pods -> permitido
+OK    leer logs del backend -> permitido
+OK    leer Secrets -> denegado
+OK    borrar un pod -> denegado
+FALLA reiniciar el backend -> error: error: unknown flag: --dry-run (esperado denegado)
+OK    exec en el backend -> denegado
+OK    ver pods de otro namespace (monitoring) -> denegado
+== beto (ecocanje:despliegue)
+FALLA reiniciar el backend -> error: error: unknown flag: --dry-run (esperado permitido)
+OK    escalar el backend -> permitido
+OK    crear un Job desde el CronJob -> permitido
+OK    leer Secrets -> denegado
+OK    exec en el backend -> denegado
+OK    borrar una NetworkPolicy -> denegado
+OK    borrar un PVC -> denegado
+OK    modificar RBAC -> denegado
+== caro (ecocanje:operaciones)
+OK    exec en el backend (diagnóstico) -> permitido
+OK    leer Secrets -> denegado
+OK    borrar una NetworkPolicy -> denegado
+OK    cambiar la cuota del namespace -> denegado
+Resultado: 17 correctas, 2 fallidas
+tests/rbac.sh failed with exit status 1.
+----- fin: FALLA(1) -----
+
+NOTA: las 2 fallas son de la prueba: "kubectl rollout restart" no acepta --dry-run. Se reemplaza por el parche equivalente (anotacion restartedAt) con --dry-run=server y se repite.

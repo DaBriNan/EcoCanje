@@ -206,3 +206,6 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T17:53:27-06:00 [prod] `bash -c k3d cluster list; kubectl config get-contexts -o name; for f in infra/imagen-aprobada-*.id; do echo "$f: $(cat $f)"; done; docker image ls --format "{{.Repository}}:{{.Tag}} {{.ID}}" | grep ecocanje-; git rev-parse --short HEAD` → OK (E14)
 - 2026-11-06T18:11:47-06:00 [prod] `scripts/bootstrap.sh` → OK (E14)
 - 2026-11-06T18:16:38-06:00 [prod] `tests/exposicion.sh` → FALLA(1) (E08)
+- 2026-11-06T18:32:34-06:00 [prod] `scripts/bootstrap.sh` → OK (E14)
+- 2026-11-06T18:32:36-06:00 [prod] `tests/exposicion.sh` → OK (E08)
+- 2026-11-06T18:33:21-06:00 [prod] `scripts/probar.sh prod tests/interfaz/correr.sh` → OK (E14)

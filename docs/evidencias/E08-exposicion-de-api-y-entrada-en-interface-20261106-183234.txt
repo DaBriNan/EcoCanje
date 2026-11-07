@@ -1,0 +1,20 @@
+ID: E08
+Descripción: Exposicion de API y entrada en interfaces externas (corregido)
+Fecha: 2026-11-06T18:32:35-06:00
+Ambiente: prod
+Host: fedora
+Commit: b16862e+cambios
+Comando: tests/exposicion.sh
+Esperado: alcanzable por 127.0.0.1 y cerrado en Wi-Fi y ZeroTier
+----- salida -----
+puertos publicados por k3d:
+k3d-prod-serverlb 127.0.0.1:8082->80/tcp, 127.0.0.1:8445->443/tcp, 127.0.0.1:6551->6443/tcp
+k3d-dev-serverlb 127.0.0.1:8081->80/tcp, 127.0.0.1:8444->443/tcp, 127.0.0.1:6550->6443/tcp
+OK    control: interfaz por 127.0.0.1:8445 -> alcanzable
+OK    control: API de prod por 127.0.0.1:6551 -> alcanzable
+OK    interfaz por 192.168.0.239:8445 -> cerrado
+OK    API de prod por 192.168.0.239:6551 -> cerrado
+OK    interfaz por 200.168.0.179:8445 -> cerrado
+OK    API de prod por 200.168.0.179:6551 -> cerrado
+Resultado: 6 correctas, 0 fallidas
+----- fin: OK -----

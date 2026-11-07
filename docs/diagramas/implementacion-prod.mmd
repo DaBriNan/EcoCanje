@@ -1,0 +1,35 @@
+flowchart TB
+  subgraph HOST["Host Fedora (Docker) — k3d-prod, k3s v1.36.5"]
+    LB["k3d-prod-serverlb<br/>127.0.0.1:8445→443, :8082→80<br/>API 127.0.0.1:6551→6443"]
+    subgraph S["k3d-prod-server-0 (control plane, sin cargas de la app)"]
+      TR[Traefik 3.7 IngressController<br/>kube-system]
+      CORE[CoreDNS, metrics-server,<br/>local-path-provisioner]
+      MIG[Job migraciones]
+    end
+    subgraph A0["k3d-prod-agent-0 (worker)"]
+      B0[backend Pod<br/>php-fpm + nginx]
+      F0[frontend Pod nginx]
+      MG[(StatefulSet mongo-0<br/>PVC data-mongo-0 2Gi)]
+      RES[(PVC respaldos)]
+      PR[(Prometheus<br/>PVC 3Gi)]
+    end
+    subgraph A1["k3d-prod-agent-1 (worker)"]
+      B1[backend Pod]
+      F1[frontend Pod]
+      PG[(StatefulSet postgres-0<br/>PVC data-postgres-0)]
+      W[outbox-worker]
+    end
+  end
+  LB --> TR
+  TR -- "Ingress / → Service frontend" --> F0 & F1
+  TR -- "Ingress /api → Service backend" --> B0 & B1
+  B0 & B1 & W --> PG
+  B0 & B1 & W --> MG
+  subgraph NS["Namespaces"]
+    E[ecocanje: app, bases, respaldos, RBAC, NetworkPolicy, cuota, Pod Security restricted]
+    M[monitoring: Prometheus, Alertmanager, Grafana, kube-state-metrics, Loki, Alloy — restricted]
+    MN[monitoring-nodos: node-exporter — privileged (excepción)]
+  end
+  HPA[HPA backend 2–6, CPU 60%]:::nota -.-> B0
+  PDB[PDB backend y frontend minAvailable 1]:::nota -.-> B1
+  classDef nota fill:#fff7d6,stroke:#c9a400

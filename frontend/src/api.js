@@ -29,7 +29,9 @@ export async function api(metodo, ruta, cuerpo) {
   if (r.status === 204) return null;
   const datos = await r.json().catch(() => ({}));
   if (r.ok) return datos;
-  if (r.status === 401 && s?.token) { sesion.borrar(); alExpirar(); }
+  // Solo cierra la sesión si sigue vigente la misma con la que se hizo esta solicitud: un 401 tardío de una sesión
+  // anterior no debe expulsar al usuario que ya volvió a entrar.
+  if (r.status === 401 && s?.token && sesion.leer()?.token === s.token) { sesion.borrar(); alExpirar(); }
   const mensajes = {
     401: 'Credenciales inválidas o sesión expirada.', 403: 'No tienes permiso para esta acción.',
     404: 'No encontrado.', 429: 'Demasiados intentos; espera un minuto.', 503: 'Servicio no disponible, intenta más tarde.',

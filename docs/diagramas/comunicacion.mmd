@@ -1,0 +1,18 @@
+flowchart LR
+  INET((Internet)) --- GW["Router LAN 192.168.0.1<br/>(gateway, NAT)"]
+  ZT["Red ZeroTier 200.168.0.0/24<br/>(VPN, interfaz ztsjsau5tt)"]
+  subgraph H["Host Fedora — wlp61s0 192.168.0.239/24"]
+    FW["Firewall de host: zona firewalld 'ecocanje' DROP<br/>(documentada; Docker publica solo en 127.0.0.1)"]
+    LO["127.0.0.1<br/>dev.ecocanje.test / prod.ecocanje.test (/etc/hosts)"]
+    subgraph DN["Redes Docker de k3d (puentes 172.x/16, NAT de salida)"]
+      subgraph K["k3s: flannel VXLAN + kube-router (NetworkPolicy)"]
+        P["Pods 10.42.0.0/16<br/>(un /24 por nodo)"]
+        SV["Services 10.43.0.0/16<br/>DNS CoreDNS 10.43.0.10"]
+      end
+    end
+  end
+  GW --- H
+  ZT --- H
+  LO -- "8444/8445 HTTPS, 6550/6551 API" --> DN
+  P -- "salida a Internet (imágenes) por NAT del host" --> GW
+  OC["Otro clúster kubernetes-admin@kubernetes<br/>API 10.31.20.9 (no administrado)"] -. "kubelet del host 10250 (excepción)" .- H

@@ -1,0 +1,46 @@
+ID: E14
+Descripción: Interfaz completa en prod con k3s v1.36.5 (Playwright)
+Fecha: 2026-11-06T19:11:42-06:00
+Ambiente: prod
+Host: fedora
+Commit: ab87731+cambios
+Comando: scripts/probar.sh prod tests/interfaz/correr.sh
+Esperado: 19 verificaciones OK
+----- salida -----
+navegador: Chromium de Playwright 1.64.1 (mcr.microsoft.com/playwright:v1.64.1-noble@sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f) | sitio: https://prod.ecocanje.test:8445
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+marca de la prueba: UI-mw5pk5ed
+OK    contraseña incorrecta muestra error
+OK    operador inicia sesión
+FALLA validación en el cliente: el navegador bloquea tarifa 0: campo valido=false, solicitud enviada=true
+OK    validación en el servidor: la API rechaza tarifa 0 aunque se evite la interfaz (422)
+OK    crear material
+OK    editar nombre y tarifa del material
+OK    guardar ficha del material en MongoDB
+OK    crear recompensa
+OK    editar stock de la recompensa
+      ciudadano id=32
+OK    ciudadano se registra desde la interfaz
+OK    registrar entrega de 4 kg del material nuevo
+FALLA búsqueda de entregas por id de ciudadano: locator.fill: Timeout 30000ms exceeded.
+OK    pesar (5 kg reales), validar y acreditar
+OK    ciudadano ve 45 puntos (5 kg x 9)
+OK    canje con confirmación
+OK    operador aprueba y entrega el canje
+OK    ciudadano ve el canje entregado y su historial en MongoDB
+OK    baja lógica de recompensa con confirmación
+OK    baja lógica de material con confirmación
+OK    sesión expirada: token inválido devuelve al login con aviso
+OK    volver a entrar tras la expiración
+OK    cerrar sesión
+OK    sin errores de JavaScript en las páginas
+Resultado: 21 correctas, 2 fallidas (capturas en /out)
+capturas: 6 en docs/evidencias/interfaz/20261106-1911-prod
+scripts/probar.sh failed with exit status 1.
+----- fin: FALLA(1) -----
+
+NOTA: la prueba ya incluia los casos de la interfaz 0.1.2 (validacion en el navegador y busqueda por ciudadano) y corrio contra 0.1.1, que no los tiene: fallan exactamente esos 2; los otros 21 pasan. Linea base antes de promover 0.1.2.

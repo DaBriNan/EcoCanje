@@ -96,7 +96,7 @@ salientes siguen permitidas. Se activa, revierte y exporta con `infra/firewall/a
 | CVE-2026-65600, CVE-2026-88007 | Traefik 3.6.13 | **Corregido**: k3s v1.36.5 trae Traefik 3.7.13 (0 CRITICAL) |
 | CVE-2026-33186, CVE-2025-68121 | metrics-server, klipper-helm de k3s v1.36.1 | **Corregido** con k3s v1.36.5 (0 CRITICAL) |
 
-Las imágenes propias (backend 0.1.3, frontend 0.1.4) tienen 0 CRITICAL y 0 HIGH. Los HIGH de componentes de terceros
+Las imágenes propias (backend 0.1.3, frontend 0.1.5) tienen 0 CRITICAL y 0 HIGH. Los HIGH de componentes de terceros
 quedan como riesgo residual y se revisan con cada actualización.
 
 ## Riesgos residuales

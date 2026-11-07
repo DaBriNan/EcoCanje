@@ -39,9 +39,9 @@ imprime el tiempo de cada fase y termina con código distinto de 0 si alguna ver
 | Fase | Qué hace | Comandos equivalentes |
 |---|---|---|
 | 0 | Prerrequisitos, `/etc/hosts`, CA de mkcert, gancho pre-commit | `cp docs/manual/gancho-pre-commit.sh .git/hooks/pre-commit` (y `gancho-excluir-secretos.txt`) |
-| 1 | Imágenes: usa las existentes o las construye desde la revisión actual | `docker build -f backend/Dockerfile.prod --build-arg MONGO_EXT=$(cat infra/MONGODB_EXT_VERSION) --build-arg APP_VERSION=0.1.3 -t ecocanje-backend:0.1.3 backend`; `docker build --build-arg VITE_VERSION=0.1.4 -t ecocanje-frontend:0.1.4 frontend` |
+| 1 | Imágenes: usa las existentes o las construye desde la revisión actual | `docker build -f backend/Dockerfile.prod --build-arg MONGO_EXT=$(cat infra/MONGODB_EXT_VERSION) --build-arg APP_VERSION=0.1.3 -t ecocanje-backend:0.1.3 backend`; `docker build --build-arg VITE_VERSION=0.1.5 -t ecocanje-frontend:0.1.5 frontend` |
 | 2 | Clústeres: dev (1 nodo) y prod (1 server + 2 workers), API y entrada solo en 127.0.0.1, cifrado de Secrets en reposo | `scripts/crear-clusters.sh dev`; `scripts/crear-clusters.sh prod` |
-| 3 | Importar imágenes en cada clúster y compararlas con el id aprobado | `k3d image import ecocanje-backend:0.1.3 ecocanje-frontend:0.1.4 -c <amb>`; `scripts/verificar-imagen.sh <amb> 0.1.3`; `IMG=ecocanje-frontend scripts/verificar-imagen.sh <amb> 0.1.4` |
+| 3 | Importar imágenes en cada clúster y compararlas con el id aprobado | `k3d image import ecocanje-backend:0.1.3 ecocanje-frontend:0.1.5 -c <amb>`; `scripts/verificar-imagen.sh <amb> 0.1.3`; `IMG=ecocanje-frontend scripts/verificar-imagen.sh <amb> 0.1.5` |
 | 4 | Aplicación: namespace, Secrets generados, TLS, migraciones y semilla, despliegue | `scripts/desplegar.sh <amb>` (llama a `crear-secretos.sh` y `crear-tls.sh`, recrea el Job `migraciones`, aplica `infra/<amb>` con Kustomize) |
 | 5 | Observabilidad en prod | `kubectl apply -f infra/observabilidad/namespaces.yaml`; `scripts/crear-secretos-monitoreo.sh k3d-prod`; `helm upgrade --install kps prometheus-community/kube-prometheus-stack --version 92.17.1 -n monitoring -f infra/observabilidad/kps-values.yaml`; `helm upgrade --install node-exporter prometheus-community/prometheus-node-exporter --version 4.60.1 -n monitoring-nodos -f infra/observabilidad/node-exporter-values.yaml`; `scripts/observabilidad.sh prod` |
 | 6 | Logs en prod | `scripts/logs.sh prod` (Loki 19.1.1 y Alloy 1.14.2; valida la configuración de Alloy antes) |
@@ -58,7 +58,7 @@ Accesos de personas (RBAC por función, D06/D07), después de la instalación:
 | Nodos y Pods | `kubectl --context k3d-<amb> get nodes`; `source scripts/ev.sh; pods_sanos k3d-<amb>` | nodos Ready; todos los Pods Running/Completed |
 | HTTPS, versión e interfaz | `curl https://<amb>.ecocanje.test:<puerto>/api/health/live`; `…/api/health/ready`; `…/` | `{"status":"ok","version":"0.1.3"}`, 200, 200 |
 | Funcional por API | `scripts/probar.sh <amb> tests/roles.sh`, `tests/flujo.sh`, `tests/catalogo.sh` (esperar 61 s entre pruebas: límite de inicio de sesión) | todas correctas |
-| Funcional por interfaz | `scripts/probar.sh <amb> tests/interfaz/correr.sh` | 23 correctas |
+| Funcional por interfaz | `scripts/probar.sh <amb> tests/interfaz/correr.sh` | 24 correctas |
 | Red y exposición | `tests/netpol-app.sh <amb>`, `tests/netpol-frontend.sh <amb>`, `tests/exposicion.sh` | todo lo no permitido, bloqueado |
 | RBAC | `tests/rbac.sh <amb>` | 19 correctas |
 | Métricas y alertas (prod) | `scripts/prom.sh prod 'up == 0'`; `scripts/prom.sh prod 'sum(prometheus_rule_group_rules{rule_group=~".*ecocanje.*"}) == 8'`; `scripts/verificar-metricas.sh prod` | sin objetivos caídos; 8 reglas; 44 métricas existentes |

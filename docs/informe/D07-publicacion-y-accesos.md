@@ -55,6 +55,7 @@ no hubo cambios de esquema.
 | frontend | 0.1.2 | validación en el navegador; búsqueda por ciudadano | `453c385884cdc` |
 | frontend | 0.1.3 | descarta respuestas de consultas no vigentes | `79b8fa604e6dd` |
 | frontend | 0.1.4 | un 401 tardío ya no cierra una sesión nueva | `06cef4d5cff81` |
+| frontend | 0.1.5 | entregas con varios materiales y detalle por material para el operador; número de ciudadano, orientación y puntos faltantes para el ciudadano | `d7a64159f485c` |
 
 Pruebas de actualización y rollback: 0.1.1 → 0.1.2 → 0.1.1 → 0.1.2 y 0.1.2 → 0.1.3 → 0.1.2 → 0.1.3, ambas con 0
 errores en la sonda (E12). En la segunda, la prueba de roles falla justo en las fases con 0.1.2 por el defecto del 401

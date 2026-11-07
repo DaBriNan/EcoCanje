@@ -29,7 +29,7 @@ Al 6 nov: **230 evidencias** (192 OK, 35 fallidas con diagnóstico, 3 invalidada
 |---|---|---|---|
 | E01 | Dos contextos y topologías distintas; nodos y componentes sanos | dev 1 nodo, prod 1+2; nodos Ready y Pods sanos tras cada reconstrucción; incidente real de workers tras reiniciar el host (diagnosticado y resuelto) | Cumple |
 | E02 | URLs HTTPS distintas y datos independientes | `dev.ecocanje.test:8444` y `prod.ecocanje.test:8445` con TLS; `tests/independencia.sh` sin datos, credenciales ni volúmenes compartidos | Cumple |
-| E03 | CRUD de tres entidades, roles y validaciones desde interfaz y API | API: flujo 22/22, catálogo 16/16 (incluye regresión del empate de tarifas); interfaz 23/23 en dev y prod (validación en cliente y servidor, búsqueda, sesión expirada), estable en 3 corridas | Cumple |
+| E03 | CRUD de tres entidades, roles y validaciones desde interfaz y API | API: flujo 22/22, catálogo 16/16 (incluye regresión del empate de tarifas); interfaz 24/24 en dev y prod (validación en cliente y servidor, búsqueda, sesión expirada), estable en 3 corridas | Cumple |
 | E04 | Uso funcional y persistente de ambas bases con consultas trazables | historial y fichas en MongoDB; outbox sin duplicados; correlación de una solicitud hasta el documento (OBS07) | Cumple |
 | E05 | Recreación de Pods de datos sin pérdida | huella de 6 métricas en PostgreSQL y 2 en MongoDB idéntica tras recrear ambos Pods (8 s c/u, mismo PVC) en dev y prod; la primera corrida dio un falso OK y se invalidó | Cumple |
 | E06 | HPA crece y disminuye; series y carga adjuntas | 2 → 6 → 2 (333 s); p95 0.99 s, 0 % errores, 124 rps; sin HPA p95 12.6 s, 13 % errores; CSV en `evidencias/carga/`. Una corrida invalidada por suspensión del equipo; la 0.1.1 no cumplía (cuello en PostgreSQL) | Cumple (p95 con poco margen) |
@@ -38,7 +38,7 @@ Al 6 nov: **230 evidencias** (192 OK, 35 fallidas con diagnóstico, 3 invalidada
 | E09 | Acceso denegado por rol de aplicación, RBAC y usuario de base | roles de la API (incluye 401 sin `Accept`); RBAC 19/19 con certificados reales; usuarios de BD de mínimo privilegio | Cumple |
 | E10 | Paneles con nodos, servicios y ambos motores; dos alertas activadas y resueltas | panel de 33 paneles con datos; AplicacionIndisponible y RespaldoFallido activadas y resueltas en Prometheus y Alertmanager; RespaldoFallido real (OBS05) | Cumple |
 | E11 | Fallo de Pod y mantenimiento de worker con tiempos e impacto | Pod: 6.5 s, 0 errores; drain/uncordon: 0 errores, 2 réplicas mantenidas tras corregir el reparto; MongoDB caído: sin pérdida; PostgreSQL caído: 72–75 s, 0 reinicios | Cumple |
-| E12 | Actualización y rollback con versión y funcionalidad | backend 0.1.1→0.1.2→0.1.1→0.1.2 y 0.1.2→0.1.3→0.1.2→0.1.3 con 0 errores; frontend hasta 0.1.4 con compuertas | Cumple |
+| E12 | Actualización y rollback con versión y funcionalidad | backend 0.1.1→0.1.2→0.1.1→0.1.2 y 0.1.2→0.1.3→0.1.2→0.1.3 con 0 errores; frontend hasta 0.1.5 con compuertas | Cumple |
 | E13 | Respaldo y restauración de ambas bases; RPO y RTO | restauración aislada 6/6; RTO 60 s y 27 s; pérdida demostrada de un dato posterior al respaldo (RPO <= 24 h) | Cumple |
 | E14 | Reconstrucción desde recursos limpios con el manual | 759 s, 671 s y 638 s (k3s v1.36.5); verificadas, sin pasos manuales adicionales | Cumple |
 

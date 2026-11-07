@@ -14,7 +14,7 @@ KUSTOMIZE=registry.k8s.io/kustomize/kustomize:v5.8.3@sha256:429eda4a1c76a7de458d
 KUBECONFORM=ghcr.io/yannh/kubeconform:v0.8.0@sha256:faffaf43f95aa6425306e1ab8d6fcad72acb9049158f38e574c085ea1ec0f64e
 HELM=docker.io/alpine/helm:4.2.4@sha256:76c375eed56144c68d6197c55bc5a4552fb42002190b796729901cbab3ae6e51
 ALLOY=docker.io/grafana/alloy:v1.21.1@sha256:4039c971193053a84e53dd9ed3e7d4561c069256b024631cd3498a353ed7ece8
-K8S=1.36.0   # misma versión menor que k3s v1.36.1
+K8S=1.36.0   # misma versión menor que k3s (infra/K3S_VERSION)
 CRD='https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json'
 TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
 ok=0; fail=0

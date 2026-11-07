@@ -6,7 +6,7 @@ Centro de acopio y reciclaje con canje de puntos, desplegado en dos ambientes Ku
 - **Aplicación**: SPA en React (frontend) y API en Laravel 12 / PHP 8.4 (backend).
 - **Datos**: PostgreSQL es la fuente de verdad (usuarios, entregas, puntos, canjes); MongoDB guarda el libro de
   movimientos y las fichas de material, sincronizado desde PostgreSQL con un *outbox* idempotente.
-- **Plataforma**: k3d con k3s v1.36.1. `k3d-dev`: 1 nodo. `k3d-prod`: 1 servidor y 2 workers, HPA 2–6 réplicas.
+- **Plataforma**: k3d con k3s v1.36.5 (versión en `infra/K3S_VERSION`). `k3d-dev`: 1 nodo. `k3d-prod`: 1 servidor y 2 workers, HPA 2–6 réplicas.
 - **Operación**: métricas (Prometheus, Grafana, Alertmanager, exportadores de ambas bases), logs (Loki y Alloy)
   con correlación por `X-Request-Id`, respaldos programados y restauración verificada.
 

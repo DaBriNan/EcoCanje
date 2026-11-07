@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { api } from './api.js';
 
 // Mensaje de confirmación o error, anunciado a lectores de pantalla.
@@ -33,12 +33,18 @@ export function useAccion() {
 }
 
 // Carga una ruta GET y permite recargarla.
+// Solo la respuesta de la consulta vigente actualiza el estado: si la ruta cambia (por ejemplo, al escribir en una
+// búsqueda) mientras otra solicitud sigue en curso, la respuesta vieja se descarta aunque llegue después.
 export function useDatos(ruta) {
   const [datos, setDatos] = useState(null);
   const [error, setError] = useState(null);
+  const vigente = useRef(0);
   const cargar = useCallback(() => {
+    const n = ++vigente.current;
     setError(null);
-    api('GET', ruta).then(setDatos).catch((e) => setError(e.message));
+    api('GET', ruta)
+      .then((d) => { if (n === vigente.current) setDatos(d); })
+      .catch((e) => { if (n === vigente.current) setError(e.message); });
   }, [ruta]);
   useEffect(cargar, [cargar]);
   return { datos, error, cargar };

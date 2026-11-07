@@ -28,7 +28,9 @@ export default function Operador() {
 function Entregas({ a }) {
   const materiales = useDatos('/materiales');
   const [filtro, setFiltro] = useState('');
-  const lista = useDatos(`/entregas${filtro ? `?estado=${filtro}` : ''}`);
+  const [ciudadano, setCiudadano] = useState('');
+  const consulta = new URLSearchParams({ ...(filtro && { estado: filtro }), ...(/^\d+$/.test(ciudadano) && { user_id: ciudadano }) });
+  const lista = useDatos(`/entregas${consulta.toString() ? `?${consulta}` : ''}`);
   const [f, setF] = useState({ user_id: '', material_id: '', peso_kg: '' });
   const [pesos, setPesos] = useState({});
   const [motivo, setMotivo] = useState({});
@@ -47,7 +49,7 @@ function Entregas({ a }) {
 
   return (
     <>
-      <form className="tarjeta" onSubmit={registrar} noValidate>
+      <form className="tarjeta" onSubmit={registrar}>
         <h2>Registrar entrega</h2>
         <div className="fila">
           <label>Id del ciudadano<input type="number" min="1" required value={f.user_id} onChange={(e) => setF({ ...f, user_id: e.target.value })} />
@@ -65,6 +67,8 @@ function Entregas({ a }) {
       <section className="tarjeta">
         <div className="titulo-fila">
           <h2>Entregas</h2>
+          <input type="search" inputMode="numeric" pattern="\d*" placeholder="Buscar por id de ciudadano" aria-label="Buscar por id de ciudadano"
+            value={ciudadano} onChange={(e) => setCiudadano(e.target.value.trim())} />
           <select aria-label="Filtrar por estado" value={filtro} onChange={(e) => setFiltro(e.target.value)}>
             <option value="">Todas</option>
             {['registrada', 'pesada', 'validada', 'acreditada', 'rechazada'].map((x) => <option key={x}>{x}</option>)}
@@ -168,7 +172,7 @@ function Materiales({ a }) {
 
   return (
     <>
-      <form className="tarjeta" onSubmit={crear} noValidate>
+      <form className="tarjeta" onSubmit={crear}>
         <h2>Nuevo material</h2>
         <div className="fila">
           <label>Nombre<input required maxLength={80} value={nuevo.nombre} onChange={(e) => setNuevo({ ...nuevo, nombre: e.target.value })} />
@@ -248,7 +252,7 @@ function Recompensas({ a }) {
 
   return (
     <>
-      <form className="tarjeta" onSubmit={guardar} noValidate>
+      <form className="tarjeta" onSubmit={guardar}>
         <h2>{editando ? `Editar recompensa #${editando}` : 'Nueva recompensa'}</h2>
         <div className="fila">
           <label>Nombre<input required maxLength={100} value={f.nombre} onChange={(e) => setF({ ...f, nombre: e.target.value })} />

@@ -44,14 +44,28 @@ await paso('operador inicia sesión', async () => {
 
 // --- CRUD de materiales ---
 const mat = `Material ${marca}`;
-await paso('validación: tarifa 0 se rechaza con mensaje', async () => {
+await paso('validación en el cliente: el navegador bloquea tarifa 0', async () => {
   await op.getByRole('button', { name: 'Materiales' }).click();
   await op.getByLabel('Nombre').fill(mat);
   await op.getByLabel('Puntos por kg').fill('0');
+  let enviada = false;
+  const vigila = (r) => { if (r.url().endsWith('/api/materiales') && r.method() === 'POST') enviada = true; };
+  op.on('request', vigila);
   await op.getByRole('button', { name: 'Crear' }).click();
-  await op.locator('.aviso.error').waitFor({ timeout: 10000 });
-  await op.locator('.error-campo').first().waitFor();
-  await captura(op, 'validacion-material');
+  await op.waitForTimeout(800);
+  op.off('request', vigila);
+  const valido = await op.getByLabel('Puntos por kg').evaluate((e) => e.validity.valid);
+  if (valido || enviada) throw new Error(`campo valido=${valido}, solicitud enviada=${enviada}`);
+  await captura(op, 'validacion-cliente');
+});
+await paso('validación en el servidor: la API rechaza tarifa 0 aunque se evite la interfaz (422)', async () => {
+  const r = await op.evaluate(async (nombre) => {
+    const t = JSON.parse(sessionStorage.getItem('ecocanje.sesion')).token;
+    const x = await fetch('/api/materiales', { method: 'POST', headers: { Authorization: `Bearer ${t}`, Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre, puntos_por_kg: 0 }) });
+    return { status: x.status, campos: Object.keys((await x.json()).errors || {}) };
+  }, mat);
+  if (r.status !== 422 || !r.campos.includes('puntos_por_kg')) throw new Error(JSON.stringify(r));
 });
 await paso('crear material', async () => {
   await op.getByLabel('Puntos por kg').fill('7');
@@ -125,6 +139,17 @@ await paso('registrar entrega de 4 kg del material nuevo', async () => {
   await op.getByRole('button', { name: 'Registrar' }).click();
   await avisoOk(op, 'registrada');
 });
+await paso('búsqueda de entregas por id de ciudadano', async () => {
+  await op.getByLabel('Buscar por id de ciudadano').fill(String(idCi));
+  // Espera a que llegue la lista filtrada: solo entregas de ese ciudadano (y al menos una)
+  const otros = () => op.locator('li.bloque').filter({ hasNotText: `ciudadano ${idCi} ` }).count();
+  const propias = () => op.locator('li.bloque').filter({ hasText: `ciudadano ${idCi} ` }).count();
+  const fin = Date.now() + 10000;
+  while ((await otros()) > 0 || (await propias()) === 0) {
+    if (Date.now() > fin) throw new Error(`${await otros()} entregas de otros ciudadanos en el resultado`);
+    await op.waitForTimeout(200);
+  }
+});
 const filaEntrega = () => op.locator('li.bloque').filter({ hasText: `ciudadano ${idCi}` }).first();
 await paso('pesar (5 kg reales), validar y acreditar', async () => {
   await filaEntrega().getByLabel(/Peso real/).fill('5');
@@ -183,6 +208,19 @@ await paso('baja lógica de material con confirmación', async () => {
   await fila.getByRole('button', { name: 'Confirmar baja' }).click();
   await avisoOk(op, 'dado de baja');
   await captura(op, 'material-baja');
+});
+await paso('sesión expirada: token inválido devuelve al login con aviso', async () => {
+  await ci.evaluate(() => { const s = JSON.parse(sessionStorage.getItem('ecocanje.sesion')); s.token = s.token.split('|')[0] + '|' + 'x'.repeat(40); /* mismo id, secreto incorrecto */ sessionStorage.setItem('ecocanje.sesion', JSON.stringify(s)); });
+  await ci.reload();
+  await ci.locator('.aviso.error').filter({ hasText: 'Tu sesión expiró' }).waitFor({ timeout: 10000 });
+  await ci.getByRole('button', { name: 'Entrar' }).waitFor();
+  await captura(ci, 'sesion-expirada');
+});
+await paso('volver a entrar tras la expiración', async () => {
+  await ci.getByLabel('Correo').fill(correo);
+  await ci.getByLabel('Contraseña').fill(pwCi);
+  await ci.getByRole('button', { name: 'Entrar' }).click();
+  await ci.getByText(`${correo} · ciudadano`).waitFor();
 });
 await paso('cerrar sesión', async () => {
   await ci.getByRole('button', { name: 'Salir' }).click();

@@ -24,7 +24,7 @@ function Acceso({ entrar }) {
     <main className="acceso">
       <h1>EcoCanje</h1>
       <p className="subtitulo">Centro de acopio y reciclaje con canje de puntos</p>
-      <form onSubmit={enviar} className="tarjeta" noValidate>
+      <form onSubmit={enviar} className="tarjeta">
         <h2>{modo === 'login' ? 'Iniciar sesión' : 'Crear cuenta de ciudadano'}</h2>
         <Aviso aviso={aviso} cerrar={cerrar} />
         {modo === 'registro' && (

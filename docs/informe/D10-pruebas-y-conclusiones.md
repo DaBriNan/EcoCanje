@@ -8,6 +8,12 @@ host, commit, comando, resultado esperado, salida (con valores sensibles ocultos
 fallidas se conservan** con su diagnóstico y la repetición se registra aparte; las mediciones afectadas por causas
 externas se marcan como invalidadas, sin borrarlas.
 
+**Datos de prueba solo en dev (desde el 7 nov).** Varias pruebas de la entrega se corrieron en prod y dejaron cuentas,
+entregas y canjes de prueba que confundieron al revisar los datos reales (un ciudadano de prueba con 25 puntos se tomó
+por una cuenta propia con 0). Desde entonces las pruebas que crean datos de negocio se niegan a correr en prod sin
+`PERMITIR_DATOS_EN_PROD=1`, y en prod la prueba de interfaz es una prueba de humo de solo lectura (10 verificaciones,
+falla si la página envía cualquier escritura distinta de iniciar o cerrar sesión).
+
 Al 6 nov: **230 evidencias** (192 OK, 35 fallidas con diagnóstico, 3 invalidadas); de ellas, 129 de la matriz E01–E14.
 
 | Tipo | Herramienta | Ubicación |

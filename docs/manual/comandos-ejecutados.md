@@ -249,3 +249,4 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-06T19:40:00-06:00 [dev] `tests/recreacion-datos.sh dev` → OK (E05)
 - 2026-11-07T14:24:33-06:00 [prod] `bash -c echo "antes:"; kubectl --context k3d-prod get nodes --no-headers; docker logs k3d-prod-agent-1 2>&1 | grep "Shutdown request" | tail -1 | cut -c1-160; echo "accion: docker restart k3d-prod-agent-1 (D08 escenario 3)"; docker restart k3d-prod-agent-1 >/dev/null && kubectl --context k3d-prod wait --for=condition=Ready node --all --timeout=180s && echo "despues:" && kubectl --context k3d-prod get nodes --no-headers` → OK (E11)
 - 2026-11-07T15:12:45-06:00 [compose-local] `scripts/promover-frontend.sh 0.1.5` → OK (DEP05)
+- 2026-11-07T15:33:30-06:00 [prod] `env VERSION_ESPERADA=0.1.5 scripts/probar.sh prod tests/interfaz/correr.sh` → OK (E03)

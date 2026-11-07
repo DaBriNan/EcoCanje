@@ -57,8 +57,8 @@ Accesos de personas (RBAC por función, D06/D07), después de la instalación:
 |---|---|---|
 | Nodos y Pods | `kubectl --context k3d-<amb> get nodes`; `source scripts/ev.sh; pods_sanos k3d-<amb>` | nodos Ready; todos los Pods Running/Completed |
 | HTTPS, versión e interfaz | `curl https://<amb>.ecocanje.test:<puerto>/api/health/live`; `…/api/health/ready`; `…/` | `{"status":"ok","version":"0.1.3"}`, 200, 200 |
-| Funcional por API | `scripts/probar.sh <amb> tests/roles.sh`, `tests/flujo.sh`, `tests/catalogo.sh` (esperar 61 s entre pruebas: límite de inicio de sesión) | todas correctas |
-| Funcional por interfaz | `scripts/probar.sh <amb> tests/interfaz/correr.sh` | 24 correctas |
+| Funcional por API | `scripts/probar.sh <amb> tests/roles.sh`; en dev además `tests/flujo.sh` y `tests/catalogo.sh` (crean datos; en prod requieren `PERMITIR_DATOS_EN_PROD=1`); esperar 61 s entre pruebas | todas correctas |
+| Funcional por interfaz | `scripts/probar.sh <amb> tests/interfaz/correr.sh` | dev: 24 correctas (flujo completo); prod: 10 correctas (humo de solo lectura) |
 | Red y exposición | `tests/netpol-app.sh <amb>`, `tests/netpol-frontend.sh <amb>`, `tests/exposicion.sh` | todo lo no permitido, bloqueado |
 | RBAC | `tests/rbac.sh <amb>` | 19 correctas |
 | Métricas y alertas (prod) | `scripts/prom.sh prod 'up == 0'`; `scripts/prom.sh prod 'sum(prometheus_rule_group_rules{rule_group=~".*ecocanje.*"}) == 8'`; `scripts/verificar-metricas.sh prod` | sin objetivos caídos; 8 reglas; 44 métricas existentes |

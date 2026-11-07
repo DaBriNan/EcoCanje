@@ -1,6 +1,7 @@
 #!/bin/bash
 # Uso: tests/rpo.sh <dev|prod>  — demuestra la perdida real de datos entre el ultimo respaldo y un fallo (RPO)
 ENV=${1:?dev|prod}; CTX=k3d-$ENV; PORT=$([ "$ENV" = dev ] && echo 8444 || echo 8445); API=https://$ENV.ecocanje.test:$PORT/api
+[ "$ENV" = prod ] && [ "${PERMITIR_DATOS_EN_PROD:-}" != 1 ] && { echo "crea un material marcador; en prod requiere PERMITIR_DATOS_EN_PROD=1"; exit 2; }
 H='Accept: application/json'; J='Content-Type: application/json'; ok=0; fail=0
 chk() { if [ "$2" = "$3" ]; then echo "OK    $1 -> $2"; ok=$((ok+1)); else echo "FALLA $1 -> $2 (esperado $3)"; fail=$((fail+1)); fi; }
 cnt() { kubectl --context "$CTX" -n "$1" exec -i postgres-0 -- sh -c 'PGPASSWORD=$(cat /run/secrets/pg/admin) psql -h 127.0.0.1 -U ecocanje_admin -d ecocanje -tA -f -' <<<"select count(*) from materiales where nombre='$2';"; }

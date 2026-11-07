@@ -54,6 +54,7 @@ drain)
   kubectl --context $CTX get nodes
   ;;
 mongo)
+  [ "$ENV" = prod ] && [ "${PERMITIR_DATOS_EN_PROD:-}" != 1 ] && { echo "el caso mongo registra una entrega de prueba; en prod requiere PERMITIR_DATOS_EN_PROD=1"; exit 2; }
   TOK=$(token); P0=$(psql_admin "select count(*) from outbox where publicado_en is null")
   echo "$(t) outbox pendientes antes: $P0"; sonda_ini; sleep 3
   echo "$(t) FALLA: MongoDB a 0 réplicas"; T=$(date +%s); $K scale statefulset mongo --replicas=0; $K wait --for=delete pod/mongo-0 --timeout=120s

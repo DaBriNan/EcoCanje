@@ -1,0 +1,17 @@
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+      EcoCanje · interfaz 0.1.5
+OK    la interfaz carga y muestra su versión
+OK    contraseña incorrecta se rechaza
+OK    el operador entra y ve su rol
+OK    pestaña Entregas carga datos
+OK    pestaña Canjes carga datos
+OK    pestaña Materiales carga datos
+OK    pestaña Recompensas carga datos
+OK    pestaña Reporte carga datos
+OK    cerrar sesión
+OK    sin escrituras de negocio ni errores de JavaScript
+Resultado: 10 correctas, 0 fallidas (capturas en /out)

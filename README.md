@@ -85,13 +85,17 @@ ev E03 "Flujo de negocio en prod" "todas OK" scripts/probar.sh prod tests/flujo.
 | Prueba | Script |
 |---|---|
 | Roles, flujo, catálogo (API) | `tests/roles.sh`, `tests/flujo.sh`, `tests/catalogo.sh` vía `scripts/probar.sh` |
-| Interfaz completa con navegador | `scripts/probar.sh <amb> tests/interfaz/correr.sh` |
+| Interfaz con navegador (completa en dev, humo de solo lectura en prod) | `scripts/probar.sh <amb> tests/interfaz/correr.sh` |
 | Políticas de red y exposición | `tests/netpol-app.sh`, `tests/netpol-frontend.sh`, `tests/exposicion.sh` |
 | Balanceo, carga y HPA | `tests/balanceo.sh`, `scripts/carga.sh prod <con-hpa\|sin-hpa>` |
 | Fallos | `scripts/fallos.sh prod <pod\|drain\|mongo\|postgres>` |
 | Alertas provocadas | `scripts/provocar-alerta.sh prod <indisponible\|respaldo>` |
 | Respaldos, RPO e independencia | `scripts/restaurar.sh`, `tests/rpo.sh`, `tests/independencia.sh` |
 | Correlación de logs | `scripts/probar.sh prod tests/correlacion.sh` |
+
+**Datos de prueba solo en dev.** Las pruebas que crean datos de negocio (`flujo.sh`, `catalogo.sh`, `correlacion.sh`,
+`rpo.sh`, `fallos.sh … mongo` y la prueba de interfaz completa) se niegan a correr en prod salvo que se pida con
+`PERMITIR_DATOS_EN_PROD=1`; en prod, `tests/interfaz/correr.sh` ejecuta una prueba de humo de solo lectura.
 
 La CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) ejecuta `scripts/validar.sh --imagenes` en cada
 cambio a `main` y `dev`.

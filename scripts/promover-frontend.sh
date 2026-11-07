@@ -30,7 +30,7 @@ for ENV in dev prod; do
   until [ "$(kubectl --context "k3d-$ENV" -n ecocanje get pods -l app=frontend -o jsonpath='{range .items[*]}{.spec.containers[0].image}{"\n"}{end}' | sort -u)" = "$IMG" ]; do sleep 2; done
 
   paso "4. Prueba de interfaz en $ENV (compuerta)"
-  scripts/probar.sh "$ENV" tests/interfaz/correr.sh
+  VERSION_ESPERADA="$V" scripts/probar.sh "$ENV" tests/interfaz/correr.sh   # dev: flujo completo; prod: humo de solo lectura
 
   if [ "$ENV" = dev ]; then
     paso "5. Registrar $IMG como imagen aprobada"

@@ -70,6 +70,7 @@ contraseña se lee del clúster y no se muestra:
 | Respaldar, exportar y restaurar | `scripts/respaldar.sh`, `scripts/exportar-respaldos.sh`, `scripts/restaurar.sh` |
 | Consultar métricas y logs | `scripts/prom.sh prod '<PromQL>'`, `scripts/loki.sh prod '<LogQL>'` |
 | Estado de los datos | `scripts/estado-datos.sh k3d-prod` |
+| Recuperar tras reiniciar el equipo | `scripts/recuperar-tras-reinicio.sh` |
 
 ## Pruebas y evidencias
 

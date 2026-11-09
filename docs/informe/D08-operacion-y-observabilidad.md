@@ -75,10 +75,13 @@ Cada escenario: **diagnóstico → acciones → verificación → escalamiento**
 **3. Nodo no disponible** (NodoNoDisponible)
 - Diagnóstico: `kubectl get nodes`; `docker ps --filter name=k3d-prod`; `docker logs k3d-prod-agent-N | grep -i shutdown`.
 - Acciones: si el log muestra `failed to find interface with specified node ip` (tras reiniciar el host, Docker
-  intercambió las IP), `docker restart k3d-prod-agent-0 k3d-prod-agent-1`; si el contenedor no existe, recrear el
+  intercambió las IP), `scripts/recuperar-tras-reinicio.sh` (reinicia solo los agentes afectados, espera los nodos,
+  reequilibra réplicas y verifica la API); si el contenedor no existe, recrear el
   ambiente (D05). Considerar que Prometheus puede estar en el nodo caído: si no hay métricas, diagnosticar con kubectl.
 - Verificación: nodos Ready; `pods_sanos`; `up == 0` sin resultados.
-- Escalamiento: administrador del host. Caso real: 5 nov (E11), recuperado con el reinicio de los agentes.
+- Escalamiento: administrador del host. Casos reales: 5, 7 y 9 nov (E11). El 9 nov PostgreSQL estaba en el agente
+  caído: prod respondió 503 hasta reiniciarlo (recuperado en ~20 s) y las réplicas quedaron en un solo worker hasta
+  reequilibrarlas. Recomendación: ejecutar el script después de cada arranque del equipo.
 
 **4. Base de datos caída** (BaseDeDatosCaida)
 - Diagnóstico: `kubectl -n ecocanje get sts,pods -l 'app in (postgres,mongo)'`; eventos; ¿el nodo de su volumen está

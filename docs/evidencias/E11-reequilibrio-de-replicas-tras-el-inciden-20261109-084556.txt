@@ -1,0 +1,15 @@
+ID: E11
+Descripción: Reequilibrio de replicas tras el incidente
+Fecha: 2026-11-09T08:45:56-06:00
+Ambiente: prod
+Host: fedora
+Commit: ba7b2a0+cambios
+Comando: bash -c K="kubectl --context k3d-prod -n ecocanje"; $K rollout restart deploy/backend deploy/frontend >/dev/null; $K rollout status deploy/backend --timeout=240s >/dev/null && $K rollout status deploy/frontend --timeout=240s >/dev/null; source scripts/ev.sh; for i in $(seq 1 30); do pods_sanos k3d-prod >/dev/null 2>&1 && break; sleep 5; done; pods_sanos k3d-prod; $K get pods -l "app in (backend,frontend)" --field-selector=status.phase=Running -o jsonpath="{range .items[*]}{.metadata.deletionTimestamp}|{.metadata.labels.app} {.spec.nodeName}{\"\n\"}{end}" | grep "^|" | cut -c2- | sort | tee /dev/stderr | sort -u | wc -l | grep -qx 4
+Esperado: una replica de backend y una de frontend por worker; pods sanos
+----- salida -----
+todos los pods Running/Completed
+backend k3d-prod-agent-0
+backend k3d-prod-agent-1
+frontend k3d-prod-agent-0
+frontend k3d-prod-agent-1
+----- fin: OK -----

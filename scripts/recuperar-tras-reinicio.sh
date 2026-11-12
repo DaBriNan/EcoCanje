@@ -13,7 +13,9 @@ for ENV in dev prod; do
   k3d cluster list "$ENV" >/dev/null 2>&1 || { echo "$(t) $ENV: el clúster no existe"; rc=1; continue; }
   for c in $(docker ps -a --format '{{.Names}}' | grep -E "^k3d-$ENV-(agent|server)-[0-9]+$"); do
     inicio=$(docker inspect -f '{{.State.StartedAt}}' "$c")
-    if docker logs --since "$inicio" "$c" 2>&1 | grep -q "failed to find interface with specified node ip"; then
+    # grep -c lee todo el log: con "grep -q" y pipefail, docker logs recibía SIGPIPE y la condición fallaba (11 nov)
+    n=$(docker logs --since "$inicio" "$c" 2>&1 | grep -c "failed to find interface with specified node ip")
+    if [ "${n:-0}" -gt 0 ]; then
       echo "$(t) $ENV: $c se apagó por IP intercambiada; reiniciando"; docker restart "$c" >/dev/null
     fi
   done

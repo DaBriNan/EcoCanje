@@ -11,9 +11,16 @@ const rampa = [
   { duration: '2m', target: 10 }, { duration: '3m', target: 30 }, { duration: '3m', target: 50 },
   { duration: '4m', target: 50 }, { duration: '1m', target: 0 },
 ];
+// Perfil corto para demostrar el HPA en vivo: sube a VUS usuarios en 30 s, sostiene MANTENER y baja en 15 s.
+const demo = [
+  { duration: '30s', target: Number(__ENV.VUS || 60) },
+  { duration: __ENV.MANTENER || '2m30s', target: Number(__ENV.VUS || 60) },
+  { duration: '15s', target: 0 },
+];
 export const options = {
   scenarios: { consulta: { executor: 'ramping-vus', startVUs: 0,
-    stages: __ENV.PERFIL === 'humo' ? [{ duration: '20s', target: 2 }] : rampa, gracefulRampDown: '10s' } },
+    stages: __ENV.PERFIL === 'humo' ? [{ duration: '20s', target: 2 }]
+      : __ENV.PERFIL === 'demo' ? demo : rampa, gracefulRampDown: '10s' } },
   thresholds: { 'respuestas{codigo:0}': ['count>=0'], 'respuestas{codigo:200}': ['count>=0'], 'respuestas{codigo:502}': ['count>=0'], 'respuestas{codigo:503}': ['count>=0'], 'respuestas{codigo:504}': ['count>=0'], 'http_req_duration{scenario:consulta}': ['p(95)<1000'], 'http_req_failed{scenario:consulta}': ['rate<0.01'] },
   summaryTrendStats: ['avg', 'med', 'p(90)', 'p(95)', 'p(99)', 'max'],
 };

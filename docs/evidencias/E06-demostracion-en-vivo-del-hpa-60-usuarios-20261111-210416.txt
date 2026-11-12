@@ -1,0 +1,95 @@
+ID: E06
+Descripción: Demostracion en vivo del HPA (60 usuarios, ~3 min)
+Fecha: 2026-11-11T21:04:16-06:00
+Ambiente: prod
+Host: fedora
+Commit: 0829281+cambios
+Comando: scripts/demo-hpa.sh 60 2m30s
+Esperado: replicas suben por encima de 2 con la carga y regresan a 2
+----- salida -----
+== Estado inicial
+NAME      REFERENCE            TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+backend   Deployment/backend   cpu: 9%/60%   2         6         2          5d2h
+
+== Carga: 60 usuarios simulados con k6 durante ~2m30s (consultas de catálogo, saldo e historial)
+   (el HPA revisa el CPU cada 15 s; la primera réplica nueva suele aparecer en 30–60 s)
+
+21:04:19  CPU   9% (objetivo 60%)  réplicas: pedidas 2 · existen 2 · listas 2  [2-6]  agent-0:1 agent-1:1  | carga activa
+21:04:25  CPU  19% (objetivo 60%)  réplicas: pedidas 2 · existen 2 · listas 2  [2-6]  agent-0:1 agent-1:1  | carga activa
+21:04:31  CPU  19% (objetivo 60%)  réplicas: pedidas 2 · existen 2 · listas 2  [2-6]  agent-0:1 agent-1:1  | carga activa
+21:04:37  CPU  20% (objetivo 60%)  réplicas: pedidas 2 · existen 2 · listas 1  [2-6]  agent-0:1 agent-1:1  | carga activa
+21:04:43  CPU  20% (objetivo 60%)  réplicas: pedidas 2 · existen 2 · listas 1  [2-6]  agent-0:1 agent-1:1  | carga activa
+21:04:49  CPU  20% (objetivo 60%)  réplicas: pedidas 2 · existen 2 · listas 1  [2-6]  agent-0:2 agent-1:1  | carga activa
+21:04:56  CPU 386% (objetivo 60%)  réplicas: pedidas 4 · existen 2 · listas 2  [2-6]  agent-0:2 agent-1:2  | carga activa
+21:05:02  CPU 386% (objetivo 60%)  réplicas: pedidas 4 · existen 2 · listas 3  [2-6]  agent-0:2 agent-1:2  | carga activa
+21:05:08  CPU 400% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 3  [2-6]  agent-0:2 agent-1:2  | carga activa
+21:05:14  CPU 400% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 3  [2-6]  agent-0:2 agent-1:2  | carga activa
+21:05:20  CPU 400% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 2  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:05:26  CPU 427% (objetivo 60%)  réplicas: pedidas 6 · existen 4 · listas 3  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:05:32  CPU 427% (objetivo 60%)  réplicas: pedidas 6 · existen 4 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:05:38  CPU 402% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 5  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:05:44  CPU 402% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 5  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:05:50  CPU 420% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 5  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:05:56  CPU 420% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:04  CPU 420% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 4  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:13  CPU 320% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 5  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:19  CPU 320% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 4  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:25  CPU 419% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 5  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:31  CPU 419% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:36  CPU 325% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:42  CPU 325% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:48  CPU 325% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:54  CPU 364% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:06:59  CPU 364% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:07:05  CPU 364% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:07:11  CPU 420% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:07:17  CPU 420% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:07:22  CPU 421% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:07:28  CPU 421% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+21:07:34  CPU 421% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | carga activa
+
+== Resultado de k6
+   http_req_duration..............: avg=1.1s  med=528.05ms p(90)=2.53s p(95)=4.22s p(99)=12.15s max=18.6s
+   http_req_failed................: 1.40%  284 out of 20221
+   http_reqs......................: 20221  102.396387/s
+   réplicas máximas durante la carga: 6
+
+== Sin carga: el HPA espera 2 min (estabilización) y quita 1 réplica por minuto hasta 2 (Ctrl+C para terminar)
+21:07:39  CPU 419% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:07:50  CPU 419% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:08:00  CPU 375% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:08:11  CPU  19% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:08:21  CPU   7% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:08:31  CPU   7% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:08:42  CPU   7% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:08:52  CPU   6% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:09:03  CPU   6% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:09:13  CPU   7% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:09:23  CPU   7% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:09:34  CPU   7% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:09:44  CPU   5% (objetivo 60%)  réplicas: pedidas 6 · existen 6 · listas 6  [2-6]  agent-0:3 agent-1:3  | bajando
+21:09:55  CPU   8% (objetivo 60%)  réplicas: pedidas 5 · existen 6 · listas 5  [2-6]  agent-0:3 agent-1:3  | bajando
+21:10:05  CPU   8% (objetivo 60%)  réplicas: pedidas 5 · existen 6 · listas 5  [2-6]  agent-0:2 agent-1:3  | bajando
+21:10:15  CPU   8% (objetivo 60%)  réplicas: pedidas 5 · existen 5 · listas 5  [2-6]  agent-0:2 agent-1:3  | bajando
+21:10:26  CPU   8% (objetivo 60%)  réplicas: pedidas 5 · existen 5 · listas 5  [2-6]  agent-0:2 agent-1:3  | bajando
+21:10:36  CPU   5% (objetivo 60%)  réplicas: pedidas 5 · existen 5 · listas 5  [2-6]  agent-0:2 agent-1:3  | bajando
+21:10:46  CPU   5% (objetivo 60%)  réplicas: pedidas 5 · existen 5 · listas 5  [2-6]  agent-0:2 agent-1:3  | bajando
+21:10:57  CPU   7% (objetivo 60%)  réplicas: pedidas 4 · existen 5 · listas 4  [2-6]  agent-0:2 agent-1:2  | bajando
+21:11:07  CPU   7% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 4  [2-6]  agent-0:2 agent-1:2  | bajando
+21:11:17  CPU   7% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 4  [2-6]  agent-0:2 agent-1:2  | bajando
+21:11:28  CPU   7% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 4  [2-6]  agent-0:2 agent-1:2  | bajando
+21:11:38  CPU   7% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 4  [2-6]  agent-0:2 agent-1:2  | bajando
+21:11:49  CPU   7% (objetivo 60%)  réplicas: pedidas 4 · existen 4 · listas 4  [2-6]  agent-0:2 agent-1:2  | bajando
+21:11:59  CPU   7% (objetivo 60%)  réplicas: pedidas 3 · existen 4 · listas 3  [2-6]  agent-0:1 agent-1:2  | bajando
+21:12:09  CPU   6% (objetivo 60%)  réplicas: pedidas 3 · existen 3 · listas 3  [2-6]  agent-0:1 agent-1:2  | bajando
+21:12:20  CPU   6% (objetivo 60%)  réplicas: pedidas 3 · existen 3 · listas 3  [2-6]  agent-0:1 agent-1:2  | bajando
+21:12:30  CPU   8% (objetivo 60%)  réplicas: pedidas 3 · existen 3 · listas 3  [2-6]  agent-0:1 agent-1:2  | bajando
+21:12:41  CPU   7% (objetivo 60%)  réplicas: pedidas 3 · existen 3 · listas 3  [2-6]  agent-0:1 agent-1:2  | bajando
+21:12:51  CPU   7% (objetivo 60%)  réplicas: pedidas 3 · existen 3 · listas 3  [2-6]  agent-0:1 agent-1:2  | bajando
+21:13:01  CPU   7% (objetivo 60%)  réplicas: pedidas 2 · existen 3 · listas 2  [2-6]  agent-0:1 agent-1:1  | bajando
+21:13:12  CPU   5% (objetivo 60%)  réplicas: pedidas 2 · existen 2 · listas 2  [2-6]  agent-0:1 agent-1:1  | de vuelta al mínimo
+
+demostración terminada
+----- fin: OK -----
+
+NOTA: con 60 usuarios que llegan en 30 s, 1.40% de solicitudes fallaron y el p95 fue 4.22 s: la carga llega antes de que las replicas nuevas esten listas (la escalada a 6 tardo ~70 s). En E06, con subida gradual de 8 min, 0% errores. El guion usa 40 usuarios por defecto.

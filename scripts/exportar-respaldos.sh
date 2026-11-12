@@ -6,7 +6,7 @@ K() { kubectl --context "$CTX" -n ecocanje "$@"; }
 mkdir -p "$DEST" "$(dirname "$KEY")"; chmod 700 "$HOME/ecocanje-respaldos" "$DEST"
 [ -f "$KEY" ] || ( umask 077; openssl rand -base64 48 > "$KEY" ); chmod 600 "$KEY"
 K delete pod lector-respaldos --ignore-not-found --wait=true >/dev/null
-cat <<'YAML' | K apply -f - >/dev/null
+cat <<'YAML' | sed "s#image: postgres:16-alpine#image: $(K get cronjob respaldo-postgres -o jsonpath='{.spec.jobTemplate.spec.template.spec.containers[0].image}')#" | K apply -f - >/dev/null
 apiVersion: v1
 kind: Pod
 metadata: {name: lector-respaldos, labels: {app: lector}}

@@ -12,8 +12,9 @@
 | PostgreSQL | `pg_dump -Fc` con la cuenta `ecocanje_backup` (`pg_read_all_data`): instantánea transaccional | CronJob `respaldo-postgres` 02:00 America/Mexico_City | `pg_restore --list` del archivo, SHA-256 escrito y comprobado; línea `respaldo_ok archivo=… bytes=… fecha=…` | 7 archivos en el PVC `respaldos` |
 | MongoDB | `mongodump --archive --gzip` con la cuenta `ecocanje_backup` (rol `backup`) | CronJob `respaldo-mongo` 02:10 | tamaño mínimo (> 100 bytes) y SHA-256; `respaldo_ok`. La validez completa se comprueba al restaurar | 7 archivos |
 
-El respaldo de PostgreSQL espera con `pg_isready` hasta poder conectarse (cambio tras el fallo del 2 nov); el de MongoDB
-no tiene esa espera y depende del reintento del Job (`backoffLimit: 1`), una asimetría por corregir. Ambos corren como no root,
+Ambos respaldos esperan hasta 10 minutos a que su base responda (`pg_isready` y un `ping` de `mongosh`). La espera de
+MongoDB se agregó el 12 nov: sin ella, cada reinicio del equipo dejaba fallar el respaldo mientras el nodo de la base
+se recuperaba, y entre el 7 y el 12 nov no hubo respaldo exitoso de MongoDB en prod (alerta RespaldoFallido real, OBS05). Ambos corren como no root,
 con `concurrencyPolicy: Forbid`, `activeDeadlineSeconds: 900` y `backoffLimit: 1`. No se copian archivos de datos en
 caliente.
 
@@ -46,6 +47,7 @@ estuviera lista; se repitió con espera activa (4/4). Ambas corridas se conserva
 |---|---|---|---|
 | 2 nov 14:35 | respaldo de PostgreSQL y exportación con FALLA (MongoDB respaldó bien en el mismo momento) | `pg_dump` recibió *Connection refused* al iniciar el Job con la base sana; causa probable: la regla de red del Pod nuevo aún no estaba programada por kube-router (mismo efecto medido en E10). La exportación copió un `.tmp` incompleto | espera con `pg_isready` antes de `pg_dump` (absorbe el retraso); la exportación excluye `.tmp`; repetición OK |
 | 3 nov | respaldos programados con `DeadlineExceeded` | el equipo estaba suspendido | alerta RespaldoFallido real (OBS05); respaldo repetido; Jobs fallidos eliminados tras el diagnóstico |
+| 9, 11 y 12 nov | respaldos de MongoDB fallidos tras reiniciar el equipo (último éxito: 7 nov) | sin espera de la base; su nodo seguía caído por la IP intercambiada | espera de hasta 10 min en ambos respaldos; respaldo manual y exportación el 12 nov; alerta resuelta |
 
 ## Continuidad
 

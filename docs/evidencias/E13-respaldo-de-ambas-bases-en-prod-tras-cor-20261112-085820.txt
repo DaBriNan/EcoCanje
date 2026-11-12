@@ -1,0 +1,14 @@
+ID: E13
+Descripción: Respaldo de ambas bases en prod tras corregir la espera de MongoDB
+Fecha: 2026-11-12T08:58:20-06:00
+Ambiente: prod
+Host: fedora
+Commit: 7696b7c+cambios
+Comando: scripts/respaldar.sh prod
+Esperado: respaldo_ok de PostgreSQL y MongoDB
+----- salida -----
+== postgres (9 s)
+respaldo_ok archivo=pg-20261112-145822.dump bytes=61170 fecha=2026-11-12T14:58:24+00:00
+== mongo (12 s)
+respaldo_ok archivo=mongo-20261112-145833.archive.gz bytes=3248 fecha=2026-11-12T14:58:33+00:00
+----- fin: OK -----

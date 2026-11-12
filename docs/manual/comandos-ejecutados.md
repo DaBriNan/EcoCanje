@@ -256,3 +256,8 @@ reconstruccion de prod desde cero: 448 s
 - 2026-11-11T21:02:42-06:00 [compose-local] `scripts/recuperar-tras-reinicio.sh` → OK (E11)
 - 2026-11-11T21:04:06-06:00 [prod] `scripts/demo-pod.sh backend` → OK (E11)
 - 2026-11-11T21:13:12-06:00 [prod] `scripts/demo-hpa.sh 60 2m30s` → OK (E06)
+- 2026-11-12T08:58:39-06:00 [prod] `scripts/respaldar.sh prod` → OK (E13)
+- 2026-11-12T08:59:28-06:00 [dev] `scripts/respaldar.sh dev` → OK (E13)
+- 2026-11-12T09:02:29-06:00 [prod] `bash -c scripts/exportar-respaldos.sh prod >/dev/null && ls -t ~/ecocanje-respaldos/prod | head -4` → FALLA(1) (E13)
+- 2026-11-12T09:03:22-06:00 [prod] `bash -c scripts/exportar-respaldos.sh prod | tail -2 && ls -t ~/ecocanje-respaldos/prod | grep 20261112 | head -4` → OK (E13)
+- 2026-11-12T09:03:45-06:00 [prod] `bash -c scripts/prom.sh prod "ALERTS{alertname=\"RespaldoFallido\",alertstate=\"firing\"}" | head -1; kubectl --context k3d-prod -n ecocanje get jobs respaldo-mongo-29903530 respaldo-mongo-29906410 respaldo-mongo-29907850 respaldo-postgres-29903520 -o custom-columns=JOB:.metadata.name,INICIO:.status.startTime,FALLOS:.status.failed` → OK (OBS05)

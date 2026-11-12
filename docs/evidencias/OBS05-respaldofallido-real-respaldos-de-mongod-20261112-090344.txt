@@ -1,0 +1,16 @@
+ID: OBS05
+Descripción: RespaldoFallido real: respaldos de MongoDB sin espera de la base tras reinicios (9, 11 y 12 nov)
+Fecha: 2026-11-12T09:03:44-06:00
+Ambiente: prod
+Host: fedora
+Commit: 7696b7c+cambios
+Comando: bash -c scripts/prom.sh prod "ALERTS{alertname=\"RespaldoFallido\",alertstate=\"firing\"}" | head -1; kubectl --context k3d-prod -n ecocanje get jobs respaldo-mongo-29903530 respaldo-mongo-29906410 respaldo-mongo-29907850 respaldo-postgres-29903520 -o custom-columns=JOB:.metadata.name,INICIO:.status.startTime,FALLOS:.status.failed
+Esperado: alerta activa por 4 Jobs fallidos ya diagnosticados
+----- salida -----
+alertname=RespaldoFallido, instance=10.42.1.77:8080, job=kube-state-metrics, namespace=ecocanje, pod=kps-kube-state-metrics-59d4d4677-f28bp, service=kps-kube-state-metrics -> 1
+JOB                          INICIO                 FALLOS
+respaldo-mongo-29903530      2026-11-09T14:21:15Z   2
+respaldo-mongo-29906410      2026-11-11T22:18:51Z   2
+respaldo-mongo-29907850      2026-11-12T14:44:26Z   2
+respaldo-postgres-29903520   2026-11-09T14:21:15Z   2
+----- fin: OK -----

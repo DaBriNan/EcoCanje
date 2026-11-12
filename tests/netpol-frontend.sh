@@ -16,7 +16,7 @@ chk "frontend -> MongoDB 27017" "$(alcanza "$FE" mongo 27017)" bloqueado
 chk "frontend -> backend 80 (el navegador usa el Ingress, no el pod)" "$(alcanza "$FE" backend 80)" bloqueado
 
 echo "== Entrada al frontend"
-cat <<'YAML' | K apply -f - >/dev/null
+cat <<'YAML' | sed "s#image: postgres:16-alpine#image: $(K get cronjob respaldo-postgres -o jsonpath='{.spec.jobTemplate.spec.template.spec.containers[0].image}')#" | K apply -f - >/dev/null
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: {name: prueba-egreso-frontend}
@@ -43,7 +43,7 @@ YAML
 K wait --for=condition=Ready pod/cliente-fe --timeout=180s >/dev/null
 IP=$(K get pod "$FE" -o jsonpath='{.status.podIP}'); sleep 4
 chk "cliente con salida permitida, bloqueado por la ENTRADA del frontend" "$(alcanza cliente-fe "$IP" 8080)" bloqueado
-cat <<'YAML' | K apply -f - >/dev/null
+cat <<'YAML' | sed "s#image: postgres:16-alpine#image: $(K get cronjob respaldo-postgres -o jsonpath='{.spec.jobTemplate.spec.template.spec.containers[0].image}')#" | K apply -f - >/dev/null
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: {name: prueba-ingreso-frontend}

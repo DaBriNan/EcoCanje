@@ -1,0 +1,14 @@
+ID: E13
+Descripción: Exportacion cifrada de los respaldos de prod
+Fecha: 2026-11-12T08:59:28-06:00
+Ambiente: prod
+Host: fedora
+Commit: 7696b7c+cambios
+Comando: bash -c scripts/exportar-respaldos.sh prod >/dev/null && ls -t ~/ecocanje-respaldos/prod | head -4
+Esperado: archivos cifrados de hoy
+----- salida -----
+error: timed out waiting for the condition on pods/lector-respaldos
+bash failed with exit status 1.
+----- fin: FALLA(1) -----
+
+NOTA: la primera exportacion fallo porque el Pod lector usaba postgres:16-alpine sin fijar y el nodo no podia descargarla (ImagePullBackOff). Ahora usa la imagen fijada por digest del CronJob respaldo-postgres; repeticion OK.

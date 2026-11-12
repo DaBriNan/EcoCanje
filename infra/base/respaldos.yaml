@@ -35,7 +35,7 @@ spec:
             - |
               D=/respaldos/postgres; mkdir -p $D; rm -f $D/*.tmp
               F=$D/pg-$(date +%Y%m%d-%H%M%S).dump
-              n=0; until pg_isready -q -h postgres -p 5432 -U ecocanje_backup; do n=$((n+1)); [ $n -gt 30 ] && { echo "postgres no responde"; exit 1; }; sleep 2; done
+              n=0; until pg_isready -q -h postgres -p 5432 -U ecocanje_backup; do n=$((n+1)); [ $n -gt 300 ] && { echo "postgres no responde en 10 min"; exit 1; }; sleep 2; done
               export PGPASSWORD=$(cat /run/secrets/pg/backup)
               pg_dump -h postgres -U ecocanje_backup -d ecocanje -Fc -f "$F.tmp"
               mv "$F.tmp" "$F"
@@ -83,6 +83,8 @@ spec:
             args:
             - |
               D=/respaldos/mongo; mkdir -p $D; rm -f $D/*.tmp
+              # Espera a que la base responda (tras reiniciar el equipo su nodo puede tardar minutos; incidentes del 11 y 12 nov)
+              n=0; until mongosh --quiet 'mongodb://mongo:27017/?serverSelectionTimeoutMS=2000' --eval 'db.adminCommand({ping: 1}).ok' >/dev/null 2>&1; do n=$((n+1)); [ $n -gt 300 ] && { echo "mongo no responde en 10 min"; exit 1; }; sleep 2; done
               F=$D/mongo-$(date +%Y%m%d-%H%M%S).archive.gz
               (umask 077; printf '%s: %s\n' password "$(cat /run/secrets/mongo/backup)" > /tmp/m.yml)
               mongodump --config=/tmp/m.yml --host=mongo --username=ecocanje_backup --authenticationDatabase=admin --db=ecocanje --archive="$F.tmp" --gzip

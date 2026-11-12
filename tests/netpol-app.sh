@@ -9,7 +9,7 @@ limpiar() { K delete networkpolicy prueba-egreso-backend prueba-ingreso-backend 
             K delete pod cliente-ext --ignore-not-found --wait=true >/dev/null; }
 trap limpiar EXIT
 limpiar
-cat <<'YAML' | K apply -f - >/dev/null
+cat <<'YAML' | sed "s#image: postgres:16-alpine#image: $(K get cronjob respaldo-postgres -o jsonpath='{.spec.jobTemplate.spec.template.spec.containers[0].image}')#" | K apply -f - >/dev/null
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: {name: prueba-egreso-backend}
@@ -39,7 +39,7 @@ IP=$(K get pod -l app=backend -o jsonpath='{.items[0].status.podIP}'); sleep 4
 chk "backend sano (todas las replicas Ready)" "$(K get pods -l app=backend -o jsonpath='{range .items[*]}{.status.containerStatuses[*].ready}{" "}{end}' | tr ' ' '\n' | grep -vc true)" 0
 chk "DNS resuelve el backend desde el cliente" "$(K exec cliente-ext -- nslookup backend.ecocanje.svc.cluster.local >/dev/null 2>&1 && echo resuelve || echo falla)" resuelve
 chk "politicas reales: cliente con egreso permitido, bloqueado por INGRESO del backend" "$(alcanza cliente-ext $IP 8080)" bloqueado
-cat <<'YAML' | K apply -f - >/dev/null
+cat <<'YAML' | sed "s#image: postgres:16-alpine#image: $(K get cronjob respaldo-postgres -o jsonpath='{.spec.jobTemplate.spec.template.spec.containers[0].image}')#" | K apply -f - >/dev/null
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata: {name: prueba-ingreso-backend}

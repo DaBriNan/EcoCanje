@@ -1,0 +1,31 @@
+ID: E10
+Descripción: Alerta RespaldoFallido activada y resuelta
+Fecha: 2026-11-05T19:13:14-06:00
+Ambiente: prod
+Host: fedora
+Commit: 95fd9c6+cambios
+Comando: scripts/provocar-alerta.sh prod respaldo
+Esperado: firing en Prometheus y Alertmanager, luego inactiva
+----- salida -----
+19:13:15 estado inicial de RespaldoFallido: inactiva
+19:13:15 FALLA: Job manual-falla-191315 de respaldo sin credencial montada (pg_dump debe fallar por autenticación)
+job.batch/manual-falla-191315 created
+job.batch/manual-falla-191315 condition met
+19:13:21 log del Job fallido:
+pg_dump: error: connection to server at "postgres" (10.43.43.22), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+19:14:03 RespaldoFallido en prom: pending (tras 41 s)
+19:14:54 RespaldoFallido en prom: firing (tras 51 s)
+19:14:54 RespaldoFallido en am: firing (tras 0 s)
+  alertmanager: RespaldoFallido critical desde 2026-11-06T01:14:53.611Z | Un Job de respaldo termino en error
+19:14:54 ACCIÓN: eliminar el Job fallido y repetir el respaldo desde el CronJob
+job.batch "manual-falla-191315" deleted from ecocanje namespace
+job.batch/manual-ok-191454 created
+job.batch/manual-ok-191454 condition met
+respaldo_ok archivo=pg-20261106-011456.dump bytes=58024 fecha=2026-11-06T01:14:59+00:00
+19:15:32 RespaldoFallido en prom: inactiva (tras 30 s)
+19:15:33 RespaldoFallido en am: inactiva (tras 1 s)
+19:15:33 RespaldoFallido activada y resuelta
+----- fin: OK -----
+
+NOTA: la activacion y resolucion de la alerta son validas, pero el Job no fallo por autenticacion como anuncia el script, sino con "Connection refused" a los ~2 s de iniciar (base sana: el respaldo real 90 s despues termino bien). Causa probable: el controlador de NetworkPolicy aun no incluia la IP del Pod nuevo y kube-router rechaza con REJECT. El CronJob real lo evita esperando con pg_isready. Se repitio la prueba con esa espera.

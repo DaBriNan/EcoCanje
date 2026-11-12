@@ -1,0 +1,16 @@
+ID: DEP05
+Descripción: Frontend 0.1.2 en prod
+Fecha: 2026-11-06T19:14:34-06:00
+Ambiente: prod
+Host: fedora
+Commit: ab87731+cambios
+Comando: bash -c k3d image import ecocanje-frontend:0.1.2 -c prod 2>&1 | tail -1 && IMG=ecocanje-frontend scripts/verificar-imagen.sh prod 0.1.2 && scripts/desplegar.sh prod >/dev/null && kubectl --context k3d-prod -n ecocanje rollout status deploy/frontend --timeout=180s
+Esperado: imagen identica a la aprobada; 1 replica por worker
+----- salida -----
+[36mINFO[0m[0009] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-prod-agent-0 -> 453c385884cdc
+OK    k3d-prod-agent-1 -> 453c385884cdc
+OK    k3d-prod-server-0 -> 453c385884cdc
+OK    identica a la imagen aprobada (453c385884cdc)
+deployment "frontend" successfully rolled out
+----- fin: OK -----

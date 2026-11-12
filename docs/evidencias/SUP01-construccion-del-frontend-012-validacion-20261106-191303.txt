@@ -1,0 +1,15 @@
+ID: SUP01
+Descripción: Construccion del frontend 0.1.2 (validacion en cliente, busqueda)
+Fecha: 2026-11-06T19:13:03-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: ab87731+cambios
+Comando: bash -c docker build -q --build-arg VITE_VERSION=0.1.2 --label org.opencontainers.image.revision=ab87731 --label org.opencontainers.image.version=0.1.2 -t ecocanje-frontend:0.1.2 frontend && docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/ecocanje-trivy:/root/.cache docker.io/aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c image --quiet --image-src docker --scanners vuln --severity CRITICAL,HIGH --exit-code 1 ecocanje-frontend:0.1.2 | tail -4
+Esperado: imagen construida; Trivy 0 CRITICAL y 0 HIGH
+----- salida -----
+sha256:bc84096a6a10c291ba80382780e8670f5d39dc8b82fb1a5dd8212d7d5b82bb5c
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+----- fin: OK -----

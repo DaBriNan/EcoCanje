@@ -1,0 +1,4 @@
+hora,hpa_deseadas,hpa_actuales,deploy_ready,cpu_hpa_pct,pods_por_nodo
+19:32:28,4,4,4,35,k3d-prod-agent-0:2 k3d-prod-agent-1:2 
+19:32:44,4,4,4,25,k3d-prod-agent-0:2 k3d-prod-agent-1:2 
+19:33:00,4,4,4,16,k3d-prod-agent-0:2 k3d-prod-agent-1:2 

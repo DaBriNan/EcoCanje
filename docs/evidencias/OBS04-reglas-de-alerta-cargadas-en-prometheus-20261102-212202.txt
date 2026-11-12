@@ -1,0 +1,11 @@
+ID: OBS04
+Descripción: Reglas de alerta cargadas en Prometheus
+Fecha: 2026-11-02T21:22:02-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/prom.sh prod sum(prometheus_rule_group_rules{rule_group=~".*ecocanje.*"})
+Esperado: 8 reglas de ecocanje
+----- salida -----
+- -> 8
+----- fin: OK -----

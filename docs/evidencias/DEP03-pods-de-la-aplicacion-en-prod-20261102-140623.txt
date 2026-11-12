@@ -1,0 +1,11 @@
+ID: DEP03
+Descripción: Pods de la aplicacion en prod
+Fecha: 2026-11-02T14:06:24-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: pods_sanos k3d-prod
+Esperado: todos Running/Completed
+----- salida -----
+todos los pods Running/Completed
+----- fin: OK -----

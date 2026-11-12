@@ -1,0 +1,21 @@
+ID: E13
+Descripción: Respaldo y exportacion de prod antes de la reconstruccion E14
+Fecha: 2026-11-06T17:51:48-06:00
+Ambiente: prod
+Host: fedora
+Commit: 074e660
+Comando: bash -c scripts/respaldar.sh prod 2>&1 | tail -3 && scripts/exportar-respaldos.sh prod 2>&1 | tail -4 && ls -la ~/ecocanje-respaldos/prod | tail -4
+Esperado: respaldos de ambas bases exportados y cifrados fuera del cluster
+----- salida -----
+Found 2 pods, using pod/manual-postgres-1794009108-kzhgm
+== mongo (18 s)
+Found 2 pods, using pod/manual-mongo-1794009108-7pd2h
+-rw-r--r--. 1 dann dann 58048 nov  6 17:52 pg-20261106-011456.dump.enc
+-rw-r--r--. 1 dann dann 58048 nov  6 17:52 pg-20261106-011726.dump.enc
+-rw-r--r--. 1 dann dann 61216 nov  6 17:52 pg-20261106-235150.dump.enc
+-rw-r--r--. 1 dann dann 61216 nov  6 17:52 pg-20261106-235204.dump.enc
+-rw-r--r--. 1 dann dann 61216 nov  6 17:52 pg-20261106-235150.dump.enc
+-rw-r--r--. 1 dann dann    94 nov  6 17:52 pg-20261106-235150.dump.enc.sha256
+-rw-r--r--. 1 dann dann 61216 nov  6 17:52 pg-20261106-235204.dump.enc
+-rw-r--r--. 1 dann dann    94 nov  6 17:52 pg-20261106-235204.dump.enc.sha256
+----- fin: OK -----

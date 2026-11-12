@@ -12,3 +12,9 @@ secrets/
 node_modules/
 vendor/
 backend/storage/*.key
+docs/evidencias/historial-*.txt
+
+# No se publican (material del curso y contexto local)
+CLAUDE.md
+docs/referencia/
+.claude/settings.local.json

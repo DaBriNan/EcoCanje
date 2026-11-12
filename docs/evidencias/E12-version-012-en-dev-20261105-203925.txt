@@ -1,0 +1,14 @@
+ID: E12
+Descripción: Version 0.1.2 en dev
+Fecha: 2026-11-05T20:39:25-06:00
+Ambiente: dev
+Host: fedora
+Commit: 5eb23b3+cambios
+Comando: bash -c curl -s https://dev.ecocanje.test:8444/api/health/live; echo; kubectl --context k3d-dev -n ecocanje get pods -l "app in (backend,outbox-worker)" -o jsonpath="{range .items[*]}{.metadata.name} {.spec.containers[0].image}{\"\n\"}{end}"; curl -s https://dev.ecocanje.test:8444/api/health/live | grep -q "\"version\":\"0.1.2\""
+Esperado: version 0.1.2 en /api/health/live y en las imagenes de los pods
+----- salida -----
+{"status":"ok","version":"0.1.2"}
+backend-9b89bf6dc-drn66 ecocanje-backend:0.1.2
+outbox-worker-57f677b668-g779c ecocanje-backend:0.1.2
+outbox-worker-69f7977477-brqfd ecocanje-backend:0.1.1
+----- fin: OK -----

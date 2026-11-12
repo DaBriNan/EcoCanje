@@ -1,0 +1,29 @@
+ID: E11
+Descripción: Demostracion en vivo: borrar una replica del backend
+Fecha: 2026-11-11T21:03:51-06:00
+Ambiente: prod
+Host: fedora
+Commit: 0829281+cambios
+Comando: scripts/demo-pod.sh backend
+Esperado: repuesta en segundos, 0 solicitudes fallidas
+----- salida -----
+== Réplicas de backend antes de la prueba
+NAME                      READY  STATUS   NODE
+backend-699985d857-4zq4r  2/2    Running  2d12h
+backend-699985d857-gxhzn  2/2    Running  k3d-prod-agent-1
+
+== 21:03:55 Borrando el Pod backend-699985d857-4zq4r (la sonda sigue pidiendo https://prod.ecocanje.test:8445/api/health/ready)
++ 0.7s  listas 1/2  4hmd4[agent-0, no listo]  4zq4r[agent-1, listo (terminando)]  gxhzn[agent-1, listo]    sonda: 7 bien, 0 fallas
++ 2.0s  listas 1/2  4hmd4[agent-0, no listo]  4zq4r[agent-1, listo (terminando)]  gxhzn[agent-1, listo]    sonda: 9 bien, 0 fallas
++ 3.5s  listas 1/2  4hmd4[agent-0, no listo]  4zq4r[agent-1, listo (terminando)]  gxhzn[agent-1, listo]    sonda: 12 bien, 0 fallas
++ 5.1s  listas 1/2  4hmd4[agent-0, no listo]  4zq4r[agent-1, listo (terminando)]  gxhzn[agent-1, listo]    sonda: 15 bien, 0 fallas
++ 6.7s  listas 1/2  4hmd4[agent-0, listo]  gxhzn[agent-1, listo]    sonda: 17 bien, 0 fallas
++ 8.1s  listas 2/2  4hmd4[agent-0, listo]  gxhzn[agent-1, listo]    sonda: 19 bien, 0 fallas
+
+== Resultado
+   Pod repuesto y todas las réplicas listas en 8.31 s
+   solicitudes durante la prueba: 24 · bien: 24 · fallidas: 0
+NAME                      READY  STATUS   AGE    NODE
+backend-699985d857-4hmd4  2/2    Running  11s    k3d-prod-agent-0
+backend-699985d857-gxhzn  2/2    Running  4h39m  k3d-prod-agent-1
+----- fin: OK -----

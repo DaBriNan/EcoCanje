@@ -1,0 +1,15 @@
+ID: E09
+Descripción: Autorizacion por rol en prod por HTTPS
+Fecha: 2026-11-02T14:11:05-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/probar.sh prod tests/roles.sh
+Esperado: 200, 401, 403 y 401
+----- salida -----
+OK    operador en ruta de operador -> 200
+OK    credenciales invalidas -> 401
+OK    ciudadano en ruta de operador -> 403
+OK    sin token -> 401
+Resultado: todas correctas
+----- fin: OK -----

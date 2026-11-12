@@ -1,0 +1,15 @@
+ID: E09
+Descripción: Autorizacion por rol en dev por HTTPS
+Fecha: 2026-11-02T12:12:37-06:00
+Ambiente: dev
+Host: fedora
+Commit: 978939b+cambios
+Comando: scripts/probar.sh dev tests/roles.sh
+Esperado: 200, 401, 403 y 401
+----- salida -----
+FALLA operador en ruta de operador -> 401 (esperado 200)
+OK    credenciales invalidas -> 401
+FALLA ciudadano en ruta de operador -> 401 (esperado 403)
+OK    sin token -> 401
+Resultado: hay fallos
+----- fin: FALLA(1) -----

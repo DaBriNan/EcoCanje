@@ -1,0 +1,27 @@
+ID: DEP01
+Descripción: Reaplicacion de bases de datos en dev
+Fecha: 2026-10-27T21:05:27-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1ab1eb0+cambios
+Comando: kubectl --context k3d-dev apply -k infra/dev
+Esperado: recursos aplicados sin advertencias de PodSecurity
+----- salida -----
+namespace/ecocanje unchanged
+resourcequota/cuota-ecocanje unchanged
+serviceaccount/mongo unchanged
+serviceaccount/postgres unchanged
+configmap/mongo-init unchanged
+configmap/postgres-init configured
+service/mongo unchanged
+service/postgres unchanged
+limitrange/limites-por-defecto unchanged
+statefulset.apps/mongo created
+statefulset.apps/postgres created
+networkpolicy.networking.k8s.io/clientes-mongo-egreso unchanged
+networkpolicy.networking.k8s.io/clientes-postgres-egreso unchanged
+networkpolicy.networking.k8s.io/denegar-todo unchanged
+networkpolicy.networking.k8s.io/mongo-ingreso unchanged
+networkpolicy.networking.k8s.io/permitir-dns unchanged
+networkpolicy.networking.k8s.io/postgres-ingreso unchanged
+----- fin: OK -----

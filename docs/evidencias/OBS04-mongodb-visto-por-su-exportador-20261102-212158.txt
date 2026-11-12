@@ -1,0 +1,11 @@
+ID: OBS04
+Descripción: MongoDB visto por su exportador
+Fecha: 2026-11-02T21:21:58-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/prom.sh prod mongodb_up
+Esperado: mongodb_up=1
+----- salida -----
+instance=10.42.1.19:9216, job=ecocanje/exportadores, namespace=ecocanje, pod=exportador-mongo-6bb5d8df5-vqrsf -> 1
+----- fin: OK -----

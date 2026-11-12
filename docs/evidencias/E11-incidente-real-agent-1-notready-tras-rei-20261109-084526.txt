@@ -1,0 +1,16 @@
+ID: E11
+Descripción: Incidente real: agent-1 NotReady tras reiniciar el host (segunda vez)
+Fecha: 2026-11-09T08:45:26-06:00
+Ambiente: prod
+Host: fedora
+Commit: ba7b2a0+cambios
+Comando: bash -c echo "antes: API ready=$(curl -s -m 5 -o /dev/null -w %{http_code} https://prod.ecocanje.test:8445/api/health/ready)"; kubectl --context k3d-prod get nodes --no-headers; docker restart k3d-prod-agent-1 >/dev/null && kubectl --context k3d-prod wait --for=condition=Ready node --all --timeout=180s >/dev/null && echo "nodos Ready"; for i in $(seq 1 36); do [ "$(curl -s -m 5 -o /dev/null -w %{http_code} https://prod.ecocanje.test:8445/api/health/ready)" = 200 ] && break; sleep 5; done; echo "despues: API ready=$(curl -s -m 5 -o /dev/null -w %{http_code} https://prod.ecocanje.test:8445/api/health/ready) tras ~$((i*5)) s"; [ "$(curl -s -m 5 -o /dev/null -w %{http_code} https://prod.ecocanje.test:8445/api/health/ready)" = 200 ]
+Esperado: agente reiniciado, nodos Ready, API 200
+----- salida -----
+antes: API ready=503
+k3d-prod-agent-0    Ready      <none>          2d13h   v1.36.5+k3s1
+k3d-prod-agent-1    NotReady   <none>          2d13h   v1.36.5+k3s1
+k3d-prod-server-0   Ready      control-plane   2d13h   v1.36.5+k3s1
+nodos Ready
+despues: API ready=200 tras ~20 s
+----- fin: OK -----

@@ -1,0 +1,13 @@
+ID: E13
+Descripción: Exportacion cifrada de respaldos (prod)
+Fecha: 2026-11-02T14:35:52-06:00
+Ambiente: prod
+Host: fedora
+Commit: 656ccdc+cambios
+Comando: scripts/exportar-respaldos.sh prod
+Esperado: archivos .enc con su sha256 fuera del cluster
+----- salida -----
+exportado y cifrado: mongo-20261102-203549.archive.gz.enc (1232 bytes)
+sha256sum: pg-20261102-203543.dump.tmp.sha256: No existe el fichero o el directorio
+FALLA integridad de pg-20261102-203543.dump.tmp
+----- fin: FALLA(1) -----

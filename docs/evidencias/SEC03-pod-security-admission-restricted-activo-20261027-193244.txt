@@ -1,0 +1,12 @@
+ID: SEC03
+Descripción: Pod Security Admission restricted activo
+Fecha: 2026-10-27T19:32:44-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1ab1eb0+cambios
+Comando: kubectl --context k3d-dev get ns ecocanje --show-labels
+Esperado: enforce=restricted en el namespace
+----- salida -----
+NAME       STATUS   AGE   LABELS
+ecocanje   Active   2m    ambiente=dev,kubernetes.io/metadata.name=ecocanje,pod-security.kubernetes.io/audit=restricted,pod-security.kubernetes.io/enforce-version=v1.36,pod-security.kubernetes.io/enforce=restricted,pod-security.kubernetes.io/warn=restricted
+----- fin: OK -----

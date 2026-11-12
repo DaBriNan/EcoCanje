@@ -1,0 +1,13 @@
+ID: E10
+Descripción: Prod sano tras las pruebas de alertas
+Fecha: 2026-11-05T19:18:08-06:00
+Ambiente: prod
+Host: fedora
+Commit: 95fd9c6+cambios
+Comando: bash -c set -e; pods_sanos k3d-prod; kubectl --context k3d-prod -n ecocanje get deploy backend; scripts/prom.sh prod "ALERTS{alertstate=\"firing\",namespace=\"ecocanje\",alertname!=\"InfoInhibitor\"}" && exit 1 || [ $? -eq 2 ]
+Esperado: pods sanos, backend 2/2 y sin alertas de ecocanje en firing
+----- salida -----
+bash: línea 1: pods_sanos: orden no encontrada
+----- fin: FALLA(127) -----
+
+NOTA: FALLA(127) por error del comando de verificacion (pods_sanos es una funcion de ev.sh no disponible en bash -c), no por el estado del cluster. Repetida a continuacion.

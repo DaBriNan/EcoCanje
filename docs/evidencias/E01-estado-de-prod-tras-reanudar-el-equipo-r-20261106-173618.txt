@@ -1,0 +1,17 @@
+ID: E01
+Descripción: Estado de prod tras reanudar el equipo (repeticion)
+Fecha: 2026-11-06T17:36:19-06:00
+Ambiente: prod
+Host: fedora
+Commit: ef9a452+cambios
+Comando: bash -c set -e; source scripts/ev.sh; kubectl --context k3d-prod get nodes --no-headers; pods_sanos k3d-prod; kubectl --context k3d-prod -n ecocanje get hpa backend --no-headers; scripts/prom.sh prod "up == 0" && exit 1 || [ $? -eq 2 ]
+Esperado: nodos Ready, pods sanos, HPA operativo, sin objetivos caidos
+----- salida -----
+k3d-prod-agent-0    Ready   <none>          4d3h   v1.36.1+k3s1
+k3d-prod-agent-1    Ready   <none>          4d3h   v1.36.1+k3s1
+k3d-prod-server-0   Ready   control-plane   4d3h   v1.36.1+k3s1
+monitoring         kps-grafana-9fdbd5b4f-9pw7h               3/3   Terminating   1 (4h51m ago)   4h55m
+bash failed with exit status 1.
+----- fin: FALLA(1) -----
+
+NOTA: fallo por el Pod anterior de Grafana aun en Terminating tras el helm upgrade; se repite tras su eliminacion.

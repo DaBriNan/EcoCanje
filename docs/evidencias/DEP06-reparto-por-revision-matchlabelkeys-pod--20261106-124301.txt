@@ -1,0 +1,14 @@
+ID: DEP06
+Descripción: Reparto por revision (matchLabelKeys pod-template-hash) tras quedar 2 replicas en un nodo
+Fecha: 2026-11-06T12:43:01-06:00
+Ambiente: prod
+Host: fedora
+Commit: 21cb157+cambios
+Comando: bash -c set -e; scripts/desplegar.sh prod >/dev/null; kubectl --context k3d-prod -n ecocanje get pods -l "app in (backend,frontend)" --field-selector=status.phase=Running -o jsonpath="{range .items[*]}{.metadata.deletionTimestamp}|{.metadata.labels.app} {.spec.nodeName}{\"\n\"}{end}" | grep "^|" | cut -c2- | sort | tee /dev/stderr | sort -u | wc -l | grep -qx 4
+Esperado: tras el rollout, 1 replica de backend y 1 de frontend por worker
+----- salida -----
+backend k3d-prod-agent-0
+backend k3d-prod-agent-1
+frontend k3d-prod-agent-0
+frontend k3d-prod-agent-1
+----- fin: OK -----

@@ -1,0 +1,18 @@
+ID: E01
+Descripción: Pods del sistema dev
+Fecha: 2026-10-27T17:52:24-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1428352+cambios
+Comando: kubectl --context k3d-dev get pods -A
+Esperado: todos Running o Completed
+----- salida -----
+NAMESPACE     NAME                                      READY   STATUS      RESTARTS      AGE
+kube-system   coredns-6648f7576f-m9wxb                  1/1     Running     0             56s
+kube-system   helm-install-traefik-crd-g2t64            0/1     Completed   0             53s
+kube-system   helm-install-traefik-h2w9l                0/1     Completed   1 (40s ago)   53s
+kube-system   local-path-provisioner-58d557dc48-gf7m8   1/1     Running     0             56s
+kube-system   metrics-server-7c86f97b8d-n9rqv           1/1     Running     0             56s
+kube-system   svclb-traefik-7edaec92-w687q              2/2     Running     0             38s
+kube-system   traefik-ffdbb68d6-758nq                   1/1     Running     0             38s
+----- fin: OK -----

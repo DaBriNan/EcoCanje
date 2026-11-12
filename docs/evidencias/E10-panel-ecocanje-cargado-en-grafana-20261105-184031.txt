@@ -1,0 +1,13 @@
+ID: E10
+Descripción: Panel EcoCanje cargado en Grafana
+Fecha: 2026-11-05T18:40:31-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c K="kubectl --context k3d-prod -n monitoring"; $K port-forward svc/kps-grafana 13000:80 >/dev/null 2>&1 & PF=$!; trap "kill $PF" EXIT; sleep 4; U=$($K get secret grafana-admin -o jsonpath={.data.admin-user} | base64 -d); C=$($K get secret grafana-admin -o jsonpath={.data.admin-password} | base64 -d); curl -sf -u "$U:$C" localhost:13000/api/dashboards/uid/ecocanje-prod | python3 -c "import sys,json; d=json.load(sys.stdin)[\"dashboard\"]; print(d[\"title\"], len(d[\"panels\"]), \"paneles\"); sys.exit(0 if len(d[\"panels\"])==33 else 1)"; curl -sf -u "$U:$C" localhost:13000/api/datasources | python3 -c "import sys,json; [print(\"datasource\", x[\"uid\"], x[\"type\"]) for x in json.load(sys.stdin)]"
+Esperado: panel EcoCanje - produccion presente en la API de Grafana con 33 paneles
+----- salida -----
+EcoCanje - produccion 33 paneles
+datasource alertmanager alertmanager
+datasource prometheus prometheus
+----- fin: OK -----

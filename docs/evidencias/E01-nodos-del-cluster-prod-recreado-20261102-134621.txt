@@ -1,0 +1,14 @@
+ID: E01
+Descripción: Nodos del cluster prod (recreado)
+Fecha: 2026-11-02T13:46:21-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: kubectl --context k3d-prod get nodes -o wide
+Esperado: 1 control plane y 2 workers Ready con IPs distintas
+----- salida -----
+NAME                STATUS   ROLES           AGE   VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE           KERNEL-VERSION                   CONTAINER-RUNTIME
+k3d-prod-agent-0    Ready    <none>          10s   v1.36.1+k3s1   172.21.0.4    <none>        K3s v1.36.1+k3s1   7.2.10-200.fc44.x86_64 (amd64)   containerd://2.2.3-k3s1
+k3d-prod-agent-1    Ready    <none>          10s   v1.36.1+k3s1   172.21.0.3    <none>        K3s v1.36.1+k3s1   7.2.10-200.fc44.x86_64 (amd64)   containerd://2.2.3-k3s1
+k3d-prod-server-0   Ready    control-plane   15s   v1.36.1+k3s1   172.21.0.2    <none>        K3s v1.36.1+k3s1   7.2.10-200.fc44.x86_64 (amd64)   containerd://2.2.3-k3s1
+----- fin: OK -----

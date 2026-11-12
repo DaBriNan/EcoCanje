@@ -1,0 +1,22 @@
+ID: SUP03
+Descripción: Frontend 0.1.1 sin vulnerabilidades criticas ni altas
+Fecha: 2026-11-06T18:50:16-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: bb89e11+cambios
+Comando: bash -c docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.cache/ecocanje-trivy:/root/.cache docker.io/aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c image --quiet --image-src docker --scanners vuln --severity CRITICAL,HIGH --exit-code 1 ecocanje-frontend:0.1.1
+Esperado: Trivy 0 CRITICAL, 0 HIGH
+----- salida -----
+
+Report Summary
+
+┌─────────────────────────────────────────┬────────┬─────────────────┐
+│                 Target                  │  Type  │ Vulnerabilities │
+├─────────────────────────────────────────┼────────┼─────────────────┤
+│ ecocanje-frontend:0.1.1 (alpine 3.24.2) │ alpine │        0        │
+└─────────────────────────────────────────┴────────┴─────────────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+----- fin: OK -----

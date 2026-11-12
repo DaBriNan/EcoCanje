@@ -1,0 +1,16 @@
+ID: E11
+Descripción: Incidente real 11 nov: agent-0 NotReady (IP); el script corregido lo detecta y recupera
+Fecha: 2026-11-11T21:02:32-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 0829281+cambios
+Comando: scripts/recuperar-tras-reinicio.sh
+Esperado: agent-0 reiniciado, nodos Ready, API 200
+----- salida -----
+21:02:33 dev: nodos Ready
+21:02:33 dev: API ready=200
+21:02:36 prod: k3d-prod-agent-0 se apagó por IP intercambiada; reiniciando
+21:02:42 prod: nodos Ready
+21:02:42 prod: API ready=200
+21:02:42 dev y prod operando
+----- fin: OK -----

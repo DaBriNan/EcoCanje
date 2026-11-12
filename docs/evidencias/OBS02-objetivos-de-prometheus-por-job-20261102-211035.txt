@@ -1,0 +1,19 @@
+ID: OBS02
+Descripción: Objetivos de Prometheus por job
+Fecha: 2026-11-02T21:10:35-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0+cambios
+Comando: scripts/prom.sh prod sum by (job) (up)
+Esperado: jobs de kubelet, apiserver, coredns, kube-state-metrics, node-exporter, alertmanager y prometheus con up
+----- salida -----
+job=kubelet -> 9
+job=kps-alertmanager -> 2
+job=kube-state-metrics -> 1
+job=apiserver -> 1
+job=kps-prometheus -> 2
+job=kps-operator -> 1
+job=coredns -> 1
+job=kps-grafana -> 1
+job=prometheus-node-exporter -> 3
+----- fin: OK -----

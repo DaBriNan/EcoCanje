@@ -1,0 +1,13 @@
+ID: OBS02
+Descripción: Nodos Ready segun kube-state-metrics
+Fecha: 2026-11-02T21:10:37-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0+cambios
+Comando: scripts/prom.sh prod kube_node_status_condition{condition="Ready",status="true"}
+Esperado: 3 nodos con Ready=true
+----- salida -----
+condition=Ready, instance=10.42.0.26:8080, job=kube-state-metrics, namespace=monitoring, node=k3d-prod-agent-1, pod=kps-kube-state-metrics-59d4d4677-b5sfq, service=kps-kube-state-metrics -> 1
+condition=Ready, instance=10.42.0.26:8080, job=kube-state-metrics, namespace=monitoring, node=k3d-prod-agent-0, pod=kps-kube-state-metrics-59d4d4677-b5sfq, service=kps-kube-state-metrics -> 1
+condition=Ready, instance=10.42.0.26:8080, job=kube-state-metrics, namespace=monitoring, node=k3d-prod-server-0, pod=kps-kube-state-metrics-59d4d4677-b5sfq, service=kps-kube-state-metrics -> 1
+----- fin: OK -----

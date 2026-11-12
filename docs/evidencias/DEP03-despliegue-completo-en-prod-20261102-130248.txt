@@ -1,0 +1,49 @@
+ID: DEP03
+Descripción: Despliegue completo en prod
+Fecha: 2026-11-02T13:02:48-06:00
+Ambiente: prod
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/desplegar.sh prod
+Esperado: migraciones completas, backend y worker Ready
+----- salida -----
+tls-ecocanje aplicado en k3d-prod para prod.ecocanje.test
+namespace/ecocanje configured
+resourcequota/cuota-ecocanje created
+serviceaccount/backend created
+serviceaccount/mongo created
+serviceaccount/postgres created
+configmap/app-config-98tht76tg9 created
+configmap/mongo-init created
+configmap/nginx-conf-d47dfbcc27 created
+configmap/postgres-init created
+service/backend created
+service/mongo created
+service/postgres created
+limitrange/limites-por-defecto created
+deployment.apps/backend created
+deployment.apps/outbox-worker created
+statefulset.apps/mongo created
+statefulset.apps/postgres created
+poddisruptionbudget.policy/backend created
+horizontalpodautoscaler.autoscaling/backend created
+job.batch/migraciones created
+ingress.networking.k8s.io/ecocanje created
+networkpolicy.networking.k8s.io/backend-ingreso created
+networkpolicy.networking.k8s.io/clientes-mongo-egreso created
+networkpolicy.networking.k8s.io/clientes-postgres-egreso created
+networkpolicy.networking.k8s.io/denegar-todo created
+networkpolicy.networking.k8s.io/mongo-ingreso created
+networkpolicy.networking.k8s.io/permitir-dns created
+networkpolicy.networking.k8s.io/postgres-ingreso created
+  2026_10_27_041412_create_ecocanje_tables ..................... 298.18ms DONE
+  2026_10_27_044839_create_personal_access_tokens_table ......... 51.43ms DONE
+  2026_10_27_235900_add_lotes_to_canjes ......................... 14.61ms DONE
+
+MongoDB listo
+
+   INFO  Seeding database.  
+
+Waiting for deployment "backend" rollout to finish: 1 of 2 updated replicas are available...
+error: timed out waiting for the condition
+----- fin: FALLA(1) -----

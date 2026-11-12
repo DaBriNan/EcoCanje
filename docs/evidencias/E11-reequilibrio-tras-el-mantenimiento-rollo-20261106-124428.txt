@@ -1,0 +1,15 @@
+ID: E11
+Descripción: Reequilibrio tras el mantenimiento (rollout restart)
+Fecha: 2026-11-06T12:44:28-06:00
+Ambiente: prod
+Host: fedora
+Commit: 21cb157+cambios
+Comando: bash -c K="kubectl --context k3d-prod -n ecocanje"; ( while :; do curl -s -o /dev/null -m 2 -w "%{http_code}\n" https://prod.ecocanje.test:8445/api/health/ready; sleep 0.2; done ) > /tmp/sonda-$$ & S=$!; $K rollout restart deploy/backend deploy/frontend >/dev/null; $K rollout status deploy/backend --timeout=180s >/dev/null && $K rollout status deploy/frontend --timeout=180s >/dev/null; sleep 3; kill $S; echo "sonda: $(wc -l < /tmp/sonda-$$) solicitudes, $(grep -vc "^200$" /tmp/sonda-$$) sin 200"; rm -f /tmp/sonda-$$; $K get pods -l "app in (backend,frontend)" --field-selector=status.phase=Running -o jsonpath="{range .items[*]}{.metadata.deletionTimestamp}|{.metadata.labels.app} {.spec.nodeName}{\"\n\"}{end}" | grep "^|" | cut -c2- | sort | tee /dev/stderr | sort -u | wc -l | grep -qx 4
+Esperado: 1 replica de backend y 1 de frontend por worker; sonda sin errores
+----- salida -----
+sonda: 46 solicitudes, 0 sin 200
+backend k3d-prod-agent-0
+backend k3d-prod-agent-1
+frontend k3d-prod-agent-0
+frontend k3d-prod-agent-1
+----- fin: OK -----

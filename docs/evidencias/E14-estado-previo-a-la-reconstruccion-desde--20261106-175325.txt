@@ -1,0 +1,27 @@
+ID: E14
+Descripción: Estado previo a la reconstruccion desde cero
+Fecha: 2026-11-06T17:53:25-06:00
+Ambiente: prod
+Host: fedora
+Commit: 074e660+cambios
+Comando: bash -c k3d cluster list; kubectl config get-contexts -o name; for f in infra/imagen-aprobada-*.id; do echo "$f: $(cat $f)"; done; docker image ls --format "{{.Repository}}:{{.Tag}} {{.ID}}" | grep ecocanje-; git rev-parse --short HEAD
+Esperado: inventario de clusteres, contextos e imagenes aprobadas
+----- salida -----
+NAME   SERVERS   AGENTS   LOADBALANCER
+dev    1/1       0/0      true
+prod   1/1       2/2      true
+k3d-dev
+k3d-prod
+kubernetes-admin@kubernetes
+infra/imagen-aprobada-0.1.1.id: ac2590b7b87d3
+infra/imagen-aprobada-0.1.2.id: 94410517655dd
+infra/imagen-aprobada-0.1.3.id: 41f344a148ebb
+infra/imagen-aprobada-frontend-0.1.0.id: 6451729c69f9b
+ecocanje-backend:0.1.3 bd9da4814ae1
+ecocanje-frontend:0.1.0 4d9dddcc5660
+ecocanje-backend:0.1.2 70f41dfd8c86
+ecocanje-backend:0.1.1 a300adfa49ed
+ecocanje-backend:0.1.0 0bd89da3e7e2
+ecocanje-api:latest 7cfbd8e7c81d
+074e660
+----- fin: OK -----

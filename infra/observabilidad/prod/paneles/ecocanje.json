@@ -1,0 +1,975 @@
+{
+ "uid": "ecocanje-prod",
+ "title": "EcoCanje - produccion",
+ "timezone": "browser",
+ "refresh": "30s",
+ "time": {
+  "from": "now-3h",
+  "to": "now"
+ },
+ "schemaVersion": 39,
+ "tags": [
+  "ecocanje"
+ ],
+ "panels": [
+  {
+   "type": "row",
+   "title": "Alertas y nodos",
+   "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false
+  },
+  {
+   "type": "table",
+   "title": "Alertas activas",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 1,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "ALERTS{alertstate=\"firing\"}",
+     "legendFormat": "{{alertname}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "stat",
+   "title": "Nodos Ready",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 1,
+    "w": 4,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum(kube_node_status_condition{condition=\"Ready\",status=\"true\"})",
+     "legendFormat": "Ready"
+    },
+    {
+     "refId": "B",
+     "expr": "count(kube_node_info)",
+     "legendFormat": "Total"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       },
+       {
+        "color": "green",
+        "value": 1
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "CPU por nodo",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 12,
+    "y": 1,
+    "w": 6,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "1 - avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m]))",
+     "legendFormat": "{{instance}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Memoria disponible por nodo",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 18,
+    "y": 1,
+    "w": 6,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes",
+     "legendFormat": "{{instance}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Disco libre (/var/lib/rancher/k3s)",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 8,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "node_filesystem_avail_bytes{mountpoint=\"/var/lib/rancher/k3s\"} / node_filesystem_size_bytes{mountpoint=\"/var/lib/rancher/k3s\"}",
+     "legendFormat": "{{instance}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Red por nodo (recibido / enviado)",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 8,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum by (instance) (rate(node_network_receive_bytes_total{device!~\"lo|veth.*|flannel.*|cni.*\"}[5m]))",
+     "legendFormat": "rx {{instance}}"
+    },
+    {
+     "refId": "B",
+     "expr": "sum by (instance) (rate(node_network_transmit_bytes_total{device!~\"lo|veth.*|flannel.*|cni.*\"}[5m]))",
+     "legendFormat": "tx {{instance}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "Bps"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "stat",
+   "title": "CPU asignable libre (cores)",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 16,
+    "y": 8,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum(kube_node_status_allocatable{resource=\"cpu\"}) - sum(kube_pod_container_resource_requests{resource=\"cpu\"})",
+     "legendFormat": "libre"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "row",
+   "title": "Kubernetes (ecocanje)",
+   "gridPos": {
+    "x": 0,
+    "y": 15,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false
+  },
+  {
+   "type": "timeseries",
+   "title": "Replicas deseadas vs disponibles",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 16,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "kube_deployment_spec_replicas{namespace=\"ecocanje\"}",
+     "legendFormat": "deseadas {{deployment}}"
+    },
+    {
+     "refId": "B",
+     "expr": "kube_deployment_status_replicas_available{namespace=\"ecocanje\"}",
+     "legendFormat": "disponibles {{deployment}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "HPA del backend",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 16,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "kube_horizontalpodautoscaler_status_current_replicas{namespace=\"ecocanje\"}",
+     "legendFormat": "actuales"
+    },
+    {
+     "refId": "B",
+     "expr": "kube_horizontalpodautoscaler_status_desired_replicas{namespace=\"ecocanje\"}",
+     "legendFormat": "deseadas"
+    },
+    {
+     "refId": "C",
+     "expr": "kube_horizontalpodautoscaler_spec_max_replicas{namespace=\"ecocanje\"}",
+     "legendFormat": "maximo"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Pods no listos, Pending y reinicios (1h)",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 16,
+    "y": 16,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum(kube_pod_status_ready{namespace=\"ecocanje\",condition=\"false\"})",
+     "legendFormat": "no listos"
+    },
+    {
+     "refId": "B",
+     "expr": "sum(kube_pod_status_phase{namespace=\"ecocanje\",phase=\"Pending\"})",
+     "legendFormat": "Pending"
+    },
+    {
+     "refId": "C",
+     "expr": "sum(increase(kube_pod_container_status_restarts_total{namespace=\"ecocanje\"}[1h]))",
+     "legendFormat": "reinicios"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "bargauge",
+   "title": "Replicas del backend por nodo",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 23,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "count by (node) (kube_pod_info{namespace=\"ecocanje\",created_by_kind=\"ReplicaSet\",pod=~\"backend-.*\"})",
+     "legendFormat": "{{node}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "row",
+   "title": "Aplicacion (via Traefik)",
+   "gridPos": {
+    "x": 0,
+    "y": 23,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false
+  },
+  {
+   "type": "timeseries",
+   "title": "Trafico por codigo (req/s)",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 24,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum by (code) (rate(traefik_service_requests_total{service=\"ecocanje-backend-http@kubernetes\"}[5m]))",
+     "legendFormat": "{{code}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "reqps"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Tasa de errores 5xx",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 24,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "(sum(rate(traefik_service_requests_total{service=\"ecocanje-backend-http@kubernetes\",code=~\"5..\"}[5m])) or vector(0)) / sum(rate(traefik_service_requests_total{service=\"ecocanje-backend-http@kubernetes\"}[5m]))",
+     "legendFormat": "5xx"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "percentunit"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Duracion p95 / p50",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 16,
+    "y": 24,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "histogram_quantile(0.95, sum by (le) (rate(traefik_service_request_duration_seconds_bucket{service=\"ecocanje-backend-http@kubernetes\"}[5m])))",
+     "legendFormat": "p95"
+    },
+    {
+     "refId": "B",
+     "expr": "histogram_quantile(0.50, sum by (le) (rate(traefik_service_request_duration_seconds_bucket{service=\"ecocanje-backend-http@kubernetes\"}[5m])))",
+     "legendFormat": "p50"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "s"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "stat",
+   "title": "Dias para expirar el certificado TLS",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 31,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "min((traefik_tls_certs_not_after - time()) / 86400)",
+     "legendFormat": "dias"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "d",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       },
+       {
+        "color": "orange",
+        "value": 7
+       },
+       {
+        "color": "green",
+        "value": 30
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "row",
+   "title": "PostgreSQL",
+   "gridPos": {
+    "x": 0,
+    "y": 38,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false
+  },
+  {
+   "type": "stat",
+   "title": "PostgreSQL arriba",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 39,
+    "w": 4,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "pg_up",
+     "legendFormat": "pg_up"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       },
+       {
+        "color": "green",
+        "value": 1
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Conexiones por estado",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 4,
+    "y": 39,
+    "w": 7,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum by (state) (pg_stat_activity_count{datname=\"ecocanje\"})",
+     "legendFormat": "{{state}}"
+    },
+    {
+     "refId": "B",
+     "expr": "pg_settings_max_connections",
+     "legendFormat": "maximo"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Transacciones/s",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 11,
+    "y": 39,
+    "w": 7,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "rate(pg_stat_database_xact_commit{datname=\"ecocanje\"}[5m])",
+     "legendFormat": "commit"
+    },
+    {
+     "refId": "B",
+     "expr": "rate(pg_stat_database_xact_rollback{datname=\"ecocanje\"}[5m])",
+     "legendFormat": "rollback"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "stat",
+   "title": "Tamano de la base",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 18,
+    "y": 39,
+    "w": 6,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "pg_database_size_bytes{datname=\"ecocanje\"}",
+     "legendFormat": "ecocanje"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "bytes"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "row",
+   "title": "MongoDB",
+   "gridPos": {
+    "x": 0,
+    "y": 46,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false
+  },
+  {
+   "type": "stat",
+   "title": "MongoDB arriba",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 47,
+    "w": 4,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "mongodb_up",
+     "legendFormat": "mongodb_up"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "red",
+        "value": null
+       },
+       {
+        "color": "green",
+        "value": 1
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Conexiones actuales",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 4,
+    "y": 47,
+    "w": 7,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "mongodb_ss_connections{conn_type=\"current\"}",
+     "legendFormat": "actuales"
+    },
+    {
+     "refId": "B",
+     "expr": "mongodb_ss_connections{conn_type=\"available\"}",
+     "legendFormat": "disponibles"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Operaciones/s",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 11,
+    "y": 47,
+    "w": 7,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum by (legacy_op_type) (rate(mongodb_ss_opcounters[5m]))",
+     "legendFormat": "{{legacy_op_type}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "ops"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "timeseries",
+   "title": "Latencia media por operacion",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 18,
+    "y": 47,
+    "w": 6,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "rate(mongodb_ss_opLatencies_latency[5m]) / clamp_min(rate(mongodb_ss_opLatencies_ops[5m]), 1e-9) / 1e6",
+     "legendFormat": "{{op_type}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "s"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "stat",
+   "title": "Tamano de datos (ecocanje)",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 54,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum(mongodb_dbstats_dataSize{database=\"ecocanje\"})",
+     "legendFormat": "datos"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "bytes"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "row",
+   "title": "Respaldos",
+   "gridPos": {
+    "x": 0,
+    "y": 61,
+    "w": 24,
+    "h": 1
+   },
+   "collapsed": false
+  },
+  {
+   "type": "stat",
+   "title": "Horas desde el ultimo respaldo exitoso",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 0,
+    "y": 62,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "(time() - kube_cronjob_status_last_successful_time{namespace=\"ecocanje\"}) / 3600",
+     "legendFormat": "{{cronjob}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "h",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       },
+       {
+        "color": "red",
+        "value": 25
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "bargauge",
+   "title": "Duracion del ultimo Job de respaldo",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 8,
+    "y": 62,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "kube_job_status_completion_time{namespace=\"ecocanje\",job_name=~\"respaldo-.*\"} - kube_job_status_start_time{namespace=\"ecocanje\",job_name=~\"respaldo-.*\"}",
+     "legendFormat": "{{job_name}}"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "s"
+    },
+    "overrides": []
+   },
+   "options": {}
+  },
+  {
+   "type": "stat",
+   "title": "Jobs de respaldo fallidos",
+   "datasource": {
+    "type": "prometheus",
+    "uid": "prometheus"
+   },
+   "gridPos": {
+    "x": 16,
+    "y": 62,
+    "w": 8,
+    "h": 7
+   },
+   "targets": [
+    {
+     "refId": "A",
+     "expr": "sum(kube_job_status_failed{namespace=\"ecocanje\",job_name=~\"(respaldo|manual)-.*\"}) or vector(0)",
+     "legendFormat": "fallidos"
+    }
+   ],
+   "fieldConfig": {
+    "defaults": {
+     "unit": "short",
+     "thresholds": {
+      "mode": "absolute",
+      "steps": [
+       {
+        "color": "green",
+        "value": null
+       },
+       {
+        "color": "red",
+        "value": 1
+       }
+      ]
+     }
+    },
+    "overrides": []
+   },
+   "options": {}
+  }
+ ]
+}

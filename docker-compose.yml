@@ -1,0 +1,18 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ecocanje
+      POSTGRES_USER: ecocanje
+      POSTGRES_PASSWORD: ${PG_PASS}
+    volumes: [pgdata:/var/lib/postgresql/data]
+  mongo:
+    image: mongo:7
+    volumes: [mongodata:/data/db]
+  api:
+    build: {context: ./backend, dockerfile: Dockerfile.dev}
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    volumes: ["./backend:/app:Z"]
+    ports: ["8000:8000"]
+    depends_on: [db, mongo]
+volumes: {pgdata: {}, mongodata: {}}

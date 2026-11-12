@@ -1,0 +1,6 @@
+kube-prometheus-stack 92.17.1
+prometheus-node-exporter 4.60.1
+postgres-exporter v0.20.1 (sha256:ac5ec343104fae0e2d84a27bb8d69b38430a11910c5382cad85d478d2bab713e)
+mongodb_exporter 0.53.0 (sha256:0214e482b2cd4b1849f9f4dcef90d328a99ba3727dd1103e7da48b42060bcec1)
+loki (grafana-community) 19.1.1 -> Loki 3.7.9 (sha256:0db216b630ae1f348a1584c67f3cead8b4c1fc839169a39501db664744158e28)
+alloy (grafana) 1.14.2 -> Alloy v1.21.1 (sha256:4039c971193053a84e53dd9ed3e7d4561c069256b024631cd3498a353ed7ece8)

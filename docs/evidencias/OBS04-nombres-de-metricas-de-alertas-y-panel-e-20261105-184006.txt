@@ -1,0 +1,55 @@
+ID: OBS04
+Descripción: Nombres de metricas de alertas y panel existen
+Fecha: 2026-11-05T18:40:07-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/verificar-metricas.sh prod
+Esperado: 44 metricas, 0 faltan
+----- salida -----
+OK    ALERTS
+OK    container_cpu_usage_seconds_total
+OK    kube_cronjob_created
+OK    kube_cronjob_status_last_successful_time
+OK    kube_deployment_spec_replicas
+OK    kube_deployment_status_replicas_available
+OK    kube_horizontalpodautoscaler_spec_max_replicas
+OK    kube_horizontalpodautoscaler_status_current_replicas
+OK    kube_horizontalpodautoscaler_status_desired_replicas
+OK    kube_job_status_completion_time
+OK    kube_job_status_failed
+OK    kube_job_status_start_time
+OK    kube_node_info
+OK    kube_node_status_allocatable
+OK    kube_node_status_condition
+OK    kube_pod_container_resource_limits
+OK    kube_pod_container_resource_requests
+OK    kube_pod_container_status_restarts_total
+OK    kube_pod_info
+OK    kube_pod_status_phase
+OK    kube_pod_status_ready
+OK    mongodb_dbstats_dataSize
+OK    mongodb_ss_connections
+OK    mongodb_ss_opLatencies_latency
+OK    mongodb_ss_opLatencies_ops
+OK    mongodb_ss_opcounters
+OK    mongodb_up
+OK    node_cpu_seconds_total
+OK    node_filesystem_avail_bytes
+OK    node_filesystem_size_bytes
+OK    node_memory_MemAvailable_bytes
+OK    node_memory_MemTotal_bytes
+OK    node_network_receive_bytes_total
+OK    node_network_transmit_bytes_total
+OK    pg_database_size_bytes
+OK    pg_settings_max_connections
+OK    pg_stat_activity_count
+OK    pg_stat_database_xact_commit
+OK    pg_stat_database_xact_rollback
+OK    pg_up
+OK    traefik_service_request_duration_seconds_bucket
+OK    traefik_service_requests_total
+OK    traefik_tls_certs_not_after
+OK    up
+44 metricas, 0 faltan
+----- fin: OK -----

@@ -1,0 +1,36 @@
+ID: E09
+Descripción: RBAC por funcion con certificados de cliente en dev (repeticion)
+Fecha: 2026-11-06T18:42:57-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1f44cf6+cambios
+Comando: tests/rbac.sh dev
+Esperado: 19 verificaciones segun la matriz
+----- salida -----
+usuario ana (grupo ecocanje:lectura) en dev; vence: Dec  7 00:37:58 2026 GMT
+usuario beto (grupo ecocanje:despliegue) en dev; vence: Dec  7 00:38:00 2026 GMT
+usuario caro (grupo ecocanje:operaciones) en dev; vence: Dec  7 00:38:02 2026 GMT
+== ana (ecocanje:lectura)
+OK    listar pods -> permitido
+OK    leer logs del backend -> permitido
+OK    leer Secrets -> denegado
+OK    borrar un pod -> denegado
+OK    reiniciar el backend -> denegado
+OK    exec en el backend -> denegado
+OK    ver pods de otro namespace (monitoring) -> denegado
+== beto (ecocanje:despliegue)
+OK    reiniciar el backend -> permitido
+OK    escalar el backend -> permitido
+OK    crear un Job desde el CronJob -> permitido
+OK    leer Secrets -> denegado
+OK    exec en el backend -> denegado
+OK    borrar una NetworkPolicy -> denegado
+OK    borrar un PVC -> denegado
+OK    modificar RBAC -> denegado
+== caro (ecocanje:operaciones)
+OK    exec en el backend (diagnóstico) -> permitido
+OK    leer Secrets -> denegado
+OK    borrar una NetworkPolicy -> denegado
+OK    cambiar la cuota del namespace -> denegado
+Resultado: 19 correctas, 0 fallidas
+----- fin: OK -----

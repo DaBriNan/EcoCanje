@@ -1,0 +1,21 @@
+ID: OBS07
+Descripción: Correlacion de una solicitud por X-Request-Id en prod
+Fecha: 2026-11-06T17:37:11-06:00
+Ambiente: prod
+Host: fedora
+Commit: ef9a452+cambios
+Comando: scripts/probar.sh prod tests/correlacion.sh
+Esperado: rid en respuesta, nginx, Laravel, worker (Loki) y MongoDB
+----- salida -----
+X-Request-Id: corr-1794008231-619
+entrega 107 registrada
+OK    POST /entregas -> 201
+OK    la respuesta devuelve el mismo X-Request-Id -> corr-1794008231-619
+esperando a que Alloy y Loki ingieran (20 s)
+OK    Loki: log de acceso de nginx con el rid -> si
+OK    Loki: Laravel registro el evento con el rid (JSON) -> si
+OK    Loki: el worker publico el evento con el mismo rid -> si
+OK    MongoDB: documento con payload.request_id -> 1
+consulta en Grafana (Explore, Loki): {namespace="ecocanje"} |= "corr-1794008231-619"
+Resultado: 6 correctas, 0 fallidas
+----- fin: OK -----

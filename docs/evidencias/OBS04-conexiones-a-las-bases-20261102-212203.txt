@@ -1,0 +1,14 @@
+ID: OBS04
+Descripción: Conexiones a las bases
+Fecha: 2026-11-02T21:22:03-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c scripts/prom.sh prod "pg_stat_database_numbackends{datname=\"ecocanje\"}"; scripts/prom.sh prod "mongodb_ss_connections{conn_type=\"current\"}"
+Esperado: valores numericos de ambos motores
+----- salida -----
+(sin resultados)
+instance=10.42.1.19:9216, job=ecocanje/exportadores, namespace=ecocanje, pod=exportador-mongo-6bb5d8df5-vqrsf -> 4
+----- fin: OK -----
+
+NOTA POSTERIOR (2026-11-05): este OK es incorrecto. bash -c solo devolvió el código de la última consulta; la de PostgreSQL no tuvo resultados porque exportador-postgres no podía leer su credencial (falta fsGroup). Repetida correctamente en OBS04-conexiones-y-tamano-de-ambas-bases-repet-20261105-184010.txt

@@ -1,0 +1,61 @@
+ID: E12
+Descripción: Actualizacion 0.1.2 a 0.1.3, rollback y nueva promocion en prod
+Fecha: 2026-11-06T13:17:50-06:00
+Ambiente: prod
+Host: fedora
+Commit: ef9a452+cambios
+Comando: scripts/actualizacion.sh prod 0.1.3 0.1.2
+Esperado: version y funcionalidad verificadas en cada fase; sonda sin errores
+----- salida -----
+13:17:50 0. Imagen 0.1.3 en prod
+[36mINFO[0m[0009] Successfully imported 1 image(s) into 1 cluster(s) 
+OK    k3d-prod-agent-0 -> 41f344a148ebb
+OK    k3d-prod-agent-1 -> 41f344a148ebb
+OK    k3d-prod-server-0 -> 41f344a148ebb
+OK    identica a la imagen aprobada (41f344a148ebb)
+13:18:00 1. Estado inicial
+13:18:00 versión en /health/live: 0.1.2 | pods: backend=ecocanje-backend:0.1.2 backend=ecocanje-backend:0.1.2 outbox-worker=ecocanje-backend:0.1.2 
+13:18:02 prueba funcional (roles): Resultado: hay fallos
+OK    operador en ruta de operador -> 200
+OK    credenciales invalidas -> 401
+OK    ciudadano en ruta de operador -> 403
+OK    sin token -> 401
+FALLA sin token ni Accept JSON (navegador) -> 500 (esperado 401)
+Resultado: hay fallos
+13:19:03 2. ACTUALIZACIÓN a 0.1.3 (migraciones y rolling update)
+13:19:18 actualización completa en 15 s
+  sonda actualizacion: 64 solicitudes, 0 sin 200 (0.00%)
+11        <none>
+12        <none>
+
+13:19:21 versión en /health/live: 0.1.3 | pods: backend=ecocanje-backend:0.1.3 backend=ecocanje-backend:0.1.3 outbox-worker=ecocanje-backend:0.1.3 
+13:19:23 prueba funcional (roles): Resultado: todas correctas
+13:20:24 3. ROLLBACK a 0.1.2 (kubectl rollout undo)
+Warning: resource deployments/backend was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+deployment.apps/backend rolled back
+Warning: resource deployments/outbox-worker was previously managed with 'kubectl apply'. Rolling back will not update the kubectl.kubernetes.io/last-applied-configuration annotation, which may cause unexpected behavior on future 'kubectl apply' operations. Consider using 'kubectl apply' with your previous configuration file instead.
+deployment.apps/outbox-worker rolled back
+13:20:35 rollback completo en 10 s
+  sonda rollback: 46 solicitudes, 0 sin 200 (0.00%)
+13:20:38 versión en /health/live: 0.1.2 | pods: backend=ecocanje-backend:0.1.2 backend=ecocanje-backend:0.1.2 outbox-worker=ecocanje-backend:0.1.2 
+13:20:40 prueba funcional (roles): Resultado: hay fallos
+OK    operador en ruta de operador -> 200
+OK    credenciales invalidas -> 401
+OK    ciudadano en ruta de operador -> 403
+OK    sin token -> 401
+FALLA sin token ni Accept JSON (navegador) -> 500 (esperado 401)
+Resultado: hay fallos
+17:32:28 4. NUEVA PROMOCIÓN de 0.1.3 desde el estado declarado en git (kubectl apply -k infra/prod)
+17:32:49 promoción completa en 21 s
+  sonda promocion: 72 solicitudes, 0 sin 200 (0.00%)
+17:32:52 versión en /health/live: 0.1.3 | pods: backend=ecocanje-backend:0.1.3 backend=ecocanje-backend:0.1.3 outbox-worker=ecocanje-backend:0.1.3 
+17:32:57 prueba funcional (roles): Resultado: todas correctas
+----- fin: FALLA(1) -----
+
+ANALISIS (2026-11-06 17:35):
+- Los fallos de tests/roles.sh en el estado inicial y tras el rollback son esperados: la prueba incluye ahora el caso
+  "sin token ni Accept JSON -> 401", corregido en 0.1.3 y ausente en 0.1.2. Que falle justo en las fases con 0.1.2 y
+  pase en las fases con 0.1.3 confirma que el rollback restauro el comportamiento anterior.
+- El equipo se suspendio de 13:21:30 a 17:32:19 (journal: "PM: suspend entry"), entre el rollback y la nueva promocion;
+  prod permanecio en 0.1.2 durante ese lapso. Cada fase se midio por separado: sonda con 0 errores en las tres.
+- Desde ahora ev() ejecuta cada evidencia bajo systemd-inhibit.

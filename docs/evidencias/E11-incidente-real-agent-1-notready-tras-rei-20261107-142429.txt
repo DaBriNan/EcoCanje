@@ -1,0 +1,23 @@
+ID: E11
+Descripción: Incidente real: agent-1 NotReady tras reiniciar el host (IP intercambiada)
+Fecha: 2026-11-07T14:24:29-06:00
+Ambiente: prod
+Host: fedora
+Commit: a9f827f
+Comando: bash -c echo "antes:"; kubectl --context k3d-prod get nodes --no-headers; docker logs k3d-prod-agent-1 2>&1 | grep "Shutdown request" | tail -1 | cut -c1-160; echo "accion: docker restart k3d-prod-agent-1 (D08 escenario 3)"; docker restart k3d-prod-agent-1 >/dev/null && kubectl --context k3d-prod wait --for=condition=Ready node --all --timeout=180s && echo "despues:" && kubectl --context k3d-prod get nodes --no-headers
+Esperado: diagnostico, reinicio del agente y nodos Ready
+----- salida -----
+antes:
+k3d-prod-agent-0    Ready      <none>          19h   v1.36.5+k3s1
+k3d-prod-agent-1    NotReady   <none>          19h   v1.36.5+k3s1
+k3d-prod-server-0   Ready      control-plane   19h   v1.36.5+k3s1
+time="2026-11-07T20:04:14Z" level=error msg="Shutdown request received: \"failed to start networking: unable to initialize network policy controller: error gett
+accion: docker restart k3d-prod-agent-1 (D08 escenario 3)
+node/k3d-prod-agent-0 condition met
+node/k3d-prod-agent-1 condition met
+node/k3d-prod-server-0 condition met
+despues:
+k3d-prod-agent-0    Ready   <none>          19h   v1.36.5+k3s1
+k3d-prod-agent-1    Ready   <none>          19h   v1.36.5+k3s1
+k3d-prod-server-0   Ready   control-plane   19h   v1.36.5+k3s1
+----- fin: OK -----

@@ -1,0 +1,62 @@
+ID: DEP02
+Descripción: Despliegue completo en dev
+Fecha: 2026-11-02T12:09:30-06:00
+Ambiente: dev
+Host: fedora
+Commit: 978939b+cambios
+Comando: scripts/desplegar.sh dev
+Esperado: migraciones completas, backend y worker Ready
+----- salida -----
+tls-ecocanje aplicado en k3d-dev para dev.ecocanje.test
+namespace/ecocanje configured
+resourcequota/cuota-ecocanje unchanged
+serviceaccount/backend created
+serviceaccount/mongo unchanged
+serviceaccount/postgres unchanged
+configmap/app-config-24hd2ftb77 created
+configmap/mongo-init unchanged
+configmap/nginx-conf-d47dfbcc27 created
+configmap/postgres-init unchanged
+service/backend created
+service/mongo unchanged
+service/postgres unchanged
+limitrange/limites-por-defecto unchanged
+deployment.apps/backend created
+deployment.apps/outbox-worker created
+statefulset.apps/mongo configured
+statefulset.apps/postgres configured
+job.batch/migraciones created
+ingress.networking.k8s.io/ecocanje created
+networkpolicy.networking.k8s.io/backend-ingreso created
+networkpolicy.networking.k8s.io/clientes-mongo-egreso unchanged
+networkpolicy.networking.k8s.io/clientes-postgres-egreso unchanged
+networkpolicy.networking.k8s.io/denegar-todo unchanged
+networkpolicy.networking.k8s.io/mongo-ingreso unchanged
+networkpolicy.networking.k8s.io/permitir-dns unchanged
+networkpolicy.networking.k8s.io/postgres-ingreso unchanged
+  2026_10_27_041412_create_ecocanje_tables ..................... 379.46ms DONE
+  2026_10_27_044839_create_personal_access_tokens_table ......... 22.71ms DONE
+  2026_10_27_235900_add_lotes_to_canjes .......................... 6.03ms DONE
+
+MongoDB listo
+
+   INFO  Seeding database.  
+
+Waiting for deployment "backend" rollout to finish: 0 of 1 updated replicas are available...
+deployment "backend" successfully rolled out
+deployment "outbox-worker" successfully rolled out
+NAME                                 READY   STATUS      RESTARTS      AGE
+pod/backend-7657ff8989-6tdcx         2/2     Running     0             19s
+pod/migraciones-cpqr7                0/1     Completed   0             19s
+pod/mongo-0                          1/1     Running     0             5d1h
+pod/outbox-worker-58dc599b94-kzvvn   1/1     Running     1 (15s ago)   19s
+pod/postgres-0                       1/1     Running     0             5d1h
+
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+service/backend    ClusterIP   10.43.200.208   <none>        80/TCP      20s
+service/mongo      ClusterIP   10.43.32.120    <none>        27017/TCP   5d16h
+service/postgres   ClusterIP   10.43.65.14     <none>        5432/TCP    5d16h
+
+NAME                                 CLASS     HOSTS               ADDRESS      PORTS     AGE
+ingress.networking.k8s.io/ecocanje   traefik   dev.ecocanje.test   172.20.0.2   80, 443   19s
+----- fin: OK -----

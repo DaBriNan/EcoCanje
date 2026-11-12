@@ -1,0 +1,18 @@
+ID: OBS05
+Descripción: RespaldoFallido real por respaldos vencidos del 3 nov
+Fecha: 2026-11-05T18:38:17-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: bash -c K="kubectl --context k3d-prod -n ecocanje"; scripts/prom.sh prod "ALERTS{alertname=\"RespaldoFallido\",alertstate=\"firing\"}" || exit 1; for j in respaldo-postgres-29894880 respaldo-mongo-29894890; do echo "$j: $($K get job $j -o jsonpath="{.status.conditions[0].reason} inicio={.status.startTime} fallos={.status.failed}")"; done; for c in respaldo-postgres respaldo-mongo; do echo "$c ultimo exitoso: $($K get cronjob $c -o jsonpath={.status.lastSuccessfulTime})"; done; $K logs job/respaldo-postgres-29897760 --tail=1; $K logs job/respaldo-mongo-29897770 --tail=1
+Esperado: alerta firing por Jobs con DeadlineExceeded y respaldo posterior exitoso
+----- salida -----
+alertname=RespaldoFallido, instance=10.42.0.37:8080, job=kube-state-metrics, namespace=ecocanje, pod=kps-kube-state-metrics-59d4d4677-ksgsn, service=kps-kube-state-metrics -> 1
+alertname=RespaldoFallido, instance=10.42.0.37:8080, job=kube-state-metrics, namespace=ecocanje, pod=kps-kube-state-metrics-59d4d4677-ksgsn, service=kps-kube-state-metrics -> 1
+respaldo-postgres-29894880: DeadlineExceeded inicio=2026-11-03T14:05:59Z fallos=2
+respaldo-mongo-29894890: DeadlineExceeded inicio=2026-11-03T14:05:59Z fallos=2
+respaldo-postgres ultimo exitoso: 2026-11-06T00:32:13Z
+respaldo-mongo ultimo exitoso: 2026-11-06T00:32:11Z
+respaldo_ok archivo=pg-20261106-003204.dump bytes=58024 fecha=2026-11-06T00:32:10+00:00
+respaldo_ok archivo=mongo-20261106-003203.archive.gz bytes=1215 fecha=2026-11-06T00:32:08+00:00
+----- fin: OK -----

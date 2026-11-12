@@ -1,0 +1,11 @@
+ID: OBS02
+Descripción: Objetivos caidos
+Fecha: 2026-11-02T21:10:36-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0+cambios
+Comando: bash -c scripts/prom.sh prod "up == 0"; [ $? -eq 2 ]
+Esperado: ninguno
+----- salida -----
+(sin resultados)
+----- fin: OK -----

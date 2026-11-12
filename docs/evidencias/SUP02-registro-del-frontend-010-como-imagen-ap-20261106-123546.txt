@@ -1,0 +1,12 @@
+ID: SUP02
+Descripción: Registro del frontend 0.1.0 como imagen aprobada tras pruebas en dev
+Fecha: 2026-11-06T12:35:46-06:00
+Ambiente: dev
+Host: fedora
+Commit: 4b44ecf+cambios
+Comando: bash -c IMG=ecocanje-frontend scripts/verificar-imagen.sh dev 0.1.0 --registrar
+Esperado: id registrado
+----- salida -----
+OK    k3d-dev-server-0 -> 6451729c69f9b
+imagen aprobada registrada en infra/imagen-aprobada-frontend-0.1.0.id: 6451729c69f9b
+----- fin: OK -----

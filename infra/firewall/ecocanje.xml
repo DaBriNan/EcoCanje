@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Zona de firewalld para el host del laboratorio EcoCanje (D03). Orden efectivo de evaluación en firewalld:
+     1) servicios/puertos permitidos de la zona, 2) target DROP para todo lo demás entrante.
+     Las salidas no se filtran. Los puertos que Docker publica NO pasan por esta zona (Docker inserta sus propias
+     reglas), por eso k3d publica API y entrada solo en 127.0.0.1 (scripts/crear-clusters.sh). -->
+<zone target="DROP">
+  <short>ecocanje</short>
+  <description>Host del laboratorio: solo ZeroTier y el kubelet/API del otro clúster (excepción documentada).</description>
+  <!-- ZeroTier: la VPN del equipo necesita su puerto UDP entrante -->
+  <port protocol="udp" port="9993"/>
+  <!-- Excepción: componentes del clúster kubernetes-admin@kubernetes (no administrado por este proyecto) -->
+  <port protocol="tcp" port="10250"/>
+  <port protocol="tcp" port="6443"/>
+  <!-- Con target DROP el ICMP entrante también se descarta (el host no responde ping desde la red);
+       las respuestas a conexiones salientes siguen permitidas por el seguimiento de estado de firewalld. -->
+</zone>

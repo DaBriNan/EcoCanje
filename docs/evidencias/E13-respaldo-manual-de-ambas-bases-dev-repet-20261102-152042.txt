@@ -1,0 +1,14 @@
+ID: E13
+Descripción: Respaldo manual de ambas bases (dev, repeticion con espera de la base)
+Fecha: 2026-11-02T15:20:42-06:00
+Ambiente: dev
+Host: fedora
+Commit: 656ccdc+cambios
+Comando: scripts/respaldar.sh dev
+Esperado: respaldo_ok de postgres y mongo
+----- salida -----
+== postgres (9 s)
+respaldo_ok archivo=pg-20261102-212043.dump bytes=57708 fecha=2026-11-02T21:20:45+00:00
+== mongo (9 s)
+respaldo_ok archivo=mongo-20261102-212049.archive.gz bytes=1207 fecha=2026-11-02T21:20:50+00:00
+----- fin: OK -----

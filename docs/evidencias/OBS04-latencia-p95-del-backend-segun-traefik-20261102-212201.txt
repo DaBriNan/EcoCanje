@@ -1,0 +1,11 @@
+ID: OBS04
+Descripción: Latencia p95 del backend segun Traefik
+Fecha: 2026-11-02T21:22:01-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/prom.sh prod histogram_quantile(0.95, sum by (le) (rate(traefik_service_request_duration_seconds_bucket{service=~".*ecocanje-backend.*"}[5m])))
+Esperado: valor numerico
+----- salida -----
+- -> 0.09500000000000001
+----- fin: OK -----

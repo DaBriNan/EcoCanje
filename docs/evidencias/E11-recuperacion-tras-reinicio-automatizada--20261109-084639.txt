@@ -1,0 +1,15 @@
+ID: E11
+Descripción: Recuperacion tras reinicio automatizada (con ambientes sanos)
+Fecha: 2026-11-09T08:46:40-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: ba7b2a0+cambios
+Comando: scripts/recuperar-tras-reinicio.sh
+Esperado: sin reinicios innecesarios; API 200 en dev y prod
+----- salida -----
+08:46:41 dev: nodos Ready
+08:46:41 dev: API ready=200
+08:46:43 prod: nodos Ready
+08:46:44 prod: API ready=200
+08:46:44 dev y prod operando
+----- fin: OK -----

@@ -1,0 +1,16 @@
+ID: DEP05
+Descripción: Despliegue del frontend en prod
+Fecha: 2026-11-06T12:35:52-06:00
+Ambiente: prod
+Host: fedora
+Commit: 4b44ecf+cambios
+Comando: bash -c scripts/desplegar.sh prod >/dev/null && kubectl --context k3d-prod -n ecocanje rollout status deploy/frontend --timeout=180s && kubectl --context k3d-prod -n ecocanje get pods -l app=frontend -o wide --no-headers | awk "{print \$1, \$2, \$3, \$7}" && kubectl --context k3d-prod -n ecocanje get pdb
+Esperado: 2 replicas del frontend en workers distintos
+----- salida -----
+deployment "frontend" successfully rolled out
+frontend-677bff95-kmg9s 1/1 Running k3d-prod-agent-0
+frontend-677bff95-mm5rc 1/1 Running k3d-prod-agent-1
+NAME       MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+backend    1               N/A               1                     3d22h
+frontend   1               N/A               1                     6s
+----- fin: OK -----

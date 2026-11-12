@@ -1,0 +1,23 @@
+ID: OBS02
+Descripción: Instalacion del exportador de nodos (4.60.1)
+Fecha: 2026-11-02T19:33:33-06:00
+Ambiente: prod
+Host: fedora
+Commit: a436fc0+cambios
+Comando: helm --kube-context k3d-prod upgrade --install node-exporter prometheus-community/prometheus-node-exporter -n monitoring-nodos --version 4.60.1 -f infra/observabilidad/node-exporter-values.yaml --wait --timeout 5m
+Esperado: release desplegado
+----- salida -----
+Release "node-exporter" does not exist. Installing it now.
+NAME: node-exporter
+LAST DEPLOYED: Mon Nov  2 19:33:35 2026
+NAMESPACE: monitoring-nodos
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace monitoring-nodos -l "app.kubernetes.io/name=prometheus-node-exporter,app.kubernetes.io/instance=node-exporter" -o jsonpath="{.items[0].metadata.name}")
+  echo "Visit http://127.0.0.1:9100 to use your application"
+  kubectl port-forward --namespace monitoring-nodos $POD_NAME 9100
+----- fin: OK -----

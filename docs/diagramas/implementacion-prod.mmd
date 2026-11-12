@@ -1,0 +1,25 @@
+flowchart TB
+  LB["k3d-prod-serverlb · 172.21.0.5<br/>publica 127.0.0.1:8445 (HTTPS) y 127.0.0.1:6551 (API)"]
+  subgraph S["k3d-prod-server-0 · 172.21.0.2 · control plane"]
+    direction TB
+    S1["API server · scheduler · controladores"]
+    S2["CoreDNS · metrics-server · local-path-provisioner"]
+    S3["Jobs: migraciones, instalación de Traefik"]
+  end
+  subgraph A1["k3d-prod-agent-1 · 172.21.0.3 · worker"]
+    direction TB
+    T1["Traefik 3.7.13 (Ingress + TLS)"]
+    B1["backend · nginx + php-fpm"]
+    F1["frontend · nginx"]
+    P1[("postgres-0 · PVC 2 Gi")]
+    M1[("Prometheus · PVC 3 Gi · Alertmanager")]
+  end
+  subgraph A0["k3d-prod-agent-0 · 172.21.0.4 · worker"]
+    direction TB
+    B0["backend · nginx + php-fpm"]
+    F0["frontend · nginx"]
+    W0["outbox-worker"]
+    G0[("mongo-0 · PVC 2 Gi")]
+    L0[("Loki · PVC 2 Gi · Grafana · Alloy")]
+  end
+  LB --> S & A1 & A0

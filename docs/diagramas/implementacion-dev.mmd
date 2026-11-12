@@ -1,0 +1,17 @@
+flowchart TB
+  subgraph HOST["Host Fedora (Docker) — k3d-dev, k3s v1.36.5"]
+    LB["k3d-dev-serverlb<br/>127.0.0.1:8444→443, :8081→80<br/>API 127.0.0.1:6550→6443"]
+    subgraph S["k3d-dev-server-0 (único nodo: control plane y cargas)"]
+      TR[Traefik]
+      B[backend 1 réplica]
+      F[frontend 1 réplica]
+      W[outbox-worker]
+      PG[(postgres-0, PVC local-path)]
+      MG[(mongo-0, PVC local-path)]
+      CJ[CronJobs de respaldo 02:00 y 02:10]
+    end
+  end
+  LB --> TR --> F & B
+  B & W --> PG & MG
+  NOTE["Sin HPA ni PDB; mismos manifiestos base (Kustomize), otro host,<br/>otros secretos y otros volúmenes que prod"]:::nota
+  classDef nota fill:#fff7d6,stroke:#c9a400

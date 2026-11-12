@@ -1,0 +1,12 @@
+ID: OBS01
+Descripción: Salud del backend por la entrada HTTPS
+Fecha: 2026-11-02T12:12:37-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 978939b+cambios
+Comando: bash -c for p in live ready; do curl -fsS -w " -> %{http_code}\n" https://dev.ecocanje.test:8444/api/health/$p; done
+Esperado: live y ready con 200
+----- salida -----
+{"status":"ok"} -> 200
+{"status":"ok"} -> 200
+----- fin: OK -----

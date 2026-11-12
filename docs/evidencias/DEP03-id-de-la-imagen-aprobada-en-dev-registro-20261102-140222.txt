@@ -1,0 +1,12 @@
+ID: DEP03
+Descripción: Id de la imagen aprobada en dev (registro)
+Fecha: 2026-11-02T14:02:22-06:00
+Ambiente: dev
+Host: fedora
+Commit: d3269e2+cambios
+Comando: scripts/verificar-imagen.sh dev 0.1.1 --registrar
+Esperado: todos los nodos de dev con el mismo id
+----- salida -----
+OK    k3d-dev-server-0 -> ac2590b7b87d3
+imagen aprobada registrada en infra/imagen-aprobada-0.1.1.id: ac2590b7b87d3
+----- fin: OK -----

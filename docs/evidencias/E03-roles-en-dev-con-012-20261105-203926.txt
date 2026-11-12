@@ -1,0 +1,15 @@
+ID: E03
+Descripción: Roles en dev con 0.1.2
+Fecha: 2026-11-05T20:39:26-06:00
+Ambiente: dev
+Host: fedora
+Commit: 5eb23b3+cambios
+Comando: scripts/probar.sh dev tests/roles.sh
+Esperado: todas las verificaciones OK
+----- salida -----
+OK    operador en ruta de operador -> 200
+OK    credenciales invalidas -> 401
+OK    ciudadano en ruta de operador -> 403
+OK    sin token -> 401
+Resultado: todas correctas
+----- fin: OK -----

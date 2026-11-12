@@ -1,0 +1,11 @@
+ID: OBS04
+Descripción: PostgreSQL visto por su exportador
+Fecha: 2026-11-02T21:21:57-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601+cambios
+Comando: scripts/prom.sh prod pg_up
+Esperado: pg_up=1
+----- salida -----
+(sin resultados)
+----- fin: FALLA(2) -----

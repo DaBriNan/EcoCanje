@@ -1,0 +1,29 @@
+ID: E03
+Descripción: Prueba de humo de solo lectura en prod (interfaz 0.1.5)
+Fecha: 2026-11-07T15:33:24-06:00
+Ambiente: prod
+Host: fedora
+Commit: b8fa37a+cambios
+Comando: env VERSION_ESPERADA=0.1.5 scripts/probar.sh prod tests/interfaz/correr.sh
+Esperado: carga, login de operador, pestañas con datos, sin escrituras de negocio
+----- salida -----
+navegador: Chromium de Playwright 1.64.1 (mcr.microsoft.com/playwright:v1.64.1-noble@sha256:2f05f8a734509a7b3f26a912639488ee08f58a7b292d14d62271bcff9038768f) | sitio: https://prod.ecocanje.test:8445 | prueba: humo.mjs
+npm notice
+npm notice New major version of npm available! 11.20.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
+      EcoCanje · interfaz 0.1.5
+OK    la interfaz carga y muestra su versión
+OK    contraseña incorrecta se rechaza
+OK    el operador entra y ve su rol
+OK    pestaña Entregas carga datos
+OK    pestaña Canjes carga datos
+OK    pestaña Materiales carga datos
+OK    pestaña Recompensas carga datos
+OK    pestaña Reporte carga datos
+OK    cerrar sesión
+OK    sin escrituras de negocio ni errores de JavaScript
+Resultado: 10 correctas, 0 fallidas (capturas en /out)
+capturas: 1 en docs/evidencias/interfaz/20261107-1533-prod-humo
+----- fin: OK -----

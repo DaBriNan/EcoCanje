@@ -1,0 +1,16 @@
+ID: E13
+Descripción: Exportacion cifrada de los respaldos de prod (imagen fijada)
+Fecha: 2026-11-12T09:03:14-06:00
+Ambiente: prod
+Host: fedora
+Commit: 7696b7c+cambios
+Comando: bash -c scripts/exportar-respaldos.sh prod | tail -2 && ls -t ~/ecocanje-respaldos/prod | grep 20261112 | head -4
+Esperado: archivos cifrados de hoy fuera del cluster
+----- salida -----
+-rw-r--r--. 1 dann dann 61136 nov 12 09:03 pg-20261112-144439.dump.enc
+-rw-r--r--. 1 dann dann 61200 nov 12 09:03 pg-20261112-145822.dump.enc
+pg-20261112-144439.dump.enc.sha256
+pg-20261112-144439.dump.enc
+pg-20261112-145822.dump.enc.sha256
+pg-20261112-145822.dump.enc
+----- fin: OK -----

@@ -1,0 +1,23 @@
+ID: SUP01
+Descripción: Construccion de la imagen 0.1.2
+Fecha: 2026-11-05T20:22:09-06:00
+Ambiente: compose-local
+Host: fedora
+Commit: 7e707b3
+Comando: bash -c docker build -q -f backend/Dockerfile.prod --build-arg MONGO_EXT=2.5.5 --build-arg APP_VERSION=0.1.2 --label org.opencontainers.image.revision=7e707b3 --label org.opencontainers.image.version=0.1.2 -t ecocanje-backend:0.1.2 backend && docker run --rm --entrypoint sh ecocanje-backend:0.1.2 -c 'php -r "echo getenv(\"APP_VERSION\"), PHP_EOL;"; ls bootstrap/cache'
+Esperado: imagen construida con revision y version
+----- salida -----
+Dockerfile.prod:17
+--------------------
+  16 |     COPY . .
+  17 | >>> RUN composer dump-autoload --no-dev --classmap-authoritative --no-scripts \
+  18 | >>>  && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs \
+  19 | >>>  && php artisan route:cache && php artisan event:cache
+  20 |     
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c composer dump-autoload --no-dev --classmap-authoritative --no-scripts  && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs  && php artisan route:cache && php artisan event:cache" did not complete successfully: exit code: 1
+
+View build details: docker-desktop://dashboard/build/default/default/zaprw1m4jkb6cu0xr1qd4d9yv
+----- fin: FALLA(1) -----
+
+NOTA: fallo "Class Laravel\Pail\PailServiceProvider not found": COPY . . copiaba bootstrap/cache/packages.php del host (generado con dependencias de desarrollo). Corregido excluyendo bootstrap/cache/*.php del contexto y ejecutando package:discover en la imagen.

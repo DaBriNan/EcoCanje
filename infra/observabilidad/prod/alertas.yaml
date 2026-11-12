@@ -1,0 +1,75 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata: {name: ecocanje-alertas, namespace: ecocanje}
+spec:
+  groups:
+  - name: ecocanje.disponibilidad
+    rules:
+    - alert: AplicacionIndisponible
+      expr: kube_deployment_status_replicas_available{namespace="ecocanje",deployment="backend"} < 1
+      for: 1m
+      labels: {severity: critical}
+      annotations:
+        summary: "El backend no tiene ninguna replica disponible"
+        accion: "Revisar pods y eventos del backend; manual de incidentes D08, escenario 1"
+    - alert: NodoNoDisponible
+      expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+      for: 1m
+      labels: {severity: critical}
+      annotations:
+        summary: "Un nodo del cluster no esta Ready"
+        accion: "kubectl get nodes; revisar kubelet y contenedor del nodo; D08, escenario 3"
+    - alert: BaseDeDatosCaida
+      expr: (up{job="ecocanje/exportadores"} == 0) or (pg_up == 0) or (mongodb_up == 0)
+      for: 1m
+      labels: {severity: critical}
+      annotations:
+        summary: "PostgreSQL o MongoDB no responden al exportador"
+        accion: "Revisar el StatefulSet y los eventos de la base; D08, escenario 4"
+  - name: ecocanje.rendimiento
+    rules:
+    - alert: TasaErroresElevada
+      expr: |
+        (sum(rate(traefik_service_requests_total{service=~".*ecocanje-backend.*",code=~"5.."}[5m]))
+          / sum(rate(traefik_service_requests_total{service=~".*ecocanje-backend.*"}[5m]))) > 0.05
+        and sum(rate(traefik_service_requests_total{service=~".*ecocanje-backend.*"}[5m])) > 0.05
+      for: 2m
+      labels: {severity: warning}
+      annotations:
+        summary: "Mas del 5% de las solicitudes al backend terminan en error 5xx"
+        accion: "Revisar logs del backend y estado de las bases; D08, escenario 2"
+    - alert: SaturacionRecursos
+      expr: |
+        sum by (pod) (rate(container_cpu_usage_seconds_total{namespace="ecocanje",container="php"}[5m]))
+          / sum by (pod) (kube_pod_container_resource_limits{namespace="ecocanje",container="php",resource="cpu"}) > 0.85
+      for: 5m
+      labels: {severity: warning}
+      annotations:
+        summary: "Una replica del backend usa mas del 85% de su limite de CPU"
+        accion: "Verificar que el HPA escale; revisar limites y cuello de botella; D08, escenario 5"
+    - alert: NodoMemoriaBaja
+      expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes < 0.10
+      for: 5m
+      labels: {severity: warning}
+      annotations:
+        summary: "Menos del 10% de memoria disponible en un nodo"
+        accion: "Identificar el pod que mas consume (kubectl top); ajustar limites o liberar recursos"
+  - name: ecocanje.respaldos
+    rules:
+    - alert: RespaldoFallido
+      expr: kube_job_status_failed{namespace="ecocanje",job_name=~"(respaldo|manual)-.*"} > 0
+      for: 1m
+      labels: {severity: critical}
+      annotations:
+        summary: "Un Job de respaldo termino en error"
+        accion: "kubectl logs del Job fallido; repetir el respaldo; D09"
+    - alert: RespaldoVencido
+      expr: |
+        (time() - kube_cronjob_status_last_successful_time{namespace="ecocanje",cronjob=~"respaldo-.*"} > 90000)
+        or ((time() - kube_cronjob_created{namespace="ecocanje",cronjob=~"respaldo-.*"} > 90000)
+            unless on (namespace, cronjob) kube_cronjob_status_last_successful_time{namespace="ecocanje",cronjob=~"respaldo-.*"})
+      for: 5m
+      labels: {severity: warning}
+      annotations:
+        summary: "No hay un respaldo exitoso en mas de 25 horas"
+        accion: "Revisar el CronJob y ejecutar scripts/respaldar.sh; D09"

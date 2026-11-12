@@ -1,0 +1,20 @@
+ID: OBS04
+Descripción: Despliegue de exportadores, monitores y alertas
+Fecha: 2026-11-02T21:17:39-06:00
+Ambiente: prod
+Host: fedora
+Commit: ee32601
+Comando: scripts/observabilidad.sh prod
+Esperado: exportadores Ready y reglas aplicadas
+----- salida -----
+creado mongo-exportador
+serviceaccount/exportador created
+deployment.apps/exportador-mongo created
+deployment.apps/exportador-postgres created
+podmonitor.monitoring.coreos.com/exportadores created
+podmonitor.monitoring.coreos.com/traefik created
+prometheusrule.monitoring.coreos.com/ecocanje-alertas created
+networkpolicy.networking.k8s.io/exportadores-desde-prometheus created
+Waiting for deployment "exportador-postgres" rollout to finish: 0 of 1 updated replicas are available...
+error: timed out waiting for the condition
+----- fin: FALLA(1) -----

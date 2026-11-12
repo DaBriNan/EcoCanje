@@ -1,0 +1,17 @@
+ID: E12
+Descripción: Conexiones persistentes en dev con 0.1.2
+Fecha: 2026-11-05T20:41:49-06:00
+Ambiente: dev
+Host: fedora
+Commit: 5eb23b3+cambios
+Comando: bash -c a=$(ses () 
+{ 
+    kubectl --context k3d-dev -n ecocanje exec postgres-0 -- sh -c 'PGPASSWORD=*** /run/secrets/pg/admin) psql -h 127.0.0.1 -U ecocanje_admin -d ecocanje -tAc "select sessions from pg_stat_database where datname=current_database()"'
+}; ses); for i in $(seq 30); do curl -s -o /dev/null https://dev.ecocanje.test:8444/api/health/ready; done; b=$(ses () 
+{ 
+    kubectl --context k3d-dev -n ecocanje exec postgres-0 -- sh -c 'PGPASSWORD=*** /run/secrets/pg/admin) psql -h 127.0.0.1 -U ecocanje_admin -d ecocanje -tAc "select sessions from pg_stat_database where datname=current_database()"'
+}; ses); echo "sesiones antes=$a despues=$b nuevas=$((b-a)) por 30 solicitudes"; [ $((b-a)) -le 10 ]
+Esperado: 30 solicitudes a /health/ready abren muy pocas sesiones nuevas
+----- salida -----
+sesiones antes=14011 despues=14012 nuevas=1 por 30 solicitudes
+----- fin: OK -----

@@ -1,0 +1,12 @@
+ID: SUP02
+Descripción: Registro de 0.1.2 como imagen aprobada tras pruebas en dev
+Fecha: 2026-11-05T20:41:59-06:00
+Ambiente: dev
+Host: fedora
+Commit: 5eb23b3+cambios
+Comando: scripts/verificar-imagen.sh dev 0.1.2 --registrar
+Esperado: id registrado en infra/imagen-aprobada-0.1.2.id
+----- salida -----
+OK    k3d-dev-server-0 -> 94410517655dd
+imagen aprobada registrada en infra/imagen-aprobada-0.1.2.id: 94410517655dd
+----- fin: OK -----

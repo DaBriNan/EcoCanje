@@ -1,0 +1,18 @@
+ID: E13
+Descripción: Programacion de los respaldos (prod)
+Fecha: 2026-11-02T14:35:56-06:00
+Ambiente: prod
+Host: fedora
+Commit: 656ccdc+cambios
+Comando: kubectl --context k3d-prod -n ecocanje get cronjob,pvc
+Esperado: dos CronJob con su horario y ultima ejecucion
+----- salida -----
+NAME                              SCHEDULE     TIMEZONE              SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/respaldo-mongo      10 2 * * *   America/Mexico_City   False     0        <none>          100s
+cronjob.batch/respaldo-postgres   0 2 * * *    America/Mexico_City   False     0        <none>          100s
+
+NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/data-mongo-0      Bound    pvc-c564fbc5-0d18-4756-af8e-43f2cba57a87   2Gi        RWO            local-path     <unset>                 49m
+persistentvolumeclaim/data-postgres-0   Bound    pvc-3f9d3b5f-4608-4ebc-9323-c8e6f6331e77   2Gi        RWO            local-path     <unset>                 49m
+persistentvolumeclaim/respaldos         Bound    pvc-bc72b1c8-f427-4dd1-a680-49968e075029   2Gi        RWO            local-path     <unset>                 100s
+----- fin: OK -----

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: cuota-ecocanje
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 6Gi
+    limits.cpu: "8"
+    limits.memory: 10Gi
+    pods: "40"
+    persistentvolumeclaims: "6"
+    requests.storage: 20Gi
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: limites-por-defecto
+spec:
+  limits:
+  - type: Container
+    defaultRequest: {cpu: 50m, memory: 64Mi}
+    default: {cpu: 500m, memory: 512Mi}
+    max: {cpu: "2", memory: 2Gi}

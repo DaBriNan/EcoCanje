@@ -1,0 +1,15 @@
+ID: E14
+Descripción: Estado previo a la reconstruccion con k3s v1.36.5
+Fecha: 2026-11-06T18:55:20-06:00
+Ambiente: prod
+Host: fedora
+Commit: ab87731
+Comando: bash -c for c in dev prod; do kubectl --context k3d-$c get nodes -o custom-columns=NODO:.metadata.name,VERSION:.status.nodeInfo.kubeletVersion --no-headers; done; kubectl --context k3d-prod -n kube-system get deploy traefik -o jsonpath="{.spec.template.spec.containers[0].image}{\"\n\"}"
+Esperado: version actual de nodos y Traefik
+----- salida -----
+k3d-dev-server-0   v1.36.1+k3s1
+k3d-prod-agent-0    v1.36.1+k3s1
+k3d-prod-agent-1    v1.36.1+k3s1
+k3d-prod-server-0   v1.36.1+k3s1
+rancher/mirrored-library-traefik:3.6.13
+----- fin: OK -----

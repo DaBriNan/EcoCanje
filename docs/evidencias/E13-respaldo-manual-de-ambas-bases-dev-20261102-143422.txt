@@ -1,0 +1,16 @@
+ID: E13
+Descripción: Respaldo manual de ambas bases (dev)
+Fecha: 2026-11-02T14:34:22-06:00
+Ambiente: dev
+Host: fedora
+Commit: 656ccdc+cambios
+Comando: scripts/respaldar.sh dev
+Esperado: respaldo_ok de postgres y mongo
+----- salida -----
+== postgres FALLO
+Found 2 pods, using pod/manual-postgres-1793651662-vss5j
+pg_dump: error: connection to server at "postgres" (10.43.65.14), port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+== mongo (6 s)
+respaldo_ok archivo=mongo-20261102-203442.archive.gz bytes=1207 fecha=2026-11-02T20:34:43+00:00
+----- fin: FALLA(1) -----

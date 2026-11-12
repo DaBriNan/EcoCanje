@@ -1,0 +1,21 @@
+ID: DEP01
+Descripción: Estado de las bases en dev
+Fecha: 2026-10-27T19:31:44-06:00
+Ambiente: dev
+Host: fedora
+Commit: 1ab1eb0+cambios
+Comando: kubectl --context k3d-dev -n ecocanje get pods,svc,pvc
+Esperado: postgres-0 y mongo-0 Running 1/1 con PVC Bound
+----- salida -----
+NAME             READY   STATUS    RESTARTS   AGE
+pod/mongo-0      1/1     Running   0          59s
+pod/postgres-0   1/1     Running   0          59s
+
+NAME               TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)     AGE
+service/mongo      ClusterIP   10.43.32.120   <none>        27017/TCP   59s
+service/postgres   ClusterIP   10.43.65.14    <none>        5432/TCP    59s
+
+NAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/data-mongo-0      Bound    pvc-5989a853-7199-489c-aaa6-7a6673186e56   2Gi        RWO            local-path     <unset>                 59s
+persistentvolumeclaim/data-postgres-0   Bound    pvc-18b06116-99c7-4990-b911-6edbb17c2745   2Gi        RWO            local-path     <unset>                 59s
+----- fin: OK -----

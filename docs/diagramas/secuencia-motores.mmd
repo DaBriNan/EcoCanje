@@ -1,0 +1,28 @@
+sequenceDiagram
+  autonumber
+  actor O as Operador
+  participant L as API Laravel
+  participant PG as PostgreSQL
+  participant W as Worker outbox
+  participant MG as MongoDB
+  O->>L: PATCH /entregas/{id}/acreditar (X-Request-Id)
+  L->>PG: BEGIN, bloquear entrega y ciudadano
+  L->>PG: calcular puntos con la tarifa del detalle, INSERT puntos_lote
+  L->>PG: INSERT outbox {tipo, payload, request_id}, COMMIT
+  L-->>O: 200 {puntos}
+  loop cada 2 s (espera creciente hasta 30 s si falla)
+    W->>PG: SELECT pendientes FOR UPDATE SKIP LOCKED
+    W->>MG: updateOne(_id = id del outbox, $setOnInsert, upsert)
+    W->>PG: publicado_en = now()
+  end
+  alt MongoDB caído
+    W->>MG: falla
+    W->>PG: intentos + 1 (el evento sigue pendiente)
+    Note over L,PG: la API sigue aceptando escrituras (PostgreSQL es la fuente de verdad)
+    MG-->>W: vuelve
+    W->>MG: reintento: upsert por _id (sin duplicados)
+  else PostgreSQL caído
+    L-->>O: 503 (readiness falla, Traefik retira las réplicas)
+    W->>W: registra advertencia, descarta conexión, reintenta sin terminar
+    PG-->>W: vuelve, se publica lo pendiente
+  end

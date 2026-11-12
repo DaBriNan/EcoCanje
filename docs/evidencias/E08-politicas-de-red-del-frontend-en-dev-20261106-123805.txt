@@ -1,0 +1,21 @@
+ID: E08
+Descripción: Politicas de red del frontend en dev
+Fecha: 2026-11-06T12:38:05-06:00
+Ambiente: dev
+Host: fedora
+Commit: acaea13
+Comando: tests/netpol-frontend.sh dev
+Esperado: sin salida a bases ni backend; entrada solo desde Traefik; DNS y HTTPS como control
+----- salida -----
+== Salida desde el frontend (frontend-9d4566dc5-vr65v)
+OK    DNS resuelve postgres (control: DNS permitido) -> resuelve
+OK    frontend -> PostgreSQL 5432 -> bloqueado
+OK    frontend -> MongoDB 27017 -> bloqueado
+OK    frontend -> backend 80 (el navegador usa el Ingress, no el pod) -> bloqueado
+== Entrada al frontend
+OK    cliente con salida permitida, bloqueado por la ENTRADA del frontend -> bloqueado
+OK    con regla temporal: el mismo cliente conecta (el frontend estaba sano) -> abierto
+OK    regla temporal retirada: bloqueado de nuevo -> bloqueado
+OK    la entrada HTTPS por Traefik sigue sirviendo la interfaz -> 200
+Resultado: 8 correctas, 0 fallidas
+----- fin: OK -----
